@@ -1,4 +1,10 @@
-# 👻  **BASES DE DATOS 2**
+---
+layout: home
+title: FIS - UD
+permalink: /
+---
+
+# 👻  **FUNDAMENTOS DE INGENIERÍA DE SOFTWARE**
 
 <img src="https://www.udistrital.edu.co/themes/custom/versh/images/default/preloader.png" width="192px" height="192px" align="right"/>
 
@@ -6,7 +12,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)][2]
 
 
-Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se desarrollen a lo largo de la materia Bases de datos 2.
+Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se desarrollen a lo largo de la materia Fundamentos de ingeniería de software.
 
 ## Contenido
 
