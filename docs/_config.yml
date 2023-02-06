@@ -1,16 +1,16 @@
 # Configurations
-title:            FIS - UD
-longtitle:        Fundamentos de ingeniería de software - UD
+title:            BD 2
+longtitle:        Bases de datos 2 - UD
 author:           Juan Felipe Rodríguez
 email:            juferoga@github.com
 description: >
-  Build Jekyll site with the GitBook style.
+  Doocumentación de bases de datos.
 
 version:          1.0
 gitbook_version:  3.2.3
 
 url:              'https://juferoga.github.io'
-baseurl:          '/fis'
+baseurl:          '/bd-2'
 rss:              RSS
 
 # bootstrap: use the remote theme for the site itself
