@@ -1,10 +1,10 @@
 ---
 layout: home
-title: FIS - UD
+title: BD2 - UD
 permalink: /
 ---
 
-# 👻  **FUNDAMENTOS DE INGENIERÍA DE SOFTWARE**
+# 👻  **BASES DE DATOS 2**
 
 <img src="https://www.udistrital.edu.co/themes/custom/versh/images/default/preloader.png" width="192px" height="192px" align="right"/>
 
@@ -12,7 +12,7 @@ permalink: /
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)][2]
 
 
-Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se desarrollen a lo largo de la materia Fundamentos de ingeniería de software.
+Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se desarrollen a lo largo de la materia Bases de datos 2.
 
 ## Contenido
 
@@ -23,6 +23,14 @@ Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se 
 3. Frontend → Desarrollo del frontend del aplicativo, en este caso [Angular][4].
 
 ## Fast SetUp
+
+### Base de datos 
+
+Instala la base de datos ORACLE18c usando el script o ejecuta el comando:
+
+```
+./scripts/oracle-installer.sh
+```
 
 ### Backend
 Primero debes tener instalado [docker][6], ejecuta el script para desplegar en local.
