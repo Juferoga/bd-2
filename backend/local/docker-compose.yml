@@ -2,20 +2,16 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    image: oracle/database:18.4.0-xe
     environment:
-      - POSTGRES_DB=db1
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - ORACLE_PWD=Admin123..
     ports: 
-      - "5432:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
+      - "11521:11521"
 
   web:
     build: .
     volumes:
-      - ../gestor-x/:/code
+      - ../bdproject/:/code
       - ./requirements.txt:/code/requirements.txt
     command: bash -c "python -m pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
     ports:

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILEC=./fisproject/requirements.txt
+FILEC=./bdproject/requirements.txt
 FILEL=./local/requirements.txt
 FILED=./deploy/requirements.txt
 
@@ -10,7 +10,7 @@ deploy_local(){
     if [[ -e "$FILEC" && -e "$FILEL" ]]; then
       prompt -i "\n Copiando requirements.txt al despliegue"
       rm -v ./local/requirements.txt
-      cp -v ./fisproject/requirements.txt ./local/requirements.txt
+      cp -v ./bdproject/requirements.txt ./local/requirements.txt
       cd ./local
       docker-compose up -d --build
       cd ..
@@ -28,7 +28,7 @@ deploy(){
     if [[ -e "$FILED" && -e "$FILEL" ]]; then
       prompt -i "\n Copiando requirements.txt al despliegue"
       rm -v ./deploy/requirements.txt
-      cp -v ./fisproject/requirements.txt ./deploy/requirements.txt
+      cp -v ./bdproject/requirements.txt ./deploy/requirements.txt
       cd ./deploy
       docker-compose up -d --build
       cd ..

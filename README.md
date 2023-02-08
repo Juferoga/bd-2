@@ -18,6 +18,14 @@ Repositorio para almacenar las tareas, talleres, ejercicios, entre otros que se 
 
 ## Fast SetUp
 
+### Base de datos 
+
+Instala la base de datos ORACLE18c usando el script o ejecuta el comando:
+
+```
+./scripts/oracle-installer.sh
+```
+
 ### Backend
 Primero debes tener instalado [docker][6], ejecuta el script para desplegar en local.
 
