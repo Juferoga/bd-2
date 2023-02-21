@@ -19,7 +19,7 @@ Draft
 ## Desarrollo de software
 --- 
 
-El aplicativo se desarrollará con las tecnologías:
+Además de las tecnologías mencionadas, el aplicativo podría utilizar otras herramientas o frameworks para mejorar su funcionalidad y performance, tales como:
 
 Tecnología   | Uso
 :-----------:|-----

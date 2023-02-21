@@ -50,6 +50,9 @@ Sigue la [guía de github][8] para más información.
 
 ## Contributors:
  - [Juan Felipe Rodríguez Galindo - Código 20181020158][1]
+ - [Andres Baquero - Código 20181020###][1]
+ - [Cristian Yara - Código 20181020###][1]
+ - [Bryan Muños - Código 201#1020###][1]
 
  [1]:https://gitlab.com/Juferoga
  [2]:https://github.com/Juferoga/fis/blob/main/LICENSE

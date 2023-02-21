@@ -62,7 +62,7 @@ Con el fin de obtener una visión integral de los componentes funcionales del ap
 
 #### Pruebas unitarias
 ---
-
+se realizan para comprobar el correcto funcionamiento de cada componente de forma individual, incluyendo funciones y métodos.
 #### Pruebas de integración
 ---
 

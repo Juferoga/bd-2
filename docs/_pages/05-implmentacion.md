@@ -39,5 +39,7 @@ Instalación del sistema.
 
 Errores post-instalación? obvio si 😆.
 
+*Importante recalcar que para lo establecido no se alcanzará a concluir el software para el semestre.*
+
 
 [1]:https://www.cloudcraft.co/

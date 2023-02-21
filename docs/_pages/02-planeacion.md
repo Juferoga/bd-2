@@ -65,7 +65,16 @@ hola
 ## Cronograma de desarrollo
 --- 
 
-hola
+* **Semana 1-2:** Reuniones con los representantes de ventas de NatAmE para entender sus necesidades y definir los requerimientos del sistema.
+* **Semana 3-4:** Diseño de la arquitectura de la base de datos y de la interfaz de usuario.
+* **Semana 5-6:** Implementación de la funcionalidad para el registro de representantes de ventas.
+* **Semana 7-8:** Implementación de la funcionalidad para el registro de clientes y gestión de pedidos.
+* **Semana 9-10:** Implementación de la funcionalidad para contabilizar el valor vendido y calificar al representante de ventas con cada pedido.
+* **Semana 11-12:** Implementación de la funcionalidad para clasificar periódicamente los representantes de ventas y calcular las comisiones de ventas.
+* **Semana 13-14:** Implementación de la funcionalidad para permitir el cambio de representante de ventas por parte del cliente.
+* **Semana 15-16:** Pruebas y corrección de errores.
+* **Semana 17-18:** Generación de estadísticas por periodo.
+* **Semana 19-20:** Ajustes finales y lanzamiento del sistema.
 
 ## Diagramas del proyecto
 --- 
