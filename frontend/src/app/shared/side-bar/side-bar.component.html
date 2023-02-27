@@ -1,0 +1,30 @@
+<div class="container">
+  <div>
+    <img [src]="'assets/icon.png'" alt="Profile image">
+    <p>{{"user-name"}}</p>
+  </div>
+  <div [routerLink]="href+'/mi-perfil'">
+    <button pButton pRipple type="button" icon="pi pi-user" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Mi perfil</p>
+  </div>
+  <div [routerLink]="href+'/mi-inventario'">
+    <button pButton pRipple type="button" icon="pi pi-box" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Mi inventario</p>
+  </div>
+  <div [routerLink]="href+'/mis-ventas'">
+    <button pButton pRipple type="button" icon="pi pi-briefcase" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Mis ventas</p>
+  </div>
+  <div [routerLink]="href+'/mis-compras'">
+    <button pButton pRipple type="button" icon="pi pi-shopping-cart" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Mis compras</p>
+  </div>
+  <div [routerLink]="href+'/mis-referidos'">
+    <button pButton pRipple type="button" icon="pi pi-users" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Mis referidos</p>
+  </div>
+  <a [href]="api+'admin/'">
+    <button pButton pRipple type="button" icon="pi pi-cog" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Configuraciones avanzadas</p>
+  </a>
+</div>

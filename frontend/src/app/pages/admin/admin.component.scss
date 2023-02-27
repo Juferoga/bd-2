@@ -18,12 +18,12 @@
 
 .left-bar div{
   margin: 5px;
-  padding: 10px;
-  background: #f8f9fa;
   border: 1px solid #dfdfdf;
   border-radius: 13px;
   min-height: calc(100% - 10px);
   max-height: calc(100% - 10px);
+  background: #f8f9fa;
+  padding-top: 20px;
 }
 
 .top-bar{
@@ -38,15 +38,17 @@ app-top-bar{
   flex-grow: 100;
 }
 app-side-bar{
-  // flex-grow: 100;
+  flex-grow: 100;
+  border-radius: 13px;
 }
 
 .content{
   grid-area: content;
   background: transparent;
+  max-height: calc(100vh - 62.5px);
 }
 
-.content div{
+.content-board{
   margin: 5px;
   padding: 10px;
   background: #f8f9fa;
@@ -54,4 +56,77 @@ app-side-bar{
   border-radius: 13px;
   min-height: calc(100% - 10px);
   max-height: calc(100% - 10px);
+  overflow-y: scroll;
+}
+
+.content-board-menu{
+  background: rgba(255, 255, 255, 0.607);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.1px);
+  -webkit-backdrop-filter: blur(6.1px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  
+  margin: 5px;
+  padding: 10px;
+  min-height: calc(100% - 10px);
+  max-height: calc(100% - 10px);
+  overflow-y: scroll;
+}
+
+.banner-menu img{
+  min-width: 100%;
+  max-width: 100%;
+  height: 320px;
+  background-size: cover;
+  border-radius: 13px;
+  filter: hue-rotate(50%);
+}
+
+.content-board-menu h1{
+  color: #333;
+  text-align: center;
+
+}
+
+.cards-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  justify-content: center;
+}
+
+.menu-card{
+  margin: 10px;
+  max-width: 400px;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.607);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.1px);
+  -webkit-backdrop-filter: blur(6.1px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-card img{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.text-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title{
+  font-weight: bolder;
 }
