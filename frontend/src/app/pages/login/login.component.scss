@@ -67,3 +67,49 @@ h1{
 #icon{
   width: 100px;
 }
+
+.flotable{
+  background-color: rgb(253, 245, 245);
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  border-radius: 50% 0px 0px 50%;
+  padding: 10px;
+}
+
+.flotable:hover{
+  background-color: rgb(246, 230, 230);
+}
+
+.flotable button{
+  background-color: rgb(253, 245, 245);
+  border-color: rgb(248, 150, 150);
+  color: rgb(120, 75, 75);
+}
+
+.flotable button:hover{
+  box-shadow: rgba(71, 12, 12, 0.35) 0px 5px 15px;
+}
+
+.flotable-info{
+  background-color: rgb(253, 245, 245);
+  position: absolute;
+  top: 80px;
+  right: 0px;
+  border-radius: 50% 0px 0px 50%;
+  padding: 10px;
+}
+
+.flotable-info:hover{
+  background-color: rgb(246, 230, 230);
+}
+
+.flotable-info button{
+  background-color: rgb(253, 245, 245);
+  border-color: rgb(248, 150, 150);
+  color: rgb(120, 75, 75);
+}
+
+.flotable-info button:hover{
+  box-shadow: rgba(71, 12, 12, 0.35) 0px 5px 15px;
+}

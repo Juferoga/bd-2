@@ -12,5 +12,6 @@ export const environment = {
   ],
   materia: 'BD-2',
   proyecto: 'Ventas multi nivel',
+  profesor: 'Alba Consuelo Nieto Lesmus',
   api: 'localhost:8000/'
 };

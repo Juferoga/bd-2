@@ -17,7 +17,14 @@ import { environment } from 'src/environments/environment.development';
 export class LoginComponent {
 
   // Referencia de página de documentación
-  page = environment.docs;
+  docs = environment.docs;
+  cronograma = environment.cronograma;
+  repositorio = environment.repositorio;
+  me = environment.juferoga;
+  profesor = environment.profesor;
+  materia = environment.materia;
+  proyecto = environment.proyecto;
+  integrantes = environment.integrantes;
   // Datos del usuario
   username:string="";
   password:string="";
@@ -26,6 +33,8 @@ export class LoginComponent {
   isLoading: boolean;
   // Registro e ingreso
   isLogin: boolean = true;
+  // Control de modal
+  display:boolean = false;
 
   constructor(
     private router: Router, 

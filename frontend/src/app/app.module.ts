@@ -25,6 +25,7 @@ import {MenuModule} from 'primeng/menu';
 import { ProfileComponent } from './shared/profile/profile.component';
 import {ChartModule} from 'primeng/chart';
 import { OnBuildComponent } from './pages/on-build/on-build.component';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { OnBuildComponent } from './pages/on-build/on-build.component';
     SlideMenuModule,
     MenuModule,
     ChartModule,
+    SidebarModule,
   ],
   providers: [
     MessageService,
