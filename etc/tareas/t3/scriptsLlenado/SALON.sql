@@ -1,0 +1,4 @@
+REM INSERTING into  SALON
+Insert into SALON (K_SALON,K_SEDE,I_TIPO,Q_CAPACIDAD) values ('504','SABCA','L',30);
+Insert into SALON (K_SALON,K_SEDE,I_TIPO,Q_CAPACIDAD) values ('202','SEDCE','S',25);
+Insert into SALON (K_SALON,K_SEDE,I_TIPO,Q_CAPACIDAD) values ('501','SABCA','L',30);
