@@ -27,6 +27,8 @@ CREATE TABLE ESTUDIANTE
 ) 
 ;
 
+-- **TODO Crear un constraint para validar que el nombre 
+-- del dÃ­a en la tabla HORARIO sea LU, MA, MI, JU, VI
 CREATE TABLE HORARIO 
 (
   K_HORARIO NUMBER(10, 0) NOT NULL 
@@ -38,9 +40,12 @@ CREATE TABLE HORARIO
     K_HORARIO 
   )
   ENABLE 
+, CONSTRAINT name_validator CHECK (N_DIA IN ('LU', 'MA', 'MI', 'JU', 'VI'));
 ) 
 ;
 
+-- **TODO Crear la llave Ãºnica GRUPO_UK1 con los 
+-- atributos   K_ASIGNATURA, Q_ANIO, Q_PERIODO, K_CODGRUPO
 CREATE TABLE GRUPO 
 (
   K_CODGRUPO NUMBER(10, 0) NOT NULL 
@@ -50,11 +55,14 @@ CREATE TABLE GRUPO
 , N_GRUPO NUMBER(2, 0) NOT NULL 
 , Q_PERIODO NUMBER(1, 0) NOT NULL 
 , Q_CUPMAX NUMBER(3, 0) NOT NULL 
-, CONSTRAINT GRUPO_PK PRIMARY KEY 
+, CONSTRAINT GRUPO_PK PRIMARY KEY
   (
-    K_CODGRUPO 
+    K_ASIGNATURA, K_CODGRUPO, Q_ANIO, Q_PERIODO 
   )
   ENABLE 
+, CONSTRAINT GRUPO_UK1 UNIQUE (
+    K_ASIGNATURA, K_CODGRUPO, Q_ANIO, Q_PERIODO 
+  )
 ) 
 ;
 
@@ -101,6 +109,7 @@ CREATE TABLE NOTA
 ) 
 ;
 
+-- **TODO Crear constraints para validar que las notas estï¿½n entre 0 y 5
 CREATE TABLE ESTUDIANTE_NOTA 
 (
   K_CODEST NUMBER(11, 0) NOT NULL 
@@ -114,25 +123,41 @@ CREATE TABLE ESTUDIANTE_NOTA
   , K_NOTA 
   )
   ENABLE 
+, CONSTRAINT notes_validator CHECK (V_NOTA>=0 AND V_NOTA<=5)
 ) 
 ;
 
+-- **TODO Crear un constraint para validar que el nivel de la ASIGNATURA estï¿½ entre 1 y 10
 CREATE TABLE ASIGNATURA 
 (
   K_ASIGNATURA NUMBER(7, 0) NOT NULL 
 , K_PLAN VARCHAR2(10 BYTE) NOT NULL 
 , N_NOMBRE VARCHAR2(50 BYTE) NOT NULL 
 , Q_NROCREDITOS NUMBER(2, 0) 
-, Q_NIVEL NUMBER(2, 0) NOT NULL 
+, Q_NIVEL NUMBER(2, 0) NOT NULL
 , CONSTRAINT ASIGNATURA_PK PRIMARY KEY 
   (
     K_ASIGNATURA 
   )
   ENABLE 
+, CONSTRAINT nivel_validator CHECK (Q_NIVEL<10 AND Q_NIVEL>1) 
 ) 
 ;
 
 -- **TODO Crear la tabla  GRHRSA con su respectiva llave primaria
+CREATE TABLE GRHRSA
+(
+  K_CODGRHRSA NUMBER(10, 0) NOT NULL,
+  K_CODGRUPO NUMBER(10, 0) NOT NULL,
+  K_HORARIO NUMBER(10, 0) NOT NULL,
+  K_SALON VARCHAR2(20 BYTE) NOT NULL,
+  K_SEDE VARCHAR(5 BYTE) NOT NULL,
+  CONSTRAINT CODGRHRSA_PK PRIMARY KEY
+  (
+    K_CODGRHRSA
+  )
+  ENABLE
+)
 
 CREATE TABLE SEDE 
 (
@@ -158,8 +183,6 @@ CREATE TABLE PLANCURRICULAR
   ENABLE 
 ) 
 ;
-
--- **TODO Crear la llave única GRUPO_UK1 con los atributos   K_ASIGNATURA, Q_ANIO, Q_PERIODO, K_CODGRUPO
 
 ALTER TABLE GRUPO
 ADD CONSTRAINT GRUPO_ASIGNATURA_FK FOREIGN KEY
@@ -208,7 +231,7 @@ ENABLE;
 ALTER TABLE SALON
 ADD CONSTRAINT SALON_SEDE_FK FOREIGN KEY
 (
-  K_SEDE 
+  K_S 
 )
 REFERENCES SEDE
 (
@@ -259,54 +282,58 @@ ADD CONSTRAINT GRHRSA_GRUPO_FK FOREIGN KEY
 (
   K_CODGRUPO 
 )
-REFERENCES GRUPO
-(
-  K_CODGRUPO 
-)
-ENABLE;
-
 ALTER TABLE GRHRSA
 ADD CONSTRAINT GRHRSA_HORARIO_FK FOREIGN KEY
 (
   K_HORARIO 
 )
+-- **TODO Crear el constraint de llave forï¿½nea entre GRHRSA y SALON
+ALTER TABLE GRHRSA
+ADD CONSTRAINT GRHRSA_SALON_FK FOREIGN KEY
+(
+  K_SALON, 
+  K_SEDE 
+) REFERENCES SALON 
+(
+  K_SALON,
+  K_SEDE
+)
+ENABLE;
+
+REFERENCES GRUPO
+(
+  K_CODGRUPO 
+)
+ENABLE;
 REFERENCES HORARIO
 (
   K_HORARIO 
 )
 ENABLE;
 
--- **TODO Crear el constraint de llave foránea entre GRHRSA y SALON
-
--- **TODO Crear un constraint para validar que el nivel de la ASIGNATURA esté entre 1 y 10
-
--- **TODO Crear constraints para validar que las notas estén entre 0 y 5
-
--- **TODO Crear un constraint para validar que el nombre del día en la tabla HORARIO sea LU, MA, MI, JU, VI
-
-COMMENT ON COLUMN DOCENTE.K_NIT IS 'Número de Identidad';
+COMMENT ON COLUMN DOCENTE.K_NIT IS 'NÃºmero de Identidad';
 
 COMMENT ON COLUMN DOCENTE.N_NOMBRE IS 'Nombre del Docente';
 
 COMMENT ON COLUMN DOCENTE.N_APELLIDO IS 'Apellido del docente';
 
-COMMENT ON COLUMN ESTUDIANTE.K_CODEST IS 'Código del estudiante';
+COMMENT ON COLUMN ESTUDIANTE.K_CODEST IS 'CÃ³digo del estudiante';
 
 COMMENT ON COLUMN ESTUDIANTE.N_NOMBRE IS 'Nombre del estudiante';
 
 COMMENT ON COLUMN ESTUDIANTE.N_APELLIDO IS 'Apellido del estudiante';
 
-COMMENT ON COLUMN HORARIO.K_HORARIO IS 'Código del Horario';
+COMMENT ON COLUMN HORARIO.K_HORARIO IS 'CÃ³digo del Horario';
 
 COMMENT ON COLUMN HORARIO.Q_HORAINI IS 'Hora inicial(formato militar : HH:MM)';
 
 COMMENT ON COLUMN HORARIO.Q_HORAFIN IS 'Hora final(formato militar : HH:MM)';
 
-COMMENT ON COLUMN HORARIO.N_DIA IS 'Día de la semana (LU=Lunes, MAR=Martes, MI=...)';
+COMMENT ON COLUMN HORARIO.N_DIA IS 'dÃ­a de la semana (LU=Lunes, MAR=Martes, MI=...)';
 
-COMMENT ON COLUMN GRUPO.K_CODGRUPO IS 'Código del Grupo';
+COMMENT ON COLUMN GRUPO.K_CODGRUPO IS 'CÃ³digo del Grupo';
 
-COMMENT ON COLUMN GRUPO.K_ASIGNATURA IS 'Código de la asignatura';
+COMMENT ON COLUMN GRUPO.K_ASIGNATURA IS 'CÃ³digo de la asignatura';
 
 COMMENT ON COLUMN GRUPO.Q_ANIO IS 'Anio';
 
@@ -318,29 +345,29 @@ COMMENT ON COLUMN GRUPO.Q_CUPMAX IS 'Cupo maximo';
 
 COMMENT ON COLUMN SALON.K_SEDE IS 'Sede';
 
-COMMENT ON COLUMN SALON.I_TIPO IS 'Tipo de salón(L=Laboratorio, S=Salón, A=Auditorio)';
+COMMENT ON COLUMN SALON.I_TIPO IS 'Tipo de salÃ³n(L=Laboratorio, S=SalÃ³n, A=Auditorio)';
 
-COMMENT ON COLUMN SALON.Q_CAPACIDAD IS 'Capacidad del salón';
+COMMENT ON COLUMN SALON.Q_CAPACIDAD IS 'Capacidad del salÃ³n';
 
 COMMENT ON COLUMN NOTA.V_PORCENTAJE IS 'Porcentaje de la nota(multiplicado por 100)';
 
 COMMENT ON COLUMN ESTUDIANTE_NOTA.V_NOTA IS 'Valor de la nota';
 
-COMMENT ON COLUMN ASIGNATURA.K_ASIGNATURA IS 'Código de la Asignatura';
+COMMENT ON COLUMN ASIGNATURA.K_ASIGNATURA IS 'CÃ³digo de la Asignatura';
 
 COMMENT ON COLUMN ASIGNATURA.K_PLAN IS 'Plan Curricular';
 
 COMMENT ON COLUMN ASIGNATURA.N_NOMBRE IS 'Nombre de la Asignatura';
 
-COMMENT ON COLUMN ASIGNATURA.Q_NROCREDITOS IS 'Número de créditos';
+COMMENT ON COLUMN ASIGNATURA.Q_NROCREDITOS IS 'NÃºmero de crÃ©ditos';
 
-COMMENT ON COLUMN ASIGNATURA.Q_NIVEL IS 'Número de nivel (o semestre)';
+COMMENT ON COLUMN ASIGNATURA.Q_NIVEL IS 'NÃºmero de nivel (o semestre)';
 
 COMMENT ON COLUMN SEDE.K_SEDE IS 'Identificador del la sede';
 
 COMMENT ON COLUMN SEDE.N_NOMBRE IS 'Nombre de la sede';
 
-COMMENT ON COLUMN SEDE.N_DIRECCION IS 'Dirección de la sede';
+COMMENT ON COLUMN SEDE.N_DIRECCION IS 'DirecciÃ³n de la sede';
 
 COMMENT ON COLUMN PLANCURRICULAR.K_PLAN IS 'Identificador del Plan Curricular';
 
