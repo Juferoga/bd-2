@@ -54,6 +54,7 @@ import { PaymentComponent } from './shared/payment/payment.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { StockComponent } from './shared/stock/stock.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
+import { PaymentModule } from './payment/payment.module';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
     InputTextareaModule,
     InputNumberModule,
     PasswordModule,
+    PaymentModule,
     ProgressBarModule,
     HttpClientModule,
     FormsModule,

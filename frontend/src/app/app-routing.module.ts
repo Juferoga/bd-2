@@ -107,6 +107,10 @@ const routes: Routes = [
     component: NotFoundComponent,
     pathMatch:'full'
   },
+  /* {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then(p => p.PaymentModule)
+  }, */
 ];
 
 @NgModule({
