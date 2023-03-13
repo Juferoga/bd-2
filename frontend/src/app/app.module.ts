@@ -1,63 +1,113 @@
-import { NgModule } from '@angular/core';
+/* Angular Auto Generated START  */
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LayoutComponent } from './layout/layout.component';
-import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+/* Angular Components PRIMENG */
+// Services
+import { ConfirmationService, MessageService, FilterService } from 'primeng/api';
+  // Modules
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { ChartModule } from 'primeng/chart';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { PasswordModule } from 'primeng/password';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RatingModule } from 'primeng/rating';
+import { SlideMenuModule } from 'primeng/slidemenu';
+import { SliderModule } from 'primeng/slider';
+import { SidebarModule } from 'primeng/sidebar';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+
+/* Angular Components  PAGES & LAYOUT */
 import { AdminComponent } from './pages/admin/admin.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LayoutComponent } from './layout/layout.component';
+import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
-import {InputTextModule} from 'primeng/inputtext';
-import {PasswordModule} from 'primeng/password';
-import {ButtonModule} from 'primeng/button';
-import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
-import {MenubarModule} from 'primeng/menubar';
-import { TopBarComponent } from './shared/top-bar/top-bar.component';
-import { SideBarComponent } from './shared/side-bar/side-bar.component';
-import {SlideMenuModule} from 'primeng/slidemenu';
-import {MenuModule} from 'primeng/menu';
-import { ProfileComponent } from './shared/profile/profile.component';
-import {ChartModule} from 'primeng/chart';
 import { OnBuildComponent } from './pages/on-build/on-build.component';
-import {SidebarModule} from 'primeng/sidebar';
+
+/* Angular Components  SHARED */
+import { MyReferralsComponent } from './shared/my-referrals/my-referrals.component';
+import { MySalesComponent } from './shared/my-sales/my-sales.component';
+import { MyShoppingComponent } from './shared/my-shopping/my-shopping.component';
+import { ProfileComponent } from './shared/profile/profile.component';
+import { PaymentComponent } from './shared/payment/payment.component';
+import { SideBarComponent } from './shared/side-bar/side-bar.component';
+import { StockComponent } from './shared/stock/stock.component';
+import { TopBarComponent } from './shared/top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
-    LoginComponent,
     AdminComponent,
     HomeComponent,
+    LayoutComponent,
+    LoginComponent,
+    MyReferralsComponent,
+    MySalesComponent,
+    MyShoppingComponent,
     NotFoundComponent,
-    TopBarComponent,
-    SideBarComponent,
-    ProfileComponent,
     OnBuildComponent,
+    PaymentComponent,
+    ProfileComponent,
+    SideBarComponent,
+    StockComponent,
+    TopBarComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
     ButtonModule,
+    CalendarModule,
+    ChartModule,
+    ConfirmDialogModule,
+    ContextMenuModule,
+    DialogModule,
+    DropdownModule,
+    FileUploadModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputNumberModule,
+    PasswordModule,
+    ProgressBarModule,
     HttpClientModule,
-    ToastModule,
     FormsModule,
     MenubarModule,
-    SlideMenuModule,
     MenuModule,
-    ChartModule,
+    MultiSelectModule,
+    RatingModule,
+    RadioButtonModule,
+    ReactiveFormsModule,
     SidebarModule,
+    SlideMenuModule,
+    SliderModule,
+    TableModule,
+    ToastModule,
+    ToolbarModule,
   ],
   providers: [
+    ConfirmationService,
+    FilterService,
     MessageService,
   ],
   bootstrap: [AppComponent]
