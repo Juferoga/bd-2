@@ -8,6 +8,12 @@ import { Component } from "@angular/core";
 export class ProfileComponent {
 
   // TODO: Integrate -> https://primeng.org/tree/horizontal
+  isEdited:boolean = false;
+  role:string = localStorage.getItem("role")? localStorage.getItem("role"):sessionStorage.getItem("role");
+  
+  cinema:string = "Central";
+  sala:number = 1;
+  local:string = "Alejado";
 
   data: any;
   chartOptions: any;
