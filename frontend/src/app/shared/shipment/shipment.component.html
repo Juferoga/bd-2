@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card">
+    <div class="title">
+      <h1>Envío</h1>
+    </div>
+    <div class="content">
+      <i class="pi" style="font-size: 2rem" [ngClass]="{'pi-truck':isDelivered, 'pi-check':isArrived, 'pi-spin pi-spinner':isInProgress}"></i>
+      <p>{{getStatus()}}</p>
+      <div class="container">
+        <button (click)="isArrived = !isArrived">L</button>
+        <button (click)="isDelivered = !isDelivered">E</button>
+        <button (click)="isInProgress = !isInProgress">P</button>
+      </div>
+    </div>
+    <div class="footer">
+      <p>{{'Descripción del pedido'}}</p>
+    </div>
+  </div>
+</div>
