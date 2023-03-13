@@ -55,6 +55,7 @@ import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { StockComponent } from './shared/stock/stock.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { PaymentModule } from './payment/payment.module';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { PaymentModule } from './payment/payment.module';
     MenubarModule,
     MenuModule,
     MultiSelectModule,
+    NgxPayPalModule,
     RatingModule,
     RadioButtonModule,
     ReactiveFormsModule,
