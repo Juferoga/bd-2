@@ -14,6 +14,7 @@ import { ConfirmationService, MessageService, FilterService } from 'primeng/api'
   // Modules
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -79,6 +80,7 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
     BrowserAnimationsModule,
     ButtonModule,
     CalendarModule,
+    CardModule,
     ChartModule,
     ConfirmDialogModule,
     ContextMenuModule,

@@ -11,7 +11,7 @@ export const environment = {
     {'name':'Juan Felipe Rodríguez','code':'20181020158','url':'https://github.com/juferoga'},
   ],
   materia: 'BD-2',
-  proyecto: 'Ventas <br> multi nivel',
+  proyecto: 'Ventas multi nivel',
   profesor: 'Alba Consuelo Nieto Lesmus',
   api: 'localhost:8000/'
 };
