@@ -1,0 +1,86 @@
+[
+  {
+    "k_pais": 1,
+    "t_nombre": "Argentina"
+  },
+  {
+    "k_pais": 2,
+    "t_nombre": "Bolivia"
+  },
+  {
+    "k_pais": 3,
+    "t_nombre": "Brasil"
+  },
+  {
+    "k_pais": 4,
+    "t_nombre": "Canada"
+  },
+  {
+    "k_pais": 5,
+    "t_nombre": "Chile"
+  },
+  {
+    "k_pais": 6,
+    "t_nombre": "Colombia"
+  },
+  {
+    "k_pais": 7,
+    "t_nombre": "Costa Rica"
+  },
+  {
+    "k_pais": 8,
+    "t_nombre": "Cuba"
+  },
+  {
+    "k_pais": 9,
+    "t_nombre": "Ecuador"
+  },
+  {
+    "k_pais": 10,
+    "t_nombre": "El Salvador"
+  },
+  {
+    "k_pais": 11,
+    "t_nombre": "Estados Unidos"
+  },
+  {
+    "k_pais": 12,
+    "t_nombre": "Guatemala"
+  },
+  {
+    "k_pais": 13,
+    "t_nombre": "Honduras"
+  },
+  {
+    "k_pais": 14,
+    "t_nombre": "Mexico"
+  },
+  {
+    "k_pais": 15,
+    "t_nombre": "Nicaragua"
+  },
+  {
+    "k_pais": 16,
+    "t_nombre": "Panama"
+  },
+  {
+    "k_pais": 17,
+    "t_nombre": "Paraguay"
+  },
+  {
+    "k_pais": 18,
+    "t_nombre": "Peru"
+  },
+  {
+    "k_pais": 19,
+    "t_nombre": "Republica Dominicana"
+  },
+  {
+    "k_pais": 20,
+    "t_nombre": "Uruguay"
+  },
+  {
+    "k_pais": 21,
+    "t_nombre": "Venezuela"
+  }
+]
