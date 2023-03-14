@@ -14,6 +14,7 @@ import { MySalesComponent } from './shared/my-sales/my-sales.component';
 import { MyShoppingComponent } from './shared/my-shopping/my-shopping.component';
 import { PaymentComponent } from './shared/payment/payment.component';
 import { ProfileComponent } from './shared/profile/profile.component';
+import { ShipmentComponent } from './shared/shipment/shipment.component';
 import { StockComponent } from './shared/stock/stock.component';
 
 const routes: Routes = [
@@ -100,6 +101,11 @@ const routes: Routes = [
   {
     path:'test',
     component: PaymentComponent,
+    pathMatch: 'full'
+  },
+  {
+    path:'envios',
+    component: ShipmentComponent,
     pathMatch: 'full'
   },
   {

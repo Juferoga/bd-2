@@ -55,6 +55,7 @@ import { PaymentComponent } from './shared/payment/payment.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { StockComponent } from './shared/stock/stock.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
+import { ShipmentComponent } from './shared/shipment/shipment.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
     SideBarComponent,
     StockComponent,
     TopBarComponent,
+    ShipmentComponent,
   ],
   imports: [
     AppRoutingModule,
