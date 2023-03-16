@@ -21,8 +21,6 @@ class pedi_item(models.Model):
     k_producto = models.ForeignKey(producto, on_delete=models.CASCADE)
     n_cantidad = models.DecimalField(max_digits=5, decimal_places=0)
     n_preciou = models.DecimalField(max_digits=6, decimal_places=0)
-    class Meta:
-        unique_together = (('k_pedido','k_producto'),)
 
 class caliservicio(models.Model):
     k_pedido = models.ForeignKey(pedido, on_delete=models.CASCADE)

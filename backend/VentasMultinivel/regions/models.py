@@ -10,8 +10,7 @@ class region(models.Model):
     k_region = models.CharField(max_length=3, primary_key=True)
     k_pais = models.ForeignKey(pais, on_delete=models.RESTRICT)
     t_nombre = models.CharField(max_length=30, unique=True)
-    class Meta:
-        unique_together = (('k_region','k_pais'),)
+    
 def add_pais(cod,nombre):
     try:
         pais.objects.create(k_pais=cod,t_nombre=nombre)

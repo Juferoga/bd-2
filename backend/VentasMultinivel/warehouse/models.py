@@ -23,5 +23,3 @@ class bode_prod(models.Model):
     k_bodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
     k_producto = models.ForeignKey(producto, on_delete=models.CASCADE)
     n_cantidad = models.DecimalField(max_digits=8, decimal_places=0)
-    class Meta:
-        unique_together = (('k_bodega','k_producto'),)
