@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-shopping.component.scss']
 })
 export class MyShoppingComponent {
+  math = Math
 
 }

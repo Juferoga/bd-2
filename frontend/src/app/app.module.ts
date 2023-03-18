@@ -56,6 +56,13 @@ import { StockComponent } from './shared/stock/stock.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { PaymentModule } from './payment/payment.module';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { PurchaseProcessCardComponent } from './components/purchase-process-card/purchase-process-card.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
+import { StepToStepComponent } from './components/step-to-step/step-to-step.component';
+import { ShoppingComponent } from './shared/shopping/shopping.component';
+import { SidebarShoppingComponent } from './components/sidebar-shopping/sidebar-shopping.component';
+import { AddressShoppingComponent } from './shared/address-shopping/address-shopping.component';
+import { SelectedProductsComponent } from './components/selected-products/selected-products.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +81,13 @@ import { NgxPayPalModule } from 'ngx-paypal';
     SideBarComponent,
     StockComponent,
     TopBarComponent,
+    PurchaseProcessCardComponent,
+    ShoppingCartComponent,
+    StepToStepComponent,
+    ShoppingComponent,
+    SidebarShoppingComponent,
+    AddressShoppingComponent,
+    SelectedProductsComponent,
   ],
   imports: [
     AppRoutingModule,

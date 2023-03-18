@@ -1,0 +1,21 @@
+@import "node_modules/bootstrap/dist/css/bootstrap.min.css";
+.card{
+    border: 1px solid #5f5f5f4f;
+}
+.background-product{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-image: url('https://picsum.photos/id/1060/100/120');
+    content: '';
+    height: 80px;
+    width: 80px;
+}
+.card-step{
+    margin: 5px;
+    height: 4rem;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

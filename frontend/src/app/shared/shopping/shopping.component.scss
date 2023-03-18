@@ -1,0 +1,17 @@
+@import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+.card-content {
+    display: grid;
+    grid-template-columns: 60% 10% 10% 10% 10%;
+    column-gap: 10px;
+    row-gap: 15px;
+    justify-items: stretch;
+    align-items: stretch;
+}
+.card-total {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    column-gap: 10px;
+    row-gap: 15px;
+    justify-items: stretch;
+    align-items: stretch;
+}
