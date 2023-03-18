@@ -10,9 +10,6 @@
 
 ---
 
-<p align="center"> 🤖 Few lines describing what your bot does.
-    <br> 
-</p>
 
 ## 📝 Table of Contents
 
