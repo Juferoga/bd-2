@@ -1,19 +1,34 @@
-from django.http.response import JsonResponse
-from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from .utils.conexiondb import open_connection, close_connection
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
 
-class UserLogin(generics.GenericAPIView):
+
+
+class UserLogin(APIView):
     
-    def get(self, request, *args, **kwargs):
-        success, connection = open_connection('DJANGO','nomelase123')
+    def post(self, request):
+        # Obtén las credenciales de la base de datos del cuerpo de la solicitud
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        success, connection = open_connection(username,password)
         if success :
             try :
+                user = authenticate(username=username, password=password)
+                access_token = AccessToken.for_user(user=user)
+                refresh_token = RefreshToken.for_user(user=user)
+
                 connection.close()
-                data = {"message": "data base connection successfully and closed successfully"}
-                return Response(data)
+                return Response(
+                    {
+                        'access': str(access_token),
+                        'refresh': str(refresh_token)
+                    }, status=200)
             except Exception as e :
-                data = {"message": "Error closing connection"}
+                data = {"message": str(e)}
                 return Response(data)
         else :
             data = {"message": str(connection)}
