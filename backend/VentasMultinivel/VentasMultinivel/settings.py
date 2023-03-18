@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'VentasMultinivel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'localhost:1521/VentasMultinivel',
-        'USER': 'VM',
-        'PASSWORD': '321654',
+        'NAME': 'redflox.com:1521/VENTAS_MULTINIVEL',
+        'USER': 'USERLOGIN',
+        'PASSWORD': 'nomelase123',
     }
 }
 
