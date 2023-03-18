@@ -1,26 +1,23 @@
 from django.http.response import JsonResponse
-from django.views import View
+from rest_framework import generics
+from rest_framework.response import Response
 from .utils.conexiondb import open_connection, close_connection
 
-class UserView(View):
+class UserLogin(generics.GenericAPIView):
     
-    def get(self, request):
-        success, connection = open_connection('DJANGO','nomelase1234')
+    def get(self, request, *args, **kwargs):
+        success, connection = open_connection('DJANGO','nomelase123')
         if success :
             try :
                 connection.close()
-                return JsonResponse({"message": "data base connection successfully and closed successfully"})
+                data = {"message": "data base connection successfully and closed successfully"}
+                return Response(data)
             except Exception as e :
-                return JsonResponse({"message": "Error closing connection"})
+                data = {"message": "Error closing connection"}
+                return Response(data)
         else :
-            return JsonResponse({"message": str(connection)} )
+            data = {"message": str(connection)}
+            return Response(data)
         
-    def post(self, request):
-        pass
-    
-    def put(self, request):
-        pass
-    
-    def delete(self, request):
-        pass
+
     
