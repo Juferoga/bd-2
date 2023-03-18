@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-xs-12 col-md-8 offset-md-2 block border">
     <div class="wrapper-progressBar">
       <ul class="progressBar">
@@ -8,4 +8,9 @@
       </ul>
     </div>
   </div>
+</div> -->
+<div class="container mt-5">
+	<div class="row py-5 mt-5">
+		<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+	</div>
 </div>

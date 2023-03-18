@@ -63,6 +63,7 @@ import { ShoppingComponent } from './shared/shopping/shopping.component';
 import { SidebarShoppingComponent } from './components/sidebar-shopping/sidebar-shopping.component';
 import { AddressShoppingComponent } from './shared/address-shopping/address-shopping.component';
 import { SelectedProductsComponent } from './components/selected-products/selected-products.component';
+import { StepsModule } from 'primeng/steps';
 
 @NgModule({
   declarations: [
@@ -122,6 +123,7 @@ import { SelectedProductsComponent } from './components/selected-products/select
     TableModule,
     ToastModule,
     ToolbarModule,
+    StepsModule,
   ],
   providers: [
     ConfirmationService,
