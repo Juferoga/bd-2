@@ -14,7 +14,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # clase del endpoint /api/auth/
-class Authentication(APIView):
+class LogIn(APIView):
     
     # Metodo post de /api/login
     def post(self, request):
