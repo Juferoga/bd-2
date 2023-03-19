@@ -39,7 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'api',
+    'app.api',
+
+    'app.authentication',
+
+    'app.user',
+
+    'app.regions',
+
+    'app.warehouse',
+
+    'app.orders',
 
     'rest_framework',
 
@@ -198,3 +208,5 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+AUTH_USER_MODEL = 'user.User'

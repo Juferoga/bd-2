@@ -1,42 +1,46 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .utils.conexiondb import open_connection, close_connection
+from app.api.utils.conexiondb import open_connection
 from django.contrib.auth import authenticate
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-# clase del endpoint /api/login 
-class UserLogin(APIView):
+
+
+
+# clase del endpoint /api/auth/
+class Authentication(APIView):
     
     # Metodo post de /api/login
     def post(self, request):
         # Obtén las credenciales de la base de datos del cuerpo de la solicitud
         username = request.data.get('username')
         password = request.data.get('password')
-
-        # Se autentica el usuario ante ORACLE.
-        success, connection = open_connection(username,password)
+        success, connection = open_connection(username, password)
         # Si se realiza la conexion exitosamente el usuario es un usuario de la base de datos.
         if success :
             try :
                 connection.close()
                 # Se autentica el usuario ante DJANGO.
                 user = authenticate(username=username, password=password)
-                print(user)
                 # Se verifica si el usuario esta autenticado
                 if(user is not None):
                     # Se generan los JWT.
                     access_token = AccessToken.for_user(user=user)
+                    access_token.payload['user'] = str(user.username)
                     refresh_token = RefreshToken.for_user(user=user)
+                    refresh_token.payload['user'] = str(user.username)
                 else:
                     # En caso de que no este autenticado envia un mensaje.
-                    print("ESTO EN EL ELSE")
                     return Response(
                     {
                         "message": "user is not authenticate in DJANGO: %s" % username
                     }, status=200)
-                
                 
                 # Si finalmente todo es correcto, devuelve el JWT access y refresh.
                 return Response(
@@ -52,6 +56,3 @@ class UserLogin(APIView):
             # Cualquier error presentado en la conexion a la BD sale de la siguiente linea.
             data = {"message": str(connection)}
             return Response(data)
-        
-
-    

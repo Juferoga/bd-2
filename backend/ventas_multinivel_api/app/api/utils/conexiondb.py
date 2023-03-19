@@ -1,5 +1,6 @@
 import cx_Oracle
 
+
 def open_connection(user, password):
     try:
         connection=cx_Oracle.connect(
@@ -12,11 +13,3 @@ def open_connection(user, password):
     except Exception as e:
         return False, e
     
-def close_connection(connection):
-    try:
-        connection.close()
-        return True
-    except Exception as e:
-        return False, e
-    
-__all__ = ['open_connection', 'close_connection']
