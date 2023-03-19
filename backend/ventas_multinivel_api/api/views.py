@@ -17,22 +17,24 @@ class UserLogin(APIView):
 
         # Se autentica el usuario ante ORACLE.
         success, connection = open_connection(username,password)
-        connection.close()
         # Si se realiza la conexion exitosamente el usuario es un usuario de la base de datos.
         if success :
             try :
+                connection.close()
                 # Se autentica el usuario ante DJANGO.
                 user = authenticate(username=username, password=password)
+                print(user)
                 # Se verifica si el usuario esta autenticado
-                if(user.is_authenticated):
+                if(user is not None):
                     # Se generan los JWT.
                     access_token = AccessToken.for_user(user=user)
                     refresh_token = RefreshToken.for_user(user=user)
                 else:
                     # En caso de que no este autenticado envia un mensaje.
+                    print("ESTO EN EL ELSE")
                     return Response(
                     {
-                        {"message": "user is not authenticate in DJANGO: %s" % username}
+                        "message": "user is not authenticate in DJANGO: %s" % username
                     }, status=200)
                 
                 
