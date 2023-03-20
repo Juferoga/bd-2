@@ -22,7 +22,7 @@ class LogIn(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         success, connection = open_connection(username, password)
-        # Si se realiza la conexion exitosamente el usuario es un usuario de la base de datos.
+        # Si se realiza la conexión exitosamente el usuario es un usuario de la base de datos.
         if success :
             try :
                 connection.close()
@@ -36,7 +36,7 @@ class LogIn(APIView):
                     refresh_token = RefreshToken.for_user(user=user)
                     refresh_token.payload['user'] = str(user.username)
                 else:
-                    # En caso de que no este autenticado envia un mensaje.
+                    # En caso de que no este autenticado envía un mensaje.
                     return Response(
                     {
                         "message": "user is not authenticate in DJANGO: %s" % username
