@@ -7,6 +7,7 @@ import { TokenModel } from '../../models/users/token.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   headers = new HttpHeaders();
@@ -28,7 +29,7 @@ export class AuthService {
 
   onLogin(correo: string, pass: string):Observable<TokenModel> {
     return this.http.post<TokenModel>(
-      environment.api + '/users/token/obtain/',
+      environment.api + '/auth/',
       JSON.stringify({
         username: correo,
         password: pass,
