@@ -25,7 +25,33 @@ start ScriptUsers.sql;
 ```
 Recuerda revisar las rutas para que coincidan con el sistema operativo o el contenedor.
 
+---
+### OPERACIONES PERMITIDAS POR ROL
+| Rol           | C (Crear) | R (Leer) | U (Actualizar) | D (Eliminar) |
+|---------------|-----------|----------|----------------|--------------|
+| Administrador | Sí        | Sí       | Sí             | Sí           |
+| Cliente       | Sí        | Sí       | Sí             | No           |
+| Representante | Sí        | Sí       | Sí             | No           |
+| Director      | Sí        | Sí       | Sí             | Sí           |
+---
+### OPERACIONES POR TABLA
 --- 
+| Tabla\Rol     | Admin | Cliente | Empleado |
+|---------------|-------|---------|----------|
+| BODEGA        | CRU   | -       | -        |
+| BODE_PROD     | CRU   | -       | RU       |
+| CALISERVICIO  | CR    | -       | CR       |
+| CATEGORIA     | CRU   | R       | R        |
+| CLASIFICACION | CRU   | -       | -        |
+| CLIENTE       | CRU   | R       | R        |
+| METODOPAGO    | CRU   | -       | -        |
+| PAGOPEDIDO    | CR    | -       | -        |
+| PEDIDO        | CRU   | CR      | CRU      |
+| PRODUCTO      | CRU   | R       | R        |
+| REGION        | CRU   | R       | R        |
+| REPRESENTANTE | CRU   | -       | R        |
+| USUARIO       | CRU   | R       | R        |
+
 ##### Extras 🙂
 Comando xD, pero que salio muy áspero.
 ```bash
