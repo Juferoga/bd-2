@@ -14,6 +14,7 @@ import { ConfirmationService, MessageService, FilterService } from 'primeng/api'
   // Modules
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -64,6 +65,7 @@ import { SidebarShoppingComponent } from './components/sidebar-shopping/sidebar-
 import { AddressShoppingComponent } from './shared/address-shopping/address-shopping.component';
 import { SelectedProductsComponent } from './components/selected-products/selected-products.component';
 import { StepsModule } from 'primeng/steps';
+import { ShipmentComponent } from './shared/shipment/shipment.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { StepsModule } from 'primeng/steps';
     SidebarShoppingComponent,
     AddressShoppingComponent,
     SelectedProductsComponent,
+    ShipmentComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -96,6 +99,7 @@ import { StepsModule } from 'primeng/steps';
     BrowserAnimationsModule,
     ButtonModule,
     CalendarModule,
+    CardModule,
     ChartModule,
     ConfirmDialogModule,
     ContextMenuModule,
