@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 /* Angular Components PRIMENG */
 // Services
-import { ConfirmationService, MessageService, FilterService } from 'primeng/api';
+import { ConfirmationService, MessageService, FilterService, MenuItem } from 'primeng/api';
   // Modules
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -35,6 +35,7 @@ import { SlideMenuModule } from 'primeng/slidemenu';
 import { SliderModule } from 'primeng/slider';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 
@@ -124,6 +125,7 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
     SidebarModule,
     SlideMenuModule,
     SliderModule,
+    TabMenuModule,
     TableModule,
     ToastModule,
     ToolbarModule,
@@ -132,7 +134,7 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
   providers: [
     ConfirmationService,
     FilterService,
-    MessageService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

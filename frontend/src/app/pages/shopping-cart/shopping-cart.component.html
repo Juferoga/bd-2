@@ -3,7 +3,8 @@
     <app-top-bar></app-top-bar>
   </div>
   <div class="content">
-    <div class="content-board">
+    
+    <div class="content-board" *ngIf="true">
 			<app-step-to-step class="mb-5"></app-step-to-step>
 			<div class="container mt-5">
 				<router-outlet></router-outlet>

@@ -5,10 +5,20 @@
         <div class=""><p class="p-2 pt-3"><strong>Seguimiento de pedido</strong></p></div>
       </div>
     </div>
+    {{activeItem}}
+    <p-tabMenu [model]="items" (activeItemChanges)="activeItem=$event"></p-tabMenu>
 		<!--  -->
-		<app-purchase-process-card></app-purchase-process-card>
-		<app-purchase-process-card></app-purchase-process-card>
-		<app-purchase-process-card></app-purchase-process-card>
-		<app-purchase-process-card></app-purchase-process-card>
+    <div class="container" *ngIf="activeItem.label == 'Compra'">
+      <app-purchase-process-card></app-purchase-process-card>
+      <app-purchase-process-card></app-purchase-process-card>
+      <app-purchase-process-card></app-purchase-process-card>
+      <app-purchase-process-card></app-purchase-process-card>
+    </div>
+    <div class="container" *ngIf="activeItem.label == 'Estado'">
+      HOLAAAAA
+    </div>
+    <div class="container" *ngIf="activeItem.label == 'pago'">
+      ADIOOOSSS
+    </div>
   </div>
 </div>

@@ -123,12 +123,12 @@ const routes: Routes = [
         path: 'pay',
         component: PaymentComponent
       },
-      {
-        path:'envios',
-        component: ShipmentComponent,
-        pathMatch: 'full'
-      }
     ]
+  },
+  {
+    path:'envios',
+    component: ShipmentComponent,
+    pathMatch: 'full'
   },
   {
     path:'**',
