@@ -36,21 +36,23 @@ Recuerda revisar las rutas para que coincidan con el sistema operativo o el cont
 ---
 ### OPERACIONES POR TABLA
 --- 
-| Tabla\Rol     | Admin | Cliente | Empleado |
-|---------------|-------|---------|----------|
-| BODEGA        | CRU   | -       | -        |
-| BODE_PROD     | CRU   | -       | RU       |
-| CALISERVICIO  | CR    | -       | CR       |
-| CATEGORIA     | CRU   | R       | R        |
-| CLASIFICACION | CRU   | -       | -        |
-| CLIENTE       | CRU   | R       | R        |
-| METODOPAGO    | CRU   | -       | -        |
-| PAGOPEDIDO    | CR    | -       | -        |
-| PEDIDO        | CRU   | CR      | CRU      |
-| PRODUCTO      | CRU   | R       | R        |
-| REGION        | CRU   | R       | R        |
-| REPRESENTANTE | CRU   | -       | R        |
-| USUARIO       | CRU   | R       | R        |
+| Tabla\Rol     | Admin | Cliente | Representante | Director  |
+|---------------|-------|---------|---------------|-----------|
+| BODEGA        | CRU   | -       | -             |           |
+| BODE_PROD     | CRU   | -       | RU            |           |
+| CALISERVICIO  | R     | CR      | R             |           |
+| CATEGORIA     | CRU   | R       | R             |           |
+| CLASIFICACION | CRU   | -       | -             |           |
+| CLIENTE       | RU    | CRU     | CR            | CRU       |
+| METODOPAGO    | CRU   | -       | -             |           |
+| PAGOPEDIDO    | R     | CR      | -             |           |
+| PEDIDO        | RU    | CRU     | RU            |           |
+| PEDI_ITEM     | R     | CRU     |               |           |
+| PRODUCTO      | CRU   | R       | R             |           |
+| REGION        | CRU   | R       | R             |           |
+| REPRESENTANTE | CRU   | -       | RU            | CRU       |
+
+1. Añadir un limite de creacion de clientes -> clientes
 
 ##### Extras 🙂
 Comando xD, pero que salio muy áspero.
