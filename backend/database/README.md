@@ -36,7 +36,7 @@ Recuerda revisar las rutas para que coincidan con el sistema operativo o el cont
 ---
 ### OPERACIONES POR TABLA
 --- 
-| Tabla\Rol     | Admin | Cliente | Representante | Director  |
+| Tabla\Rol     | Admin | Cliente | Representante | Director  | 
 |---------------|-------|---------|---------------|-----------|
 | BODEGA        | CRU   | -       | -             |           |
 | BODE_PROD     | CRU   | -       | RU            |           |
@@ -51,6 +51,24 @@ Recuerda revisar las rutas para que coincidan con el sistema operativo o el cont
 | PRODUCTO      | CRU   | R       | R             |           |
 | REGION        | CRU   | R       | R             |           |
 | REPRESENTANTE | CRU   | -       | RU            | CRU       |
+
+---
+### OPERACIONES DE TABLAS DE PRIVILEGIOS
+--- 
+| Tabla\Rol        | DJANGO | Contenidos                                                                    |
+|------------------|--------|-------------------------------------------------------------------------------|
+| DBA_ROLES        |        | Nombres de los roles y su estado del password.                                |
+| DBA_ROLE_PRIVS   | R      | Usuarios a los que han sido otorgados roles.                                  |
+| DBA_SYS_PRIVS    |        | Usuarios a los que han sido otorgados privilegios del sistema.                |
+| DBA_TAB_PRIVS    |        | Usuarios a los que han sido otorgados privilegios sobre objetos.              |
+| DBA_COL_PRIVS    |        | Usuarios a los que han sido otorgados privilegios sobre columnas de tablas.   |
+| ROLE_ROLE_PRIVS  |        | Roles que han sido otorgados a otros roles.                                   |
+| ROLE_SYS_PRIVS   |        | Privilegios de sistema que han sido otorgados a roles.                        |
+| ROLE_TAB_PRIVS   |        | Privilegios de tabla que han sido otorgados a roles.                          |
+
+
+
+
 
 1. Añadir un limite de creacion de clientes -> clientes
 
