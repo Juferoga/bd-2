@@ -1,0 +1,32 @@
+[
+  {
+    "idRegion":1,
+    "nombre":"Andina",
+    "idPais":246
+  },
+  {
+    "idRegion":2,
+    "nombre":"Caribe",
+    "idPais":246
+  },
+  {
+    "idRegion":3,
+    "nombre":"Orinoquia",
+    "idPais":246
+  },
+  {
+    "idRegion":4,
+    "nombre":"Pacífico",
+    "idPais":246
+  },
+  {
+    "idRegion":5,
+    "nombre":"Amazonia",
+    "idPais":246
+  },
+  {
+    "idRegion":6,
+    "nombre":"Insular",
+    "idPais":246
+  }
+]
