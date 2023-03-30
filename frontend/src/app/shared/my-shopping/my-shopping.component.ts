@@ -8,15 +8,19 @@ import { MenuItem } from 'primeng/api';
 })
 export class MyShoppingComponent implements OnInit {
   math = Math
-  items: MenuItem[];
-  activeItem = 1;
-
+  items: any[];
+  //activeItem:any = 1;
+  activeItem: MenuItem;
   ngOnInit() {
     this.items = [
-        {label: 'Compra', icon: 'pi pi-fw pi-home',},
-        {label: 'Estado', icon: 'pi pi-fw pi-calendar'},
-        {label: 'Pago', icon: 'pi pi-fw pi-pencil'},
+        {label: 'Compra', icon: 'pi pi-fw pi-home',path:'/shopping-cart/cart'},
+        {label: 'Estado', icon: 'pi pi-fw pi-calendar',path:'/shopping-cart/address'},
+        {label: 'Pago', icon: 'pi pi-fw pi-pencil',path:'/shopping-cart/pay'},
     ];
+    this.activeItem = this.items[0];
   }
-
+  activeItemC(ev){
+    console.log(ev);
+    
+  }
 }

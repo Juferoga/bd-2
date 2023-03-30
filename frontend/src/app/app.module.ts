@@ -67,6 +67,10 @@ import { AddressShoppingComponent } from './shared/address-shopping/address-shop
 import { SelectedProductsComponent } from './components/selected-products/selected-products.component';
 import { StepsModule } from 'primeng/steps';
 import { ShipmentComponent } from './shared/shipment/shipment.component';
+import { TabViewModule } from 'primeng/tabview';
+import { PaymentShoppingComponent } from './shared/payment-shopping/payment-shopping.component';
+import { UsersComponent } from './shared/users/users.component';
+
 
 @NgModule({
   declarations: [
@@ -93,6 +97,8 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
     AddressShoppingComponent,
     SelectedProductsComponent,
     ShipmentComponent,
+    PaymentShoppingComponent,
+    UsersComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -130,6 +136,7 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
     ToastModule,
     ToolbarModule,
     StepsModule,
+    TabViewModule,
   ],
   providers: [
     ConfirmationService,

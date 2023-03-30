@@ -19,6 +19,7 @@ import { ProfileComponent } from './shared/profile/profile.component';
 import { ShoppingComponent } from './shared/shopping/shopping.component';
 import { ShipmentComponent } from './shared/shipment/shipment.component';
 import { StockComponent } from './shared/stock/stock.component';
+import { UsersComponent } from './shared/users/users.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
       {
         path: 'mis-referidos',
         component: MyReferralsComponent
+      },
+      {
+        path: 'usuarios',
+        component: UsersComponent
       }
     ]
   },

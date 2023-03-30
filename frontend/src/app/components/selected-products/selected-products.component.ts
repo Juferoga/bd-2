@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-selected-products',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./selected-products.component.scss']
 })
 export class SelectedProductsComponent {
+  @Input() data:any[];
+  @Output() deleteitem: EventEmitter<any> = new EventEmitter();
 
+  deleteProduct(){
+    this.deleteitem.emit()
+  }
 }
