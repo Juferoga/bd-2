@@ -19,7 +19,7 @@
 		<p>{{ data['n_preciou'] | currency:'COP':'$'}}</p>
 	</div>
 	<div class="item">
-		<select class="form-select" aria-label="Default select example" [(ngModel)]="data['n_cantidad']">
+		<select class="form-select" aria-label="Default select example"  (ngModelChange)="updateValueTotal($event)"  [(ngModel)]="data['n_cantidad']">
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -27,7 +27,7 @@
 		</select>
 	</div>
 	<div class="item">
-		<p>{{data['n_preciou']*data['n_cantidad'] | currency:'COP':'$'}}</p>
+		<p>{{total | currency:'COP':'$'}}</p>
 	</div>
 	<div class="item">
 		<button class="btn btn-outline-danger" (click)="deleteProduct()">X</button>

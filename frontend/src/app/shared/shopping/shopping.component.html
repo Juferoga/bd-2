@@ -24,6 +24,7 @@
         *ngFor="let item of data; index as idx"
         [data]="item"
         (deleteitem)="deleteProduct(item)"
+        (reCalculate)="calcTotal()"
       >
       </app-selected-products>
       <!--  -->

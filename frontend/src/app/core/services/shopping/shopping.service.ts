@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root'
 })
 export class ShoppingService {
-  shoppingCart: BehaviorSubject<any> = new BehaviorSubject(null);
+  shoppingCart: BehaviorSubject<any> = new BehaviorSubject('');
 
   configUrl = environment.api
   constructor(private http: HttpClient) { }
