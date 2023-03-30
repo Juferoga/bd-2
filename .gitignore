@@ -54,3 +54,4 @@ __pycache__/
 /scripts/docker-images
 /scripts/download/*.rpm
 venv
+env/

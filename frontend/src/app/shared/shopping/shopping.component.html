@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row g-5">
     <div class="col-md-7 col-lg-8">
+      {{data | json}}
       <h4 class="mb-3">Tus productos</h4>
       <div class="card-content px-3 py-2">
         <div class="item">
@@ -24,6 +25,7 @@
         *ngFor="let item of data; index as idx"
         [data]="item"
         (deleteitem)="deleteProduct(item)"
+        (reCalculate)="calcTotal()"
       >
       </app-selected-products>
       <!--  -->
