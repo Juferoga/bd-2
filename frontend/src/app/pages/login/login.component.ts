@@ -45,77 +45,29 @@ export class LoginComponent {
 
   signUp(){
     this.authSvc.onClean();
-    // if(this.loginForm.controls.password.value == passwordConfirmation){
-      // this.authSvc.onSignUp(this.loginForm.controls.username.value, this.loginForm.controls.password.value).subscribe(
-      //   {
-      //       next: (data: TokenModel) => {
-      //         sessionStorage.setItem('token', data.token);
-      //         sessionStorage.setItem('role', data.role);
-      //         sessionStorage.setItem('id', data.id.toString());
-      //         this.messageService.add({key:'grl-toast', severity:'success', summary:'Ingreso correcto', detail:'Bienvenido a la plataforma'});
-      
-      //         if (data.role === ROLES.ADMINISTRATOR) {
-      //           this.router.navigate(['/admin']);
-      //         } else {
-      //           this.router.navigate(['/app']);
-      //         }
-      //       },
-    
-      //     error: (any) => {
-      //       this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos'});
-      //     }
-      //   }
-      // );
-    //}
   }
 
   logIn() {
-    // this.isLoading = true;
-    this.authSvc.onClean();
-    if (this.username == "admin" && this.password == "admin"){
-      sessionStorage.setItem('token', 'abc123');
-      sessionStorage.setItem('role', 'Administrador');
-      sessionStorage.setItem('id', '123123123');
-      this.router.navigate(['/admin']);
-    }else{
-      if (this.username == "user" && this.password == "user"){
-        sessionStorage.setItem('token', 'abc123');
-        sessionStorage.setItem('role', 'RepresentanteVentas');
-        sessionStorage.setItem('id', '12312312321');
-        this.router.navigate(['/app']);
-      }else{
-        if (this.username == "client" && this.password == "client"){
-          sessionStorage.setItem('token', 'abc123');
-          sessionStorage.setItem('role', 'Cliente');
-          sessionStorage.setItem('id', '123123');
-          this.router.navigate(['/app']);
-        }else{
-          this.username == "" && this.password == ""?
-          this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Escriba sus credenciales'}):
+    this.authSvc.onLogin(this.username, this.password).subscribe(
+      {
+          next: (data: TokenModel) => {
+            sessionStorage.setItem('token', data.token);
+            sessionStorage.setItem('role', data.role);
+            sessionStorage.setItem('id', data.id.toString());
+            this.messageService.add({key:'grl-toast', severity:'success', summary:'Ingreso correcto', detail:'Bienvenido a la plataforma'});
+    
+            if (data.role === ROLES.ADMINISTRATOR) {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/app']);
+            }
+          },
+  
+        error: (any) => {
           this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos'});
         }
       }
-    }
-    // this.authSvc.onLogin(this.loginForm.controls.username.value, this.loginForm.controls.password.value).subscribe(
-    //   {
-    //       next: (data: TokenModel) => {
-    //         sessionStorage.setItem('token', data.token);
-    //         sessionStorage.setItem('role', data.role);
-    //         sessionStorage.setItem('id', data.id.toString());
-    //         this.messageService.add({key:'grl-toast', severity:'success', summary:'Ingreso correcto', detail:'Bienvenido a la plataforma'});
-    
-    //         if (data.role === ROLES.ADMINISTRATOR) {
-    //           this.router.navigate(['/admin']);
-    //         } else {
-    //           this.router.navigate(['/app']);
-    //         }
-    //       },
-  
-    //     error: (any) => {
-    //       this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos'});
-    //     }
-    //   }
-    // );
+    );
   }
 
   onClear(){
