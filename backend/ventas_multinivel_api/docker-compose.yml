@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8001:8000"
+      - "8000:8000"
     networks:
       - proxy
       - default
@@ -18,7 +18,7 @@ services:
       #cambiar por nombre del api
       #adicionar desde aquí para el funcionamiento de una container con traefik
       - "traefik.http.routers.api-secure.entrypoints=websecure"
-      - "traefik.http.routers.api-secure.rule=host(´api.redflox.com´)"
+      - "traefik.http.routers.api-secure.rule=Host(`api.redflox.com`)"
 networks:
       proxy:
         external: true

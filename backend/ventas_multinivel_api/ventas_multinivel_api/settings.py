@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-1l$-0v_ywd72m&x44*n1iq0+p)puq5c6dh+ic*qi&8&e8!iyve
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'http://api.redflox.com',
+    'https://api.redflox.com'
+]
 
 
 # Application definition
