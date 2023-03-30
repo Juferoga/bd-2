@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'http://api.redflox.com',
-    'https://api.redflox.com'
+    'https://api.redflox.com',
+    '*'
 ]
 
 
