@@ -1,8 +1,0 @@
-{
-  "Status": "{{ status }}",
-  "Message": "{{ message }}",
-  "Data": [{% for i in datos%}"{{ i }}"{% if not forloop.last %},{% endif %}{% endfor %}],
-  "TotalRecords": 1,
-  "StatusCode": {{ status_code }},
-  "ResponseTime": {{ response_time }}
-}

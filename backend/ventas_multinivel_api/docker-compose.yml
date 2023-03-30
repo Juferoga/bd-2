@@ -4,8 +4,6 @@ services:
   backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
-    env_file:
-      - ./.env 
     volumes:
       - .:/code
     ports:
@@ -16,11 +14,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.port=8080"
-       #cambiar por nombre del api
-       #adicionar desde aquí para el funcionamiento de una container con traefik
+      - "traefik.port=8000"
+      #cambiar por nombre del api
+      #adicionar desde aquí para el funcionamiento de una container con traefik
       - "traefik.http.routers.api-secure.entrypoints=websecure"
-      - "traefik.http.routers.api-secure.rule=host(api.safecrops.com.co)"
+      - "traefik.http.routers.api-secure.rule=host(´api.redflox.com´)"
 networks:
       proxy:
-         external: true
+        external: true
