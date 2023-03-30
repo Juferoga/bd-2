@@ -6,7 +6,7 @@ from .data import *
 
 class User(AbstractUser):
     oracle_password = models.CharField(max_length=30)
-    role = models.CharField(max_length=30, choices=ROLES, null=True)
+    role = models.CharField(max_length=30, null=True)
     uid = models.IntegerField()
     objects = UserManager()
 

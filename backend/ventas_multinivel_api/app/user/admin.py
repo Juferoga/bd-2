@@ -9,7 +9,7 @@ class UserAdmin(admin.ModelAdmin):
     (
       'Información básica', 
       {
-        'fields': ('username', 'email', 'password', 'role', 'k_usuario')
+        'fields': ('username', 'email', 'password', 'role', 'uid')
       }
     ),
     (
