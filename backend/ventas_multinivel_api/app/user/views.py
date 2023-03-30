@@ -7,7 +7,73 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 # Create your views here.
 
+class allUsersView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        # Capturar el JWT del encabezado de autorización
+        jwt_token = request.headers.get('Authorization', '').split('Bearer ')[1]
+        try:
+            payload = AccessToken(jwt_token)
+        except Exception as e:
+            return Response({'error de Token': '%s' % e})
+        user = payload['user']
+        user_request = User.objects.filter(username=user).values('oracle_password').get()
+        password = user_request['oracle_password']
+        
+
+        # Creación de la conexión con la BD
+        print(f"usuario:{user} password:{password}")
+        success, conn = open_connection(user,password) #Conexión a la base de datos
+        if success:
+            # SI HAY UN ERROR EN LA EJECUCIÓN DEL QUERY
+            try:
+                #--------------------------- CONTENT --------------------------------------------------------
+
+                # Creación de la consulta
+                sql = "SELECT * FROM usuarios"
+                # cursor de la base de datos
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                # Recorrer los resultados de la consulta y almacenarlos en una lista
+                usuarios = []
+                for row in cursor:
+                    if row[0] not in usuarios:
+                        usuarios[row[0]] = {
+                            "t_nombre": row[0],
+                            "t_apellido": row[1],
+                            "f_nacimiento": row[2],
+                            "i_genero": row[3],
+                            "n_telefono": row[4],
+                            "t_direccion": row[5],
+                            "t_email": row[6],
+                            "f_contrato": row[7],
+                            "k_region": row[8],
+                            "k_pais": row[9],
+                            "k_clasificacion": row[10],
+                            "k_jefe": row[11],
+                            "t_cuidad": row[12],
+                            "k_representante": row[13],
+                        }
+                cursor.close()
+                conn.close()
+
+                return Response({
+                    "status":"success",
+                    "data":{
+                        "usuarios": usuarios
+                    }
+                })
+            
+                #--------------------------- END CONTENT --------------------------------------------------------
+                
+            except Exception as e:
+                # Error presentado en la ejecución de un query
+                return Response({"Error con DB": str(e)})
+        else :
+            # Cualquier error presentado en la conexión a la BD.
+            data = {"Error DB": str(conn)}
+            return Response(data)  
 # /api/user/register
 class createUserView(APIView):
     permission_classes = [IsAuthenticated]

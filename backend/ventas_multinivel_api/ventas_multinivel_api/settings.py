@@ -32,6 +32,11 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+CSRF_TRUSTED_ORIGINS = [ 
+    'http://api.redflox.com',
+    'https://api.redflox.com',
+    'http://localhost'
+]
 
 # Application definition
 
