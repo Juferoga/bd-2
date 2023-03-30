@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 /* Angular Components PRIMENG */
 // Services
-import { ConfirmationService, MessageService, FilterService } from 'primeng/api';
+import { ConfirmationService, MessageService, FilterService, MenuItem } from 'primeng/api';
   // Modules
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -35,6 +35,7 @@ import { SlideMenuModule } from 'primeng/slidemenu';
 import { SliderModule } from 'primeng/slider';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 
@@ -55,7 +56,21 @@ import { PaymentComponent } from './shared/payment/payment.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { StockComponent } from './shared/stock/stock.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
+import { PaymentModule } from './payment/payment.module';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { PurchaseProcessCardComponent } from './components/purchase-process-card/purchase-process-card.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
+import { StepToStepComponent } from './components/step-to-step/step-to-step.component';
+import { ShoppingComponent } from './shared/shopping/shopping.component';
+import { SidebarShoppingComponent } from './components/sidebar-shopping/sidebar-shopping.component';
+import { AddressShoppingComponent } from './shared/address-shopping/address-shopping.component';
+import { SelectedProductsComponent } from './components/selected-products/selected-products.component';
+import { StepsModule } from 'primeng/steps';
 import { ShipmentComponent } from './shared/shipment/shipment.component';
+import { TabViewModule } from 'primeng/tabview';
+import { PaymentShoppingComponent } from './shared/payment-shopping/payment-shopping.component';
+import { UsersComponent } from './shared/users/users.component';
+
 
 @NgModule({
   declarations: [
@@ -74,7 +89,16 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
     SideBarComponent,
     StockComponent,
     TopBarComponent,
+    PurchaseProcessCardComponent,
+    ShoppingCartComponent,
+    StepToStepComponent,
+    ShoppingComponent,
+    SidebarShoppingComponent,
+    AddressShoppingComponent,
+    SelectedProductsComponent,
     ShipmentComponent,
+    PaymentShoppingComponent,
+    UsersComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -93,26 +117,31 @@ import { ShipmentComponent } from './shared/shipment/shipment.component';
     InputTextareaModule,
     InputNumberModule,
     PasswordModule,
+    PaymentModule,
     ProgressBarModule,
     HttpClientModule,
     FormsModule,
     MenubarModule,
     MenuModule,
     MultiSelectModule,
+    NgxPayPalModule,
     RatingModule,
     RadioButtonModule,
     ReactiveFormsModule,
     SidebarModule,
     SlideMenuModule,
     SliderModule,
+    TabMenuModule,
     TableModule,
     ToastModule,
     ToolbarModule,
+    StepsModule,
+    TabViewModule,
   ],
   providers: [
     ConfirmationService,
     FilterService,
-    MessageService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

@@ -4,18 +4,22 @@ import { CheckLoginGuard,  } from './core/guards/check-login.guard';
 import { CheckLogoutGuard } from './core/guards/check-logout.guard';
 import { ROLES } from './core/models/users/roles.enum';
 import { LayoutComponent } from './layout/layout.component';
+import { AddressShoppingComponent } from './shared/address-shopping/address-shopping.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { OnBuildComponent } from './pages/on-build/on-build.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { MyReferralsComponent } from './shared/my-referrals/my-referrals.component';
 import { MySalesComponent } from './shared/my-sales/my-sales.component';
 import { MyShoppingComponent } from './shared/my-shopping/my-shopping.component';
 import { PaymentComponent } from './shared/payment/payment.component';
 import { ProfileComponent } from './shared/profile/profile.component';
+import { ShoppingComponent } from './shared/shopping/shopping.component';
 import { ShipmentComponent } from './shared/shipment/shipment.component';
 import { StockComponent } from './shared/stock/stock.component';
+import { UsersComponent } from './shared/users/users.component';
 
 const routes: Routes = [
   {
@@ -65,6 +69,10 @@ const routes: Routes = [
       {
         path: 'mis-referidos',
         component: MyReferralsComponent
+      },
+      {
+        path: 'usuarios',
+        component: UsersComponent
       }
     ]
   },
@@ -104,6 +112,25 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'shopping-cart',
+    component: ShoppingCartComponent,
+    children: [
+      { path: "", pathMatch: "full", redirectTo: "cart" },
+      {
+        path: 'cart',
+        component: ShoppingComponent
+      },
+      {
+        path: 'address',
+        component: AddressShoppingComponent
+      },
+      {
+        path: 'pay',
+        component: PaymentComponent
+      },
+    ]
+  },
+  {
     path:'envios',
     component: ShipmentComponent,
     pathMatch: 'full'
@@ -113,6 +140,11 @@ const routes: Routes = [
     component: NotFoundComponent,
     pathMatch:'full'
   },
+  /* {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then(p => p.PaymentModule)
+  }, */
+
 ];
 
 @NgModule({

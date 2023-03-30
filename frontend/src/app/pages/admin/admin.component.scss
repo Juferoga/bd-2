@@ -1,4 +1,4 @@
-.container-box{
+.container-box,.container-box-right{
   margin: 0;
   height: 100%;
   background-color: #ffaa00;
@@ -10,6 +10,11 @@
                         'left-bar content content content';
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 62.5px 1fr;
+}
+.container-box-right{
+  grid-template-areas:  'top-bar top-bar top-bar top-bar'
+                        'right-bar content content content';
+  grid-template-columns: 4fr 1fr;
 }
 
 .left-bar{
@@ -26,6 +31,19 @@
   padding-top: 20px;
 }
 
+.right-bar{
+  grid-area: right-bar;
+}
+
+.right-bar div{
+  margin: 5px;
+  padding: 10px;
+  background: #f8f9fa;
+  border: 1px solid #dfdfdf;
+  border-radius: 13px;
+  min-height: calc(100% - 10px);
+  max-height: calc(100% - 10px);
+}
 .top-bar{
   grid-area: top-bar;
   display: flex;

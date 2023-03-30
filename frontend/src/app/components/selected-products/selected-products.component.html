@@ -1,0 +1,35 @@
+
+<div class="card card-content px-3 py-2 my-2" *ngIf="data">
+	<div class="item">
+		<div class="d-flex align-items-center">
+			<div class="mx-4 image-product"></div>
+			<div>
+				<p><strong>{{data['t_nombre']}}</strong><br/><small>{{data['fabricante']}}</small></p>
+				<br/>
+				<p>
+					<strong>Origen:</strong> Colombia <br/>
+					<strong>Envío:</strong>Envío en 1 día hábil <br/>
+					<strong>Stock:</strong> Disponible <br/>
+					<strong>Estado:</strong>{{data['t_estado']}} <br/>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="item">
+		<p>{{ data['n_preciou'] | currency:'COP':'$'}}</p>
+	</div>
+	<div class="item">
+		<select class="form-select" aria-label="Default select example" [(ngModel)]="data['n_cantidad']">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+	</div>
+	<div class="item">
+		<p>{{data['n_preciou']*data['n_cantidad'] | currency:'COP':'$'}}</p>
+	</div>
+	<div class="item">
+		<button class="btn btn-outline-danger" (click)="deleteProduct()">X</button>
+	</div>
+</div>

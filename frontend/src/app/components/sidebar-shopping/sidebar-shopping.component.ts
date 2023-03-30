@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { Component } from '@angular/core';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']
+  selector: 'app-sidebar-shopping',
+  templateUrl: './sidebar-shopping.component.html',
+  styleUrls: ['./sidebar-shopping.component.scss']
 })
-export class PaymentComponent implements OnInit {
+export class SidebarShoppingComponent {
   showSuccess: boolean = false;
   showCancel: boolean = false;
   showError: boolean = false;
