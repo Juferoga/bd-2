@@ -34,7 +34,7 @@ class AllProductsView(APIView):
                 #--------------------------- CONTENT --------------------------------------------------------
 
                 # Creación de la consulta
-                sql = "SELECT * FROM producto"
+                sql = "SELECT * FROM ADMINDB.producto"
                 # cursor de la base de datos
                 cursor = conn.cursor()
                 cursor.execute(sql)
@@ -72,11 +72,11 @@ class AllProductsView(APIView):
                 
             except Exception as e:
                 # Error presentado en la ejecución de un query
-                return Response({"Error con DB": str(e)})
+                return Response({"Error con DB": str(e)},500)
         else :
             # Cualquier error presentado en la conexión a la BD.
             data = {"Error DB": str(conn)}
-            return Response(data)  
+            return Response(data, 500)  
 
 class SaveProductView(APIView):
     permission_classes = [IsAuthenticated]
@@ -110,7 +110,7 @@ class SaveProductView(APIView):
                 # TODO: Convertir a método
                 # Creación de la consulta
                 sql = [ 
-                        f"INSERT INTO PRODUCTO (k_producto, t_nombre, t_description, i_estado, k_categoria) VALUES ({k_producto}, {t_nombre}, {t_description}, {i_estado}, {k_categoria})"
+                        f"INSERT INTO ADMINDB.PRODUCTO (k_producto, t_nombre, t_description, i_estado, k_categoria) VALUES ({k_producto}, {t_nombre}, {t_description}, {i_estado}, {k_categoria})"
                     ]
                 # cursor de la base de datos
                 cursor = conn.cursor()
@@ -137,11 +137,11 @@ class SaveProductView(APIView):
                 
             except Exception as e:
                 # Error presentado en la ejecución de un query
-                return Response({"Error con DB": str(e)})
+                return Response({"Error con DB": str(e)},500)
         else :
             # Cualquier error presentado en la conexión a la BD.
             data = {"Error DB": str(conn)}
-            return Response(data)   
+            return Response(data), 500   
 
 # CATEGORYS
 
@@ -169,7 +169,7 @@ class CategoryView(APIView):
                 #--------------------------- CONTENT --------------------------------------------------------
 
                 # Creación de la consulta
-                sql = "SELECT * FROM categoria"
+                sql = "SELECT * FROM ADMINDB.categoria"
                 # cursor de la base de datos
                 cursor = conn.cursor()
                 cursor.execute(sql)
@@ -195,8 +195,8 @@ class CategoryView(APIView):
                 
             except Exception as e:
                 # Error presentado en la ejecución de un query
-                return Response({"Error con DB": str(e)})
+                return Response({"Error con DB": str(e)},500)
         else :
             # Cualquier error presentado en la conexión a la BD.
             data = {"Error DB": str(conn)}
-            return Response(data)  
+            return Response(data, 500)  

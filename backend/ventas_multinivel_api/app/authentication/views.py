@@ -2,15 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from app.api.utils.conexiondb import open_connection
 from django.contrib.auth import authenticate
+from app.user.models import User
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.tokens import RefreshToken
-
-
-
 
 
 # clase del endpoint /api/auth/
@@ -27,7 +25,8 @@ class LogIn(APIView):
             try :
                 connection.close()
                 # Se autentica el usuario ante DJANGO.
-                user = authenticate(username=username, password=password)
+                user = User.objects.get(username=username)
+                # user = authenticate(username=username, password=password)
                 # Se verifica si el usuario esta autenticado
                 if(user is not None):
                     # Se generan los JWT.
@@ -45,14 +44,16 @@ class LogIn(APIView):
                 # Si finalmente todo es correcto, devuelve el JWT access y refresh.
                 return Response(
                     {
+                        'username': str(username),
+                        'oracle_password':User.objects.filter(username=username).values('oracle_password').get()["oracle_password"],
                         'access': str(access_token),
                         'refresh': str(refresh_token)
                     }, status=200)
             except Exception as e :
-                # Si algo sale mal en la autenticacion, generacion de tokens o en la respuesta se captura el error para su interpretacion.
+                # Si algo sale mal en la autenticación, generación de tokens o en la respuesta se captura el error para su interpretación.
                 data = {"message": str(e)}
-                return Response(data)
+                return Response(data,status=500)
         else :
             # Cualquier error presentado en la conexion a la BD sale de la siguiente linea.
-            data = {"message": str(connection)}
-            return Response(data)
+            data = {"message": str(connection)}  
+            return Response(data,status=500)

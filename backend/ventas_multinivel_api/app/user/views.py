@@ -31,7 +31,7 @@ class allUsersView(APIView):
                 #--------------------------- CONTENT --------------------------------------------------------
 
                 # Creación de la consulta
-                sql = "SELECT * FROM usuarios"
+                sql = "SELECT * FROM ADMINDB.USUARIO"
                 # cursor de la base de datos
                 cursor = conn.cursor()
                 cursor.execute(sql)
@@ -69,7 +69,7 @@ class allUsersView(APIView):
                 
             except Exception as e:
                 # Error presentado en la ejecución de un query
-                return Response({"Error con DB": str(e)})
+                return Response({"Error con DB": str(e)},500)
         else :
             # Cualquier error presentado en la conexión a la BD.
             data = {"Error DB": str(conn)}
@@ -168,7 +168,7 @@ class createUserView(APIView):
                 })
             except Exception as e:
                 # Error presentado en la ejecución de un query
-                return Response({"Error con DB": str(e)})
+                return Response({"Error con DB": str(e)},500)
         else :
             # Cualquier error presentado en la conexión a la BD.
             data = {"Error DB": str(conn)}
