@@ -1,11 +1,12 @@
 from jwt import encode, decode
+from jwt import exceptions
 from datetime import datetime, timedelta
 from os import getenv
 from fastapi.responses import JSONResponse
 
-def expire_date(days: int):
+def expire_date(minutes: int):
     date = datetime.now()
-    new_date = date + timedelta(days)
+    new_date = date + timedelta(minutes=minutes)
     return new_date
 
 def write_token(data: dict):
@@ -17,5 +18,7 @@ def validate_token(token, output=False):
         if output:
             return decode(token, key=getenv("SECRET"), algorithm="HS256")
         decode(token, key=getenv("SECRET"), algorithm="HS256")
-    except:
+    except exceptions.DecodeError:
         return JSONResponse(content={"message": "Invalid token"}, status_code=401)
+    except exceptions.ExpiredSignatureError:
+        return JSONResponse(content={"message": "Token expired"}, status_code=401)
