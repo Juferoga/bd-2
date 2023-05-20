@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1 id="p"></h1>
+  <script>
+    let p = document.getElementById('p');
+    fetch('http://127.0.0.1:8000/items/89?q=jdyr', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'John',
+        age: 30
+      })
+    })
+      .then(res => res.json()).then(data => console.log(data))
+      .catch(err => console.log(err));
+  </script>
+</body>
+
+</html>
