@@ -15,12 +15,21 @@ class Connect:
             return [True,'success']
         except cx_Oracle.Error as error:
             return [False, str(error)]
-    def execute_query(self, query):
-        self.cursor.execute(query)
-        if self.cursor.description != None:
-            return self.cursor.fetchall()
-        else:
-            return self.cursor
+    def execute_query(self, query, params):
+        try:
+            self.cursor.execute(query, params)
+            if self.cursor.description != None:
+                return [True, self.cursor.fetchall()]
+            else:
+                return [True, None]
+        except cx_Oracle.Error as error:
+            print(error)
+            print(query)
+            return [False, str(error)]
+    def commit(self):
+        self.connection.commit()
     def close_connection(self):
         self.cursor.close()
         self.connection.close()
+    def get_cursor(self):
+        return self.cursor
