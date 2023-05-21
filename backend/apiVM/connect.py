@@ -9,8 +9,7 @@ class Connect:
     
     def open_connection(self):
         try:
-            self.connection = cx_Oracle.connect(user=self.user, password=self.password, 
-                                        dsn='redflox.com:1521/VENTAS_MULTINIVEL', encoding="UTF-8")
+            self.connection = cx_Oracle.connect(user=self.user, password=self.password, dsn='redflox.com:1521/VENTAS_MULTINIVEL', encoding="UTF-8")
             self.cursor = self.connection.cursor()
             return [True,'Conectado']
         except cx_Oracle.Error as error:
