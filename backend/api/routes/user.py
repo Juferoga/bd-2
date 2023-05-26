@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-from models.user import User
+from fastapi import APIRouter, Depends
+from models.user import User, UserOfDB, get_current_user
 from typing import List
 
 user_routes = APIRouter()
@@ -16,6 +16,6 @@ def edit(user: User):
     return "success"
 
 
-@user_routes.get('/user/all', response_model=List[User])
-def get_users():
-    return "success"
+@user_routes.get('/user/all')
+async def get_users(current_user: UserOfDB = Depends(get_current_user)):
+    return current_user

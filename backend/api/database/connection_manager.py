@@ -19,3 +19,15 @@ class ConnectionManager:
         if user in self.connections:
             self.connections[user].close()
             del self.connections[user]
+
+
+''' Funcion para comprobar si el usuario esta registrado en la db'''
+def try_connect_to_db(username: str, password: str, dsn: str = "localhost:1521/XEPDB1"):
+    try:
+        with connect(username, password, dsn) as conn:
+            pass
+        return {"status" : True, "message": "Conexion exitosa"}
+    except DatabaseError as e:
+        error, = e.args
+        return {"status" : False, "message": error.message}
+    
