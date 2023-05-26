@@ -6,7 +6,6 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 
 
-
 app = FastAPI()
 app.include_router(auth_routes, prefix='/api')
 app.include_router(user_routes, prefix='/api')

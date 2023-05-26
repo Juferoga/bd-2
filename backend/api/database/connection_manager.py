@@ -1,16 +1,23 @@
 from cx_Oracle import connect, DatabaseError
+from services.conexion import is_connection_active
 
 class ConnectionManager:
     def __init__(self):
         self.connections = {}
 
     def create_connection(self, user: str, password: str):
-        try:
-            connection = connect(user=user, password=password, dsn='localhost:1521/XEPDB1', encoding='UTF-8')  # Actualiza los valores del host y service_name
-            self.connections[user] = connection
-            return connection
-        except DatabaseError:
-            return None
+        if is_connection_active(self.get_connection(user)):
+            print ("LA CONEXION ESTA ACTIVA, RETORNANDO:", user , " CONEXION;")
+            return self.connections[user]
+        else:
+            try:
+                connection = connect(user=user, password=password, dsn='localhost:1521/XEPDB1', encoding='UTF-8')  # Actualiza los valores del host y service_name
+                self.connections[user] = connection
+                print("LA CONEXION NO ESTA ACTIVA, CREATE:", user , " CONEXION;")
+                return connection
+            except DatabaseError as e:
+                print("Error al crear la conexión:", str(e))
+                return None
 
     def get_connection(self, user: str):
         return self.connections.get(user)
@@ -19,6 +26,14 @@ class ConnectionManager:
         if user in self.connections:
             self.connections[user].close()
             del self.connections[user]
+
+    def get_all_connections(self):
+        return self.connections
+    
+    def get_len_connections(self):
+        print(self.connections)
+
+conn_manager = ConnectionManager()
 
 
 ''' Funcion para comprobar si el usuario esta registrado en la db'''
