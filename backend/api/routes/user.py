@@ -25,7 +25,7 @@ async def get_user_all(current_user: UserOfDB = Depends(get_current_user)):
     conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
     user_dao = UserDao(conn)
     users = user_dao.get_all_users()
-    if not isinstance(users, list) and not all(isinstance(user, User) for user in users):
+    if not isinstance(users, list) and    not all(isinstance(user, User) for user in users):
         return ApiResponse(status=status.HTTP_404_NOT_FOUND,data=users,message="error")
     del user_dao
     return ApiResponse(status=status.HTTP_200_OK,data=users,message="success")

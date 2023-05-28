@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { MessageService } from "primeng/api";
+import { Representantes } from "src/app/core/models/representantes/representantes.model";
 import { User } from "src/app/core/models/users/user.model";
+import { RepresentanteService } from "src/app/core/services/representantes/representante.service";
 import { UserService } from "src/app/core/services/users/user.service";
 
 @Component({
@@ -24,6 +26,7 @@ export class ProfileComponent {
   }
 
   username = sessionStorage.getItem("username")? sessionStorage.getItem("username"):'Loading...';
+  representantes : Representantes[];
   user : User = this.userLoading;
   data: any;
   chartOptions: any;
@@ -31,6 +34,7 @@ export class ProfileComponent {
 
   constructor(
     private userService: UserService,
+    private repService: RepresentanteService,
     private messageService: MessageService,
   ) {}
 
@@ -44,6 +48,16 @@ export class ProfileComponent {
       (err)=>{
         this.messageService.add({key:'grl-toast', severity:'error', summary:'Consulta realizada SIN ÉXITO', detail:'::: ERROR ::: \n'+err['error']['detail']});
 
+      }
+    )
+
+    this.repService.getRepresentantes().subscribe(
+      (representante:Representantes[])=>{
+        this.representantes = representante['data'];
+        this.messageService.add({key:'grl-toast', severity:'success', summary:'Consulta exitosa', detail:'La consulta se realizo correctamente sobre la base de datos'});
+      },
+      (err)=>{
+        this.messageService.add({key:'grl-toast', severity:'error', summary:'Consulta realizada SIN ÉXITO', detail:'::: ERROR ::: \n'+err['error']['detail']});
       }
     )
 
