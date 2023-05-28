@@ -1,0 +1,3 @@
+REM INSERTING into  PLANCURRICULAR
+Insert into PLANCURRICULAR (K_PLAN,N_NOMBRE) values ('2006CR','2006 Creditos');
+Insert into PLANCURRICULAR (K_PLAN,N_NOMBRE) values ('2002AS','2002 Asignaturas');

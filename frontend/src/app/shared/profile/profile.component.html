@@ -1,0 +1,55 @@
+<div class="container-box-profile">
+  <div class="profile-img">
+    <div>
+      <img src="/assets/icon.png" alt="imagen de perfil" srcset="">
+      <h4>{{username}}</h4>
+      <h5>{{user.nombre +' '+ user.apellido}}</h5>
+    </div>
+  </div>
+  <div class="scrollable">
+    <div class="profile-info">
+      <div class="profile-info-title">
+        <h5> Datos personales</h5> <p-button icon="pi pi-pencil" label="Editar" (click)="isEdited=!isEdited"></p-button>
+      </div>
+      <div class="profile-info-form">
+        <div>
+          <p><strong>Nombre:</strong> <span *ngIf="!isEdited"> {{user.nombre}} </span></p>
+          <input [(ngModel)]="user.nombre" type="text" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Apellido:</strong> <span *ngIf="!isEdited"> {{user.apellido}} </span></p>
+          <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Fecha de nacimiento:</strong> <span *ngIf="!isEdited"> {{user.fecha_de_nacimiento | date}} </span></p>
+          <input [(ngModel)]="user.fecha_de_nacimiento" type="date" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Genero:</strong> <span *ngIf="!isEdited"> {{user.genero}} </span></p>
+          <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Teléfono:</strong> <span *ngIf="!isEdited"> {{user.telefono}} </span></p>
+          <input [(ngModel)]="user.telefono" type="number" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Dirección:</strong> <span *ngIf="!isEdited"> {{user.direccion}} </span></p>
+          <input [(ngModel)]="user.direccion" type="text" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Email:</strong> <span *ngIf="!isEdited"> {{user.email}} </span></p>
+          <input [(ngModel)]="user.email" type="email" pInputText *ngIf="isEdited"/>
+        </div>
+        <div style="display:flex; justify-content: space-around; width: 100%; padding: 30px;">
+          <p-button icon="pi pi-save" label="Guardar" *ngIf="isEdited" (click)="saveUser()"></p-button>
+          <p-button icon="pi pi-times" label="Eliminar cuenta" (click)="deleteUser()"></p-button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="false" class="profile-graphs">
+      <div class="graph">
+        <p-chart type="radar" [data]="data" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>

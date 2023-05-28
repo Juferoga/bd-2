@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    image: swsbmm/oracle-database:21.3.0-xe
+    ports:
+      - 1521:1521  #1521 (Oracle Listener) 
+      - 5500:5500  #5500 (OEM Express)
+    volumes:
+      - data:/opt/oracle/oradata
+    environment:
+      - ORACLE_SID=ORCLCDB #The Oracle Database SID that should be used.(Default:ORCLCDB)
+      - ORACLE_PDB=ORCLPDB1  #The Oracle Database PDB name that should be used. (Default: ORCLPDB1)
+      - ORACLE_PWD=password  #The Oracle Database SYS, SYSTEM and PDBADMIN password. (Default: auto-generated)
+    #  - INIT_SGA_SIZE=  #The total memory in MB that should be used for all SGA components (Optional)
+    #  - INIT_PGA_SIZE=  #The target aggregate PGA memory in MB that should be used for all server processes attached to the instance (Optional)
+    #  - ORACLE_EDITION=   #The Oracle Database Edition [enterprise|standard]. (Default: enterprise)
+    #  - ORACLE_CHARACTERSET=       #The character set that you want used when creating the database. (Default: AL32UTF8)
+    #  - ENABLE_ARCHIVELOG=true  #The ARCHIVELOG mode. By default, set to false.
+volumes:
+  data:

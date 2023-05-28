@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  sc_frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '80'
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=80"
+      - "traefik.http.routers.data-secure.entrypoints=websecure"
+      - "traefik.http.routers.data-secure.rule=host(`fis.juferoga.tk`)"
+networks:
+    proxy:
+      external: true

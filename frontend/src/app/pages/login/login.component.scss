@@ -1,4 +1,4 @@
-.container{
+.container-box{
   margin: 0;
   height: 100%;
   background-color: #ffaa00;
@@ -7,7 +7,7 @@
   background-size: cover;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 50px 1fr 50px;
+  grid-template-rows: 1fr 3fr 1fr ;
 }
 
 .loginbox{
@@ -16,4 +16,100 @@
   grid-row-start: 2;
   border-radius: 15px;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.loginbox div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.loginbox img{
+  filter: drop-shadow(0rem 0rem 0.2rem #24242472);
+}
+
+.form-input{
+  margin: 30px 0px 30px 0px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+.form-input-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-ng{
+  margin: 10px 0px 10px 0px;
+}
+
+.p-input-icon-right > .p-inputtext {
+	padding-right: 0px;
+  min-width: 220px;
+  margin-right: 0.5rem;
+}
+
+.input-fix{
+  left: -0.45rem;
+  position: relative;
+}
+
+h1{
+  text-align: center;
+}
+
+#icon{
+  width: 100px;
+}
+
+.flotable{
+  background-color: rgb(253, 245, 245);
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  border-radius: 50% 0px 0px 50%;
+  padding: 10px;
+}
+
+.flotable:hover{
+  background-color: rgb(246, 230, 230);
+}
+
+.flotable button{
+  background-color: rgb(253, 245, 245);
+  border-color: rgb(248, 150, 150);
+  color: rgb(120, 75, 75);
+}
+
+.flotable button:hover{
+  box-shadow: rgba(71, 12, 12, 0.35) 0px 5px 15px;
+}
+
+.flotable-info{
+  background-color: rgb(253, 245, 245);
+  position: absolute;
+  top: 80px;
+  right: 0px;
+  border-radius: 50% 0px 0px 50%;
+  padding: 10px;
+}
+
+.flotable-info:hover{
+  background-color: rgb(246, 230, 230);
+}
+
+.flotable-info button{
+  background-color: rgb(253, 245, 245);
+  border-color: rgb(248, 150, 150);
+  color: rgb(120, 75, 75);
+}
+
+.flotable-info button:hover{
+  box-shadow: rgba(71, 12, 12, 0.35) 0px 5px 15px;
 }
