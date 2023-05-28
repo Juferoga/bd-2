@@ -46,6 +46,9 @@ import { TokenInterceptor } from './core/interceptors/token-interceptor.service'
 import { ResponseInterceptorService } from './core/interceptors/response.interceptor.service';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { StatsComponent } from './pages/stats/stats.component';
+import { SellsComponent } from './pages/sells/sells.component';
 
 
 @NgModule({
@@ -66,6 +69,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ShowsComponent,
     MoviesComponent,
     UsersComponent,
+    StatsComponent,
+    SellsComponent,
   ],
   imports: [
     TagModule,
@@ -93,7 +98,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     RatingModule,
     DataViewModule,
-    RadioButtonModule
+    RadioButtonModule,
+    SelectButtonModule
   ],
   providers: [
     MessageService,

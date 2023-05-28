@@ -8,8 +8,8 @@ export class User{
   email: string;
   estado: string;
   username?: string;
+  representante?: string;
 
   constructor(){
-
   }
 }

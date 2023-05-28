@@ -23,6 +23,10 @@
     <button pButton pRipple type="button" icon="pi pi-shopping-cart" class="p-button-secondary p-button-rounded p-button-text"></button>
     <p>Mis compras</p>
   </div>
+  <div [routerLink]="href+'/estadisticas'">
+    <button pButton pRipple type="button" icon="pi pi-chart-pie" class="p-button-secondary p-button-rounded p-button-text"></button>
+    <p>Estadísticas</p>
+  </div>
   <a [href]="server+'/docs/'">
     <button pButton pRipple type="button" icon="pi pi-cog" class="p-button-secondary p-button-rounded p-button-text"></button>
     <p>Configuraciones avanzadas</p>

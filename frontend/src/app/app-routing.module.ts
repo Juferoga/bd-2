@@ -15,6 +15,8 @@ import { StockComponent } from './shared/stock/stock.component';
 import { PurchaseComponent } from './pages/purchase/purchase.component';
 import { ShowsComponent } from './pages/shows/shows.component';
 import { UsersComponent } from './pages/users/users.component';
+import { StatsComponent } from './pages/stats/stats.component';
+import { SellsComponent } from './pages/sells/sells.component';
 
 const routes: Routes = [
   {
@@ -56,15 +58,15 @@ const routes: Routes = [
       },
       {
         path: 'mis-ventas',
-        component: OnBuildComponent
+        component: SellsComponent
       },
       {
         path: 'mis-compras',
         component: PurchaseComponent
       },
       {
-        path: 'cartelera',
-        component: ShowsComponent
+        path: 'estadisticas',
+        component: StatsComponent
       }
     ]
   },

@@ -61,3 +61,12 @@
   flex-wrap: wrap;
 }
 
+.rep-change{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  select{
+    width: 12rem;
+    height: 2rem;
+  }
+}
