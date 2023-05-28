@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  bd_front:
+    image: juferoga/bd2-front:1.0
+    networks:
+      - proxy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+      placement:
+        constraints: [node.hostname==juferoga.live]    
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy"
+        - "traefik.http.routers.front-db.rule=host(`bd.juferoga.tk`)"
+        - "traefik.http.routers.front-db.entrypoints=websecure"
+        - "traefik.http.routers.front-db.service=front-db"
+        - "traefik.http.services.front-db.loadbalancer.port=80"
+        - "traefik.port=80"
+networks:
+    proxy:
+      external: true

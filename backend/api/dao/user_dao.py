@@ -1,9 +1,11 @@
-from models.user import User, UserOfDB
+from models.user import User, UserOfDB, UserClient
+import cx_Oracle
 
 class UserDao:
     def __init__(self, connection):
         self.nombre = "UserDao"
         self.connection = connection
+        self.cursor = None
 
     def get_by_username(self, username):
         cursor = self.connection.cursor()
@@ -89,7 +91,7 @@ class UserDao:
                     T_APELLIDO = '{user.apellido}',
                     F_NACIMIENTO = TO_DATE('{user.fecha_de_nacimiento}', 'YYYY-MM-DD'),
                     I_GENERO = '{user.genero}',
-                    N_TELEFONO = {user.telefono},
+                    N_TELEFONO = {user.telefono},UserClient
                     T_DIRECCION = '{user.direccion}',
                     T_EMAIL = '{user.email}',
                     I_ESTADO = '{user.estado}',
@@ -124,6 +126,24 @@ class UserDao:
             })
 
         return users
+
+    def create_user(self,cursor, usuario: UserOfDB):
+        sql = f"insert into usuario ( K_USUARIO, T_NOMBRE, T_APELLIDO, F_NACIMIENTO, I_GENERO, N_TELEFONO, T_DIRECCION, T_EMAIL, I_ESTADO, T_USERNAME) values ({usuario.id}, '{usuario.nombre}', '{usuario.apellido}', to_date('{str(usuario.fecha_de_nacimiento)}','YYYY-mm-dd'), '{usuario.genero}', {usuario.telefono}, '{usuario.direccion}', '{usuario.email}', '{usuario.estado}','{usuario.username}')"
+        try:
+            cursor.execute(sql)
+            return [True, 'Usuario creado correctamente']
+        except cx_Oracle.Error as error:
+            print("ERROR user.py: create_user: ", error)
+            return [False, str(error)]
+
+    def create_client(self, cursor, cliente: UserClient, representante : int):
+        sql = f"insert into cliente (K_CLIENTE,T_CIUDAD,K_REPRESENTANTE) values ({cliente.id}, '{cliente.ciudad}', {representante})"
+        try:
+            cursor.execute(sql)
+            return [True, 'Cliente creado correctamente']
+        except cx_Oracle.Error as error:
+            print("ERROR user_dao.py/create_cliente", error)
+            return [False, str(error)]
     
     def __del__(self):
         print(f"El objeto {self.nombre} se está destruyendo")

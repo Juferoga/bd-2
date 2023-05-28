@@ -10,13 +10,13 @@ class ConnectionManager:
 
     def create_connection(self, user: str, password: str):
         if is_connection_active(self.get_connection(user)):
-            print ("LA CONEXION ESTA ACTIVA, RETORNANDO:", user , " CONEXION;")
+            print ("LA CONEXIÓN ESTA ACTIVA, RETORNANDO:", user , " CONEXIÓN;")
             return self.connections[user]
         else:
             try:
                 connection = connect(user=user, password=password, dsn="34.125.35.46:1521/XEPDB1", encoding='UTF-8')  # Actualiza los valores del host y service_name
                 self.connections[user] = connection
-                print("LA CONEXION NO ESTA ACTIVA, CREATE:", user , " CONEXION;")
+                print("LA CONEXIÓN NO ESTA ACTIVA, CREATE:", user , " CONEXIÓN;")
                 return connection
             except DatabaseError as e:
                 print("Error al crear la conexión:", str(e))

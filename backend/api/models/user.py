@@ -16,7 +16,7 @@ class User(BaseModel):
     apellido: str or None = None
     fecha_de_nacimiento: date or None = None
     genero: str or None = None 
-    telefono: str or None = None
+    telefono: int or None = None
     direccion: str or None = None
     email: EmailStr or None = None
     estado: str or None = None
@@ -24,6 +24,9 @@ class User(BaseModel):
 class UserOfDB(User):
     username: str
     password: str
+
+class UserClient(UserOfDB):
+    ciudad: str
 
 def authenticate_user(username : str, password : str):
     response = try_connect_to_db(username, desencriptar(password))
