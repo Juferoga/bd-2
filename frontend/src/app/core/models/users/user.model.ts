@@ -1,9 +1,10 @@
 export class User{
+  id ?: number;
   nombre: string;
   apellido: string;
   fecha_de_nacimiento: Date;
   genero: string;
-  telefono: string;
+  telefono: number;
   direccion: string;
   email: string;
   estado: string;

@@ -19,7 +19,7 @@ export class ProfileComponent {
     'apellido':'Cargando',
     'fecha_de_nacimiento': new Date(Date.now()),
     'genero':'Cargando',
-    'telefono':'Cargando',
+    'telefono': 300000000,
     'direccion':'Cargando',
     'email':'Cargando',
     'estado':'Cargando'
