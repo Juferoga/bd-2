@@ -1,0 +1,127 @@
+<p-toast></p-toast>
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="Nuevo usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        <button pButton pRipple [label]="'Eliminar'" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedusuarios()" [disabled]="!selectedusuarios || !selectedusuarios.length"></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Importar" chooseLabel="Importar" class="mr-2 inline-block"></p-fileUpload>
+        <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"></button>
+    </ng-template>
+</p-toolbar>
+
+<p-table
+    #dt
+    [value]="usuarios"
+    [rows]="5"
+    [paginator]="true"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selectedusuarios"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0">Administración de usuarios</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." /> -->
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="nombre" style="min-width:15rem">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+            <th>Fecha de nacimiento</th>
+            <th pSortableColumn="genero">Genero <p-sortIcon field="genero"></p-sortIcon></th>
+            <th pSortableColumn="telefono" style="min-width:10rem">Teléfono <p-sortIcon field="telefono"></p-sortIcon></th>
+            <th pSortableColumn="direccion">Dirección <p-sortIcon field="direccion"></p-sortIcon></th>
+            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="estado" style="min-width:10rem">username <p-sortIcon field="estado"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
+            </td>
+            <td>{{ usuario.nombre +' '+ usuario.apellido }}</td>
+            <td>{{ usuario.fecha_de_nacimiento | date}}</td>
+            <td>{{ usuario.genero }}</td>
+            <td>{{ usuario.telefono }}</td>
+            <td>{{ usuario.direccion }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>
+                <!-- <p-tag [value]="usuario.inventoryStatus" [severity]="getSeverity(usuario.inventoryStatus)"></p-tag> -->
+            </td>
+            <td>
+                <button style="margin-right: 2rem;" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success" (click)="editUsuario(usuario)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUsuario(usuario)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">En total hay {{ usuarios ? usuarios.length : 0 }} usuarios.</div>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="userDialog" [style]="{ width: '450px' }" header="Detalles usuario" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="name" [(ngModel)]="usuario.nombre" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.nombre">El nombre es requerido.</small>
+        </div>
+        <div class="field">
+            <label for="lastname">Apellido</label>
+            <input type="text" pInputText id="lastname" [(ngModel)]="usuario.apellido" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.apellido">El apellido es requerido.</small>
+        </div>
+        <div class="field">
+            <label for="birthdate">Fecha de nacimiento</label>
+            <input type="date" pInputText id="birthdate" [(ngModel)]="usuario.fecha_de_nacimiento" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.fecha_de_nacimiento">La fecha de nacimiento es requerida.</small>
+        </div>
+        <div class="field">
+            <label for="gender">Genero</label>
+            <p-dropdown [(ngModel)]="usuario.genero" inputId="gender" [options]="statuses">
+                <ng-template pTemplate="selectedItem">
+                    <p-tag [value]="usuario.genero.toUpperCase()" [severity]="getSeverity(usuario.genero.toUpperCase())"></p-tag>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                    <p>{{option['label']}}</p>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="field">
+            <label for="phone">Teléfono</label>
+            <input type="tel" pInputText id="phone" [(ngModel)]="usuario.telefono" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.telefono">El teléfono es requerida.</small>
+        </div>
+        <div class="field">
+            <label for="address">Dirección</label>
+            <input type="text" pInputText id="address" [(ngModel)]="usuario.direccion" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.direccion">La dirección es requerida.</small>
+        </div>
+        <div class="field">
+            <label for="address">Email</label>
+            <input type="email" pInputText id="address" [(ngModel)]="usuario.email" required autofocus />
+            <small class="p-error" *ngIf="submitted && !usuario.email">La dirección de correo electrónico es requerida.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUsuario()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

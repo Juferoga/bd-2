@@ -7,6 +7,7 @@ from os import getenv
 class Token(BaseModel):
     access_token: str
     token_type: str
+    username: str
 
 class TokenData(BaseModel):
     username: str or None = None

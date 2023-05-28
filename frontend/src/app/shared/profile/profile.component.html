@@ -1,12 +1,9 @@
-<div class="section-title">
-  <h1>Mi perfil</h1>
-</div>
 <div class="container-box-profile">
   <div class="profile-img">
     <div>
       <img src="/assets/icon.png" alt="imagen de perfil" srcset="">
-      <h4>{{'Username'}}</h4>
-      <h5>{{'Name of the user'}}</h5>
+      <h4>{{username}}</h4>
+      <h5>{{user.nombre +' '+ user.apellido}}</h5>
     </div>
   </div>
   <div class="scrollable">
@@ -16,33 +13,36 @@
       </div>
       <div class="profile-info-form">
         <div>
-          <p><strong>Dirección:</strong> <span *ngIf="!isEdited"> {{"User Data"}} </span></p>
-          <input type="text" pInputText *ngIf="isEdited"/>
+          <p><strong>Nombre:</strong> <span *ngIf="!isEdited"> {{user.nombre}} </span></p>
+          <input [(ngModel)]="user.nombre" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Teléfono :</strong> <span *ngIf="!isEdited"> {{"User Data"}} </span></p>
-          <input type="tel" pInputText *ngIf="isEdited"/>
+          <p><strong>Apellido:</strong> <span *ngIf="!isEdited"> {{user.apellido}} </span></p>
+          <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Correo electrónico</strong> : <span *ngIf="!isEdited"> {{"User Data"}} </span></p>
-          <input type="email" pInputText *ngIf="isEdited"/>
+          <p><strong>Fecha de nacimiento:</strong> <span *ngIf="!isEdited"> {{user.fecha_de_nacimiento | date}} </span></p>
+          <input [(ngModel)]="user.fecha_de_nacimiento" type="date" pInputText *ngIf="isEdited"/>
         </div>
-        <div *ngIf="isEdited">
-          <p><strong>Password:</strong></p>
-          <input type="password" pPassword/>
-        </div>
-      </div>
-      <div class="profile-info-form" *ngIf="role == 'Administrador'">
-        <p>Eres admin :D</p>
-      </div>
-      <div class="profile-info-form" *ngIf="role == 'RepresentanteVentas'">
         <div>
-          <p><strong>Rol Empleado:</strong> <span > {{"User Data"}} </span></p>
+          <p><strong>Genero:</strong> <span *ngIf="!isEdited"> {{user.genero}} </span></p>
+          <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
         </div>
-      </div>
-      <div class="profile-info-form" *ngIf="role == 'Cliente'">
         <div>
-          <p><strong>Puntos:</strong> <span> {{"User Data"}} </span></p>
+          <p><strong>Teléfono:</strong> <span *ngIf="!isEdited"> {{user.telefono}} </span></p>
+          <input [(ngModel)]="user.telefono" type="number" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Dirección:</strong> <span *ngIf="!isEdited"> {{user.direccion}} </span></p>
+          <input [(ngModel)]="user.direccion" type="text" pInputText *ngIf="isEdited"/>
+        </div>
+        <div>
+          <p><strong>Email:</strong> <span *ngIf="!isEdited"> {{user.email}} </span></p>
+          <input [(ngModel)]="user.email" type="email" pInputText *ngIf="isEdited"/>
+        </div>
+        <div style="display:flex; justify-content: space-around; width: 100%; padding: 30px;">
+          <p-button icon="pi pi-save" label="Guardar" *ngIf="isEdited" (click)="saveUser()"></p-button>
+          <p-button icon="pi pi-times" label="Eliminar cuenta" (click)="deleteUser()"></p-button>
         </div>
       </div>
     </div>

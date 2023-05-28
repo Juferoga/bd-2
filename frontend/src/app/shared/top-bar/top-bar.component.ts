@@ -28,7 +28,7 @@ export class TopBarComponent implements OnInit {
       {
         icon: 'pi pi-fw pi-cog',
         label: 'Conf. avan.',
-        url: environment.api+'admin/'
+        url: environment.server+'/docs/'
       },
       {
         icon: 'pi pi-fw pi-times',

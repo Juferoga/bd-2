@@ -3,7 +3,7 @@
 #############
 
 # base image
-FROM node:18.12.0 as build
+FROM node:16.19.1 as build
 
 # install chrome for protractor tests
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -19,7 +19,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY package.json /app/package.json
 RUN npm install
-RUN npm install -g @angular/cli@15.1.3
+RUN npm install -g @angular/cli@15.1.4
 
 # add app
 COPY . /app
@@ -29,7 +29,7 @@ COPY . /app
 # RUN ng e2e --port 4202
 
 # generate build
-RUN ng build --output-path=dist
+RUN ng build --prod
 
 ############
 ### prod ###

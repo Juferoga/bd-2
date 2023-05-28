@@ -11,7 +11,7 @@ from models.jwt import TokenData
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
 class User(BaseModel):
-    
+    id: int or None = None
     nombre: str or None = None
     apellido: str or None = None
     fecha_de_nacimiento: date or None = None
@@ -21,7 +21,7 @@ class User(BaseModel):
     email: EmailStr or None = None
     estado: str or None = None
 
-class UserOfDB(BaseModel):
+class UserOfDB(User):
     username: str
     password: str
 

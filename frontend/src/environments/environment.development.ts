@@ -4,14 +4,15 @@ export const environment = {
   repositorio: 'https://github.com/juferoga/bd-2',
   juferoga: 'https://github.com/juferoga/',
   integrantes: [
-    {'name':'Andres Baquero','code':'2018102000','url':'https://github.com/juferoga'},
-    {'name':'Bryan Muñoz','code':'20171020000','url':'https://github.com/juferoga'},
-    {'name':'Cristian Yara','code':'20181020000','url':'https://github.com/juferoga'},
-    {'name':'Johan Cortes','code':'20181020000','url':'https://github.com/juferoga'},
+    {'name':'Andres Baquero','code':'20181020124','url':'https://github.com/juferoga'},
+    {'name':'Bryan Muñoz','code':'20162020408','url':'https://github.com/juferoga'},
+    {'name':'Cristhian Mauricio Yara','code':'20181020081','url':'https://github.com/juferoga'},
     {'name':'Juan Felipe Rodríguez','code':'20181020158','url':'https://github.com/juferoga'},
+    {'name':'Johan Cortes','code':'20181020068','url':'https://github.com/juferoga'},
   ],
-  materia: 'BD-2',
-  proyecto: 'Ventas multi nivel',
-  profesor: 'Alba Consuelo Nieto Lesmus',
-  api: 'localhost:8000/'
+  materia: 'BD2',
+  proyecto: 'Bases de datos II',
+  profesor: 'Alba Consuelo Nieto',
+  api: 'http://localhost:8000/api/',
+  server: 'http://localhost:8000'
 };

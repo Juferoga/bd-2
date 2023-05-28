@@ -1,10 +1,10 @@
-export class Product{
-  name?:string
-  id?:string
-  image?:string
-  description?:string
-  category?:string
-  price?:number
-  quantity?:number
-  inventoryStatus?:string[]
+export class Product {
+  producto : string;
+  nombre : string;
+  descripcion : string;
+  precio : number;
+  estado : boolean;
+  categoria : string;
+  image ?: string;
+  quantity ? : number;
 }

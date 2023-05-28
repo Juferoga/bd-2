@@ -1,4 +1,7 @@
 import { Component } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { User } from "src/app/core/models/users/user.model";
+import { UserService } from "src/app/core/services/users/user.service";
 
 @Component({
   selector: "app-profile",
@@ -8,19 +11,42 @@ import { Component } from "@angular/core";
 export class ProfileComponent {
 
   // TODO: Integrate -> https://primeng.org/tree/horizontal
-  isEdited:boolean = false;
-  role:string = localStorage.getItem("role")? localStorage.getItem("role"):sessionStorage.getItem("role");
-  
-  cinema:string = "Central";
-  sala:number = 1;
-  local:string = "Alejado";
 
+  userLoading = {
+    'nombre':'Cargando',
+    'apellido':'Cargando',
+    'fecha_de_nacimiento': new Date(Date.now()),
+    'genero':'Cargando',
+    'telefono':'Cargando',
+    'direccion':'Cargando',
+    'email':'Cargando',
+    'estado':'Cargando'
+  }
+
+  username = sessionStorage.getItem("username")? sessionStorage.getItem("username"):'Loading...';
+  user : User = this.userLoading;
   data: any;
   chartOptions: any;
+  isEdited:boolean = false;
 
-  constructor() {}
+  constructor(
+    private userService: UserService,
+    private messageService: MessageService,
+  ) {}
 
   ngOnInit() {
+
+    this.userService.getUser().subscribe(
+      (user:User)=>{
+        this.user = user['data'];
+        this.messageService.add({key:'grl-toast', severity:'success', summary:'Consulta exitosa', detail:'La consulta se realizo correctamente sobre la base de datos'});
+      },
+      (err)=>{
+        this.messageService.add({key:'grl-toast', severity:'error', summary:'Consulta realizada SIN ÉXITO', detail:'::: ERROR ::: \n'+err['error']['detail']});
+
+      }
+    )
+
     this.data = {
       labels: [
         "Eating",
@@ -55,4 +81,12 @@ export class ProfileComponent {
       ],
     };
   }
+
+    deleteUser() {
+      console.log("Usuario BORRADO")
+    }
+
+    saveUser() {
+      console.log("Usuario ACTUALIZADO")
+    }
 }

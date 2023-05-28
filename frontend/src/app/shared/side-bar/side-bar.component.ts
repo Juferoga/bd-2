@@ -8,8 +8,10 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent{
+  username = sessionStorage.getItem("username")? sessionStorage.getItem("username"):'Loading...';
   public href: string = "";
   api = environment.api;
+  server = environment.server;
   
   constructor(private router: Router) {}
 

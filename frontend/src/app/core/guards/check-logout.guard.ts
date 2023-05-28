@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/user/auth.service';
+import { AuthService } from '../services/users/auth.service';
 
 @Injectable({
   providedIn: 'root'

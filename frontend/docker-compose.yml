@@ -15,7 +15,7 @@ services:
       - "traefik.docker.network=proxy"
       - "traefik.port=80"
       - "traefik.http.routers.data-secure.entrypoints=websecure"
-      - "traefik.http.routers.data-secure.rule=host(`redflox.com`)"
+      - "traefik.http.routers.data-secure.rule=host(`fis.juferoga.tk`)"
 networks:
     proxy:
       external: true

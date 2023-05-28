@@ -6,7 +6,7 @@ import { tap } from 'rxjs';
 import { ROLES } from 'src/app/core/models/users/roles.enum';
 import { TokenModel } from 'src/app/core/models/users/token.model';
 import { User } from 'src/app/core/models/users/user.model';
-import { AuthService } from 'src/app/core/services/user/auth.service';
+import { AuthService } from 'src/app/core/services/users/auth.service';
 import { environment } from 'src/environments/environment.development';
 
 @Component({
@@ -45,26 +45,45 @@ export class LoginComponent {
 
   signUp(){
     this.authSvc.onClean();
+    // if(this.loginForm.controls.password.value == passwordConfirmation){
+      // this.authSvc.onSignUp(this.loginForm.controls.username.value, this.loginForm.controls.password.value).subscribe(
+      //   {
+      //       next: (data: TokenModel) => {
+      //         sessionStorage.setItem('token', data.token);
+      //         sessionStorage.setItem('role', data.role);
+      //         sessionStorage.setItem('id', data.id.toString());
+      //         this.messageService.add({key:'grl-toast', severity:'success', summary:'Ingreso correcto', detail:'Bienvenido a la plataforma'});
+      
+      //         if (data.role === ROLES.ADMINISTRATOR) {
+      //           this.router.navigate(['/admin']);
+      //         } else {
+      //           this.router.navigate(['/app']);
+      //         }
+      //       },
+    
+      //     error: (any) => {
+      //       this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos'});
+      //     }
+      //   }
+      // );
+    //}
   }
 
   logIn() {
+    this.isLoading = true;
+    this.authSvc.onClean();
     this.authSvc.onLogin(this.username, this.password).subscribe(
       {
-          next: (data: TokenModel) => {
-            sessionStorage.setItem('token', data.token);
-            sessionStorage.setItem('role', data.role);
-            sessionStorage.setItem('id', data.id.toString());
+          next: (data) => {
+            sessionStorage.setItem('token', data.access_token);
+            sessionStorage.setItem('tokenType', data.token_type);
+            sessionStorage.setItem('username', data.username);
             this.messageService.add({key:'grl-toast', severity:'success', summary:'Ingreso correcto', detail:'Bienvenido a la plataforma'});
-    
-            if (data.role === ROLES.ADMINISTRATOR) {
-              this.router.navigate(['/admin']);
-            } else {
-              this.router.navigate(['/app']);
-            }
+            this.router.navigate(['/admin']);
           },
   
-        error: (any) => {
-          this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos'});
+        error: (err) => {
+          this.messageService.add({key:'grl-toast', severity:'error', summary:'Ingreso Incorrecto', detail:'Datos de ingreso incorrectos\n'+err['error']['detail']});
         }
       }
     );

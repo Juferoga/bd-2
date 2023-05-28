@@ -1,8 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import date
 
-
-
 class Product(BaseModel):
     id: int
     nombre: str

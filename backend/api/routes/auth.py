@@ -22,4 +22,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
                                         "password": encriptar(form_data.password)},
                                         expires_delta=access_token_expires)
     return {"access_token": access_token,
-            "token_type": "bearer"}
+            "token_type": "bearer",
+            "username": form_data.username}

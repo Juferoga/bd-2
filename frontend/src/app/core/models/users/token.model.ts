@@ -1,5 +1,5 @@
 export interface TokenModel {
-  id: Number;
-  role: string;
-  token: string;
+  username: string;
+  access_token: string;
+  token_type: string;
 }

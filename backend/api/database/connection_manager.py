@@ -2,6 +2,8 @@ from cx_Oracle import connect, DatabaseError
 from services.conexion import is_connection_active
 from os import getenv
 
+# adminmulven - adminmulven
+
 class ConnectionManager:
     def __init__(self):
         self.connections = {}
@@ -12,7 +14,7 @@ class ConnectionManager:
             return self.connections[user]
         else:
             try:
-                connection = connect(user=user, password=password, dsn="redflox.com:1521/VENTAS_MULTINIVEL", encoding='UTF-8')  # Actualiza los valores del host y service_name
+                connection = connect(user=user, password=password, dsn="34.125.35.46:1521/XEPDB1", encoding='UTF-8')  # Actualiza los valores del host y service_name
                 self.connections[user] = connection
                 print("LA CONEXION NO ESTA ACTIVA, CREATE:", user , " CONEXION;")
                 return connection
@@ -38,7 +40,7 @@ conn_manager = ConnectionManager()
 
 
 ''' Funcion para comprobar si el usuario esta registrado en la db'''
-def try_connect_to_db(username: str, password: str, dsn: str = "redflox.com:1521/VENTAS_MULTINIVEL"):
+def try_connect_to_db(username: str, password: str, dsn: str = "34.125.35.46:1521/XEPDB1"):
     try:
         with connect(username, password, dsn) as conn:
             pass
