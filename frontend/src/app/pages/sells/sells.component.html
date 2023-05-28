@@ -1,0 +1,75 @@
+<h1>Mis ventas</h1>
+<div>
+  <h2>Valor de mi comisión</h2>
+  <p>el valor de tu comisión es {{25200021.13 | currency}}</p>
+</div>
+<p-tabView>
+  <p-tabPanel header="Mis datos">
+    <div>
+      <h3>Mis ventas por mes</h3>
+      <div class="card">
+        <p-table [value]="[]" [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Tu clasificación">
+    <div>
+      <h3>Mi clasificación</h3>
+      <div class="card" style="text-align: center;">
+        <h4>Tú clasificación en este mes es : {{'Numero de representante'}}</h4>
+      </div>
+      <div class="card">
+        <p-table [value]="['unlockedCustomers']" [frozenValue]="['lockedCustomers']" [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '60rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Company</th>
+                    <th>Representative</th>
+                    <th style="width:5rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="frozenbody" let-customer let-index="rowIndex">
+                <tr>
+                    <!-- <td>{{customer.name}}</td>
+                    <td>{{customer.country.name}}</td>
+                    <td>{{customer.company}}</td>
+                    <td>{{customer.representative.name}}</td> -->
+                    <td>
+                        <!-- <button pButton pRipple type="button" [icon]="'pi pi-lock-open'" (click)="toggleLock(customer,true,index)" class="p-button-sm p-button-text"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer let-index="rowIndex">
+                <tr>
+                    <!-- <td>{{customer.name}}</td>
+                    <td>{{customer.country.name}}</td>
+                    <td>{{customer.company}}</td>
+                    <td>{{customer.representative.name}}</td> -->
+                    <td>
+                        <!-- <button pButton pRipple type="button" [icon]="'pi pi-lock'" [disabled]="lockedCustomers.length >= 2" (click)="toggleLock(customer,false,index)" class="p-button-sm p-button-text"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    </div>    
+  </p-tabPanel>
+</p-tabView>
