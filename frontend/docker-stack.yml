@@ -1,9 +1,11 @@
 version: '3.7'
 services:
   bd_front:
-    image: juferoga/bd2-front:1.0
+    image: bd2-front:1.0
     networks:
       - proxy
+    ports:
+      - 80:80
     deploy:
       replicas: 1
       restart_policy:

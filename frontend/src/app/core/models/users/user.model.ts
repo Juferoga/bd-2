@@ -10,6 +10,12 @@ export class User{
   estado: string;
   username?: string;
   representante?: string;
+  ciudad?: string;
+  contrato?: string;
+  region?: string;
+  pais?: string;
+  clasificacion?: string;
+  jefe?: string;
 
   constructor(){
   }

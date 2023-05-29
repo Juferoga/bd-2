@@ -16,9 +16,15 @@ export class CategoriaService {
     this.headers = this.headers.append("Content-Type", "application/json");
   }
 
-  getCatgoria(id):Observable<Categorias>{
+  getCategoria(id):Observable<Categorias>{
     return this.http.get<Categorias>(
       environment.api + 'categoria/' + id,
+      {headers: this.headers}
+    )
+  }
+  getCategorias():Observable<Categorias>{
+    return this.http.get<Categorias>(
+      environment.api + 'categoria/',
       {headers: this.headers}
     )
   }

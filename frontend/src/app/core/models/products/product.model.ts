@@ -5,6 +5,5 @@ export class Product {
   precio : number;
   estado : boolean;
   categoria : string;
-  image ?: string;
-  quantity ? : number;
+  cantidad?: number;
 }
