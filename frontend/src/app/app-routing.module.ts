@@ -17,6 +17,10 @@ import { ShowsComponent } from './pages/shows/shows.component';
 import { UsersComponent } from './pages/users/users.component';
 import { StatsComponent } from './pages/stats/stats.component';
 import { SellsComponent } from './pages/sells/sells.component';
+import { PersonalDemo } from './pages/purchase/personal';
+import { SeatDemo } from './pages/purchase/seat';
+import { PaymentDemo } from './pages/purchase/payment';
+import { ConfirmationDemo } from './pages/purchase/confirmation';
 
 const routes: Routes = [
   {
@@ -62,7 +66,25 @@ const routes: Routes = [
       },
       {
         path: 'mis-compras',
-        component: PurchaseComponent
+        component: PurchaseComponent,
+        children: [
+          {
+            path: 'personal',
+            component: PersonalDemo
+          },
+          {
+            path: 'seat',
+            component: SeatDemo
+          },
+          {
+            path: 'payment',
+            component: PaymentDemo
+          },
+          {
+            path: 'confirmation',
+            component: ConfirmationDemo
+          }
+        ]
       },
       {
         path: 'estadisticas',

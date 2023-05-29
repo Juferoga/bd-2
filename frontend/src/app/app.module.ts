@@ -47,8 +47,18 @@ import { ResponseInterceptorService } from './core/interceptors/response.interce
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { StepsModule } from 'primeng/steps';
+import { CardModule } from 'primeng/card';
+import { InputMaskModule } from 'primeng/inputmask';
 import { StatsComponent } from './pages/stats/stats.component';
 import { SellsComponent } from './pages/sells/sells.component';
+import { DeadlineComponent } from './shared/deadline/deadline.component';
+import { SeatDemo } from './pages/purchase/seat';
+import { PersonalDemo } from './pages/purchase/personal';
+import { PaymentDemo } from './pages/purchase/payment';
+import { ConfirmationDemo } from './pages/purchase/confirmation';
+import { TicketService } from './core/services/compra/ticket.service';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -71,6 +81,11 @@ import { SellsComponent } from './pages/sells/sells.component';
     UsersComponent,
     StatsComponent,
     SellsComponent,
+    DeadlineComponent,
+    PaymentDemo, 
+    PersonalDemo, 
+    SeatDemo, 
+    ConfirmationDemo
   ],
   imports: [
     TagModule,
@@ -83,6 +98,7 @@ import { SellsComponent } from './pages/sells/sells.component';
     ButtonModule,
     HttpClientModule,
     ToastModule,
+    InputMaskModule,
     TabViewModule,
     FormsModule,
     MenubarModule,
@@ -99,12 +115,16 @@ import { SellsComponent } from './pages/sells/sells.component';
     RatingModule,
     DataViewModule,
     RadioButtonModule,
-    SelectButtonModule
+    SelectButtonModule,
+    StepsModule,
+    CheckboxModule,
+    CardModule
   ],
   providers: [
     MessageService,
     ConfirmationService,
     FilterService,
+    TicketService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptorService,

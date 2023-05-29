@@ -10,7 +10,6 @@
         <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"></button>
     </ng-template>
 </p-toolbar>
-
 <p-table
     #dt
     [value]="usuarios"
@@ -98,18 +97,106 @@
         </div>
         <div class="field">
             <label for="phone">Teléfono</label>
-            <input type="tel" pInputText id="phone" [(ngModel)]="usuario.telefono" required autofocus />
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-phone"></i>
+                </span>
+                <input type="tel" pInputText id="phone" [(ngModel)]="usuario.telefono" required autofocus />
+            </div>
             <small class="p-error" *ngIf="submitted && !usuario.telefono">El teléfono es requerida.</small>
         </div>
         <div class="field">
             <label for="address">Dirección</label>
-            <input type="text" pInputText id="address" [(ngModel)]="usuario.direccion" required autofocus />
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-building"></i>
+                </span>
+                <input type="text" pInputText id="address" [(ngModel)]="usuario.direccion" required autofocus />
+            </div>
             <small class="p-error" *ngIf="submitted && !usuario.direccion">La dirección es requerida.</small>
         </div>
         <div class="field">
             <label for="address">Email</label>
-            <input type="email" pInputText id="address" [(ngModel)]="usuario.email" required autofocus />
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-envelope"></i>
+                </span>
+                <input type="email" pInputText id="address" [(ngModel)]="usuario.email" required autofocus />
+            </div>
             <small class="p-error" *ngIf="submitted && !usuario.email">La dirección de correo electrónico es requerida.</small>
+        </div>
+        <!-- Tipo de usuario -->
+        <div class="field">
+            <label for="userType">Tipo de usuario</label>
+            <select id="userType" [(ngModel)]="selectedUserType">
+                <option selected disabled value="null">Seleccione tipo usuario </option>
+                <option value="cliente">Cliente</option>
+                <option value="representante">Representante</option>
+            </select>
+        </div>
+        <!-- Campos habilitados según el tipo de usuario -->
+        <div *ngIf="selectedUserType === 'cliente'">
+            <div class="field">
+                <label for="ciudad">Ciudad</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-globe"></i>
+                    </span>
+                    <select id="ciudad" [(ngModel)]="usuario.ciudad">
+                        <option selected disabled value="null">Seleccione Ciudad </option>
+                        <option *ngFor="let ciudad of ciudadesList" [value]="ciudad.codigo">{{ ciudad.nombre }}</option>
+                    </select> 
+                </div>              
+            </div>
+        </div>
+
+        <div *ngIf="selectedUserType === 'representante'">
+            <div class="field">
+                <label for="representante">Representante</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-users"></i>
+                    </span>
+                    <select id="representante" [(ngModel)]="usuario.representante">
+                        <option selected disabled value="null">Seleccione Representante </option>
+                        <option *ngFor="let representante of representantesList" [value]="representante">{{ representante |json }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label for="contrato">Contrato</label>
+                <input type="text" pInputText id="contrato" [(ngModel)]="usuario.contrato" required autofocus />
+                <small class="p-error" *ngIf="submitted && !usuario.contrato">El contrato es requerido.</small>
+            </div>
+            <div class="field">
+                <label for="pais">País</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-globe"></i>
+                    </span>
+                    <select id="pais" [(ngModel)]="usuario.pais">
+                        <option selected disabled value="null">Seleccione País </option>
+                        <option *ngFor="let pais of paisesList" [value]="pais['codigo']">{{ pais['nombre'] }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label for="region">Región</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-globe"></i>
+                    </span>
+                    <select id="region" [(ngModel)]="usuario.region">
+                        <option selected disabled value="null">Seleccione Región </option>
+                        <option *ngFor="let region of regionesList" [value]="region.id">{{ region.departamento }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label for="clasificacion">Clasificación</label>
+                <input type="text" pInputText id="clasificacion" [(ngModel)]="usuario.clasificacion" required autofocus />
+                <small class="p-error" *ngIf="submitted && !usuario.clasificacion">La clasificación es requerida.</small>
+            </div>
         </div>
     </ng-template>
 
