@@ -59,7 +59,7 @@ import { PaymentDemo } from './pages/purchase/payment';
 import { ConfirmationDemo } from './pages/purchase/confirmation';
 import { TicketService } from './core/services/compra/ticket.service';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { SplitterModule } from 'primeng/splitter';
 
 @NgModule({
   declarations: [
@@ -118,7 +118,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     SelectButtonModule,
     StepsModule,
     CheckboxModule,
-    CardModule
+    CardModule,
+    SplitterModule
   ],
   providers: [
     MessageService,

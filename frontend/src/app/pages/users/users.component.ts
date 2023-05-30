@@ -140,6 +140,9 @@ export class UsersComponent {
 
   saveUsuario() {
     this.submitted = true;
+    if (this.selectedUserType==='representante') {
+      this.usuario.jefe = sessionStorage.getItem('username');
+    }else this.usuario.jefe = '';
 
     if (this.usuario.nombre.trim()) {
       if (this.usuario.email) {
@@ -153,6 +156,10 @@ export class UsersComponent {
       } else {
         this.usuario.email = this.createId();
         this.usuarios.push(this.usuario);
+        this.userService.createUser(this.usuario).subscribe({
+          next:(res)=>{ console.log(res) },
+          error:(err)=>{}
+        });
         this.messageService.add({
           severity: "success",
           summary: "Successful",
@@ -160,11 +167,6 @@ export class UsersComponent {
           life: 3000,
         });
       }
-			if (this.selectedUserType==='representante') {
-				this.usuario.jefe = sessionStorage.getItem('username');
-			}else{
-				this.usuario.jefe = '';
-			}
 
       this.usuarios = [...this.usuarios];
       this.userDialog = false;

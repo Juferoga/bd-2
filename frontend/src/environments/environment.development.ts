@@ -14,5 +14,6 @@ export const environment = {
   proyecto: 'Bases de datos II',
   profesor: 'Alba Consuelo Nieto',
   api: 'http://localhost:8000/api/',
+  api_factura: 'http://34.125.35.46:3000/factura?pedido=',
   server: 'http://localhost:8000'
 };
