@@ -8,3 +8,7 @@ class Product(BaseModel):
     precio: int
     estado: str
     categoria: str
+
+class FilterRegionCounty(BaseModel):
+    region: str
+    country: str

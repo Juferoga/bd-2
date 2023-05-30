@@ -1,12 +1,12 @@
-from models.user import UserClient
+from models.client import UserClient
 import cx_Oracle
 
 
 class ClientDao:
-    def __init__(self, connection):
+    def __init__(self):
         self.nombre = "ClientDao"
 
-    def create_client(self, cursor, cliente: UserClient, representante : int):
+    def create(self, cursor, cliente: UserClient, representante : int):
             sql = f"insert into cliente (K_CLIENTE,T_CIUDAD,K_REPRESENTANTE) values ({cliente.id}, '{cliente.ciudad}', {representante})"
             try:
                 cursor.execute(sql)

@@ -1,5 +1,7 @@
+from colorama import init, Fore, Back, Style
 from cx_Oracle import connect, DatabaseError
 from services.conexion import is_connection_active
+from models.api import InternalResponse
 from os import getenv
 
 # adminmulven - adminmulven
@@ -10,31 +12,41 @@ class ConnectionManager:
 
     def create_connection(self, user: str, password: str):
         if is_connection_active(self.get_connection(user)):
-            print ("LA CONEXIÓN ESTA ACTIVA, RETORNANDO:", user , " CONEXIÓN;")
-            return self.connections[user]
+            print(Back.GREEN + f":::   [RETURN|connection]: {user} :::" + Style.RESET_ALL)
+            return InternalResponse(success=True, content=self.connections[user]) 
         else:
             try:
                 connection = connect(user=user, password=password, dsn="34.125.35.46:1521/XEPDB1", encoding='UTF-8')  # Actualiza los valores del host y service_name
                 self.connections[user] = connection
-                print("LA CONEXIÓN NO ESTA ACTIVA, CREATE:", user , " CONEXIÓN;")
-                return connection
+                print(Back.GREEN + f":::   [ OPEN |connection]: {user}     :::" + Style.RESET_ALL)
+                return InternalResponse(success=True, content=connection)
             except DatabaseError as e:
-                print("Error al crear la conexión:", str(e))
-                return None
+                print(Back.RED +"[ERROR|connection_manager]:", str(e) + Style.RESET_ALL)
+                return InternalResponse(success=False, content=str(e))
 
     def get_connection(self, user: str):
-        return self.connections.get(user)
+        try:
+            conn = self.connections.get(user)
+        except Exception as e:
+            return InternalResponse(success=False, content=str(e))
+        return InternalResponse(success=True, content=conn)
 
     def remove_connection(self, user: str):
-        if user in self.connections:
-            self.connections[user].close()
-            del self.connections[user]
+        try:
+            if user in self.connections:
+                self.connections[user].close()
+                del self.connections[user]
+            print(Back.BLUE + f":::   [CLOSE|connection]: {user}      :::" + Style.RESET_ALL)
+        except Exception as e:
+            return InternalResponse(success=False, content=str(e))
+        return InternalResponse(success=True, content=user)
 
     def get_all_connections(self):
-        return self.connections
-    
-    def get_len_connections(self):
-        print(self.connections)
+        try:
+            conns = self.connections
+        except Exception as e:
+            return InternalResponse(success=False, content=str(e))
+        return InternalResponse(success=True, content=conns)
 
 conn_manager = ConnectionManager()
 
@@ -48,37 +60,3 @@ def try_connect_to_db(username: str, password: str, dsn: str = "34.125.35.46:152
     except DatabaseError as e:
         error, = e.args
         return {"status" : False, "message": error.message}
-    
-
-# class Connect:
-#     def __init__(self, user, password):
-#         self.user = user
-#         self.password = password
-#         self.connection = None
-#         self.cursor = None
-    
-#     def open_connection(self):
-#         try:
-#             self.connection = cx_Oracle.connect(user=self.user, password=self.password, dsn='redflox.com:1521/VENTAS_MULTINIVEL', encoding="UTF-8")
-#             self.cursor = self.connection.cursor()
-#             return [True,'Conectado']
-#         except cx_Oracle.Error as error:
-#             return [False, str(error)]
-#     def execute_query(self, query, params):
-#         try:
-#             self.cursor.execute(query, params)
-#             if self.cursor.description != None:
-#                 return [True, self.cursor.fetchall()]
-#             else:
-#                 return [True, None]
-#         except cx_Oracle.Error as error:
-#             print(error)
-#             print(query)
-#             return [False, str(error)]
-#     def commit(self):
-#         self.connection.commit()
-#     def close_connection(self):
-#         self.cursor.close()
-#         self.connection.close()
-#     def get_cursor(self):
-#         return self.cursor
