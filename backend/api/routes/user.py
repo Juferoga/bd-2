@@ -25,7 +25,7 @@ async def get_user_me(current_user: UserOfDB = Depends(get_current_user)):
             raise Exception(str(user[1]))
         response.status = status.HTTP_200_OK
         response.data = user
-        response.message = "success"
+        response.message = "Success"
     except Exception as e:
         response.status = status.HTTP_409_CONFLICT
         response.data = []
@@ -54,6 +54,8 @@ async def get_user_all(current_user: UserOfDB = Depends(get_current_user)):
         response.message = str(e)
     finally:
         conn_manager.remove_connection(current_user.username)
+    return response
+
 # Modifica un usuario
 @user_routes.post('/user/set')
 async def edit(user: User, current_user: UserOfDB = Depends(get_current_user)):
@@ -63,13 +65,16 @@ async def edit(user: User, current_user: UserOfDB = Depends(get_current_user)):
         if not conn.success:
             raise Exception(conn.content)
         user_dao = UserDao(conn.content)
+        conn.content.begin()
         res = user_dao.edit(user)
         if not res[0]:
             raise Exception(res[1])
+        conn.content.commit()
         response.status = status.HTTP_200_OK
         response.data = user_dao.get_by_id(user.id)
-        response.message = res[1]
+        response.message = "Success"
     except Exception as e:
+        conn.content.rollback()
         response.status = status.HTTP_409_CONFLICT
         response.data = []
         response.message = str(e)
@@ -85,17 +90,20 @@ async def delete(user: User, current_user: UserOfDB = Depends(get_current_user))
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
         if not conn.success:
             raise Exception(conn.content)
+        conn.content.begin()
         user_dao = UserDao(conn.content)
         user = user_dao.edit(user)
         if not user[0]:
             raise Exception(user[1])
-        response.message = user[1]
+        conn.content.commit()
         response.status = status.HTTP_200_OK
-        response.data = []
+        response.data = user[1]
+        response.message = "Success"
     except Exception as e:
-        response.message = str(e)
+        conn.content.rollback()
         response.status = status.HTTP_400_BAD_REQUEST
-        response.data = user
+        response.data = []
+        response.message = str(e)
     finally:
         conn_manager.remove_connection(current_user.username)
     return response
@@ -114,7 +122,7 @@ async def get_user_me(username:str, current_user: UserOfDB = Depends(get_current
             raise Exception(str(user[1]))
         response.status = status.HTTP_200_OK
         response.data = user[1]
-        response.message = "success"
+        response.message = "Success"
     except Exception as e:
         response.status = status.HTTP_409_CONFLICT
         response.data = []

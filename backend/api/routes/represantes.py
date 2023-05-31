@@ -19,6 +19,7 @@ async def create_represent(user: Representante, res: Response = None, current_us
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
         if not conn.success:
             raise Exception(str(conn.content))
+        conn.content.begin()
         cur = conn.content.cursor()
         user_dao = UserDao(conn)
         represent_dao = RepresentanteDao()
@@ -48,25 +49,18 @@ async def create_represent(user: Representante, res: Response = None, current_us
         if not resCli[0]:
             cur.execute(f"delete from usuario where k_usuario = {user.id}")
             raise Exception(resCli[1])
-        response.message = resUser[1] + " -- " + resCli[1]
+        conn.content.commit()
+        response.message = "Success"
         response.status = 200
         response.data = user_dao.get_by_username(user.username)
-        conn.commit()
     except Exception as e:
-        response.message = str(e)
+        conn.content.rollback()
         response.status = status.HTTP_400_BAD_REQUEST
-        if response.message.find("ORA-01031") == -1:
-            try:
-                cur.execute("drop user {}".format(user.username))
-            except Exception as e:
-                response.status = status.HTTP_404_NOT_FOUND
-                response.message = str(e)
-                response.data = {}
-                res.status_code = 404
-        print(response.message)
+        response.data = []
+        response.message = str(e)
     finally:
         cur.close()
-        del user_dao
+        conn_manager.remove_connection(current_user.username)
     return response
     
 
@@ -83,7 +77,7 @@ async def get_representante_all(current_user: UserOfDB = Depends(get_current_use
             raise Exception(str(representantes[1]))
         response.status = status.HTTP_200_OK
         response.data = representantes[1]
-        response.message = "success"
+        response.message = "Success"
     except Exception as e:
         response.status = status.HTTP_409_CONFLICT
         response.data = []

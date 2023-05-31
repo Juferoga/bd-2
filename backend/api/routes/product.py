@@ -7,38 +7,80 @@ from models.api import ApiResponse
 from database.connection_manager import conn_manager
 from services.crypto import desencriptar
 from dao.product_dao import ProductDao
-from models.product import FilterRegionCounty
+from models.product import FilterRegionCounty, CreateProduct
 
 
 product_routes = APIRouter()
 
+@product_routes.post('/product/add', response_model=ApiResponse)
+async def create_product(product: CreateProduct, current_user: UserOfDB = Depends(get_current_user)):
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        product_dao = ProductDao(conn.content)
+        conn.content.begin()
+        product = product_dao.create_product(product)
+        if not product[0]:
+            raise Exception(str(product[1]))
+        conn.content.commit()
+        response.status = status.HTTP_200_OK
+        response.data = []
+        response.message = "Success"
+    except Exception as e:
+        if conn.success:
+            conn.content.rollback()
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response
+
 
 @product_routes.get('/product/get', response_model=ApiResponse)
 async def get_product_all(current_user: UserOfDB = Depends(get_current_user)):
-    response = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
-    if response.success:
-        product_dao = ProductDao(response.content)
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        product_dao = ProductDao(conn.content)
         products = product_dao.get_all_products()
-        if not isinstance(products, list) and not all(isinstance(product, Product) for product in products):
-            del product_dao
-            return ApiResponse(status=status.HTTP_404_NOT_FOUND,data=products,message="error")
-        del product_dao
-        return ApiResponse(status=status.HTTP_200_OK,data=products,message="success")
-    else:
-        return ApiResponse(status=status.HTTP_200_OK,data="error",message=response.content)
-
+        if not products[0]:
+            raise Exception(str(products[1]))
+        response.status = status.HTTP_200_OK
+        response.data = products[1]
+        response.message = "Success"
+    except Exception as e:
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response
+        
 @product_routes.get('/product/filter', response_model=ApiResponse)
 async def filter_products(region: str, country: str, current_user: UserOfDB = Depends(get_current_user)):
-    response = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
-    if response.success:
-        product_dao = ProductDao(response.content)
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        product_dao = ProductDao(conn.content)
         products = product_dao.get_filter_products(FilterRegionCounty(region=region, country=country))
-        if not isinstance(products, list) and not all(isinstance(product, Product) for product in products):
-            del product_dao
-            return ApiResponse(status=status.HTTP_404_NOT_FOUND,data=products,message="error")
-        del product_dao
-        return ApiResponse(status=status.HTTP_200_OK,data=products,message="success")
-    else:
-        return ApiResponse(status=status.HTTP_200_OK,data="error",message=response.content)
-
+        if not products[0]:
+            raise Exception(str(products[1]))
+        response.status = status.HTTP_200_OK
+        response.data = products[1]
+        response.message = "Success"
+    except Exception as e:
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response
+        
 
