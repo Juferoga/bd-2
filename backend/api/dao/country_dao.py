@@ -7,8 +7,8 @@ class CountryDao:
         self.connection = connection
 
     def create(self, country: Country):
-        sql = f"INSERT INTO PAIS (K_PAIS, T_NOMBRE) VALUES ('{country.id}', '{country.nombre}')"
         try:
+            sql = f"INSERT INTO PAIS (K_PAIS, T_NOMBRE) VALUES ('{country.id}', '{country.nombre}')"
             cursor = self.connection.cursor()
             cursor.execute(sql)
         except cx_Oracle.Error as error:
@@ -33,3 +33,13 @@ class CountryDao:
         finally:
             cursor.close()
         return [True, countrys]
+    
+    def delete(self, country_id):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"DELETE FROM PAIS WHERE K_PAIS = '{country_id}'")
+        except Exception as e:
+            return [False, str(e)]
+        finally:
+            cursor.close()
+        return [True, country_id]

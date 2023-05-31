@@ -63,7 +63,7 @@ async def create_represent(user: Representante, res: Response = None, current_us
         conn_manager.remove_connection(current_user.username)
     return response
     
-
+# retorna todos los representantes
 @representantes_routes.get('/representante/get', response_model=ApiResponse)
 async def get_representante_all(current_user: UserOfDB = Depends(get_current_user)):
     try:

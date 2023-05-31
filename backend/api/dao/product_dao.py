@@ -26,14 +26,15 @@ class ProductDao:
             products = []
             for row in cursor: 
                 K_PRODUCTO, T_NOMBRE, T_DESCRIPCION, N_PRECIO, I_ESTADO, K_CATEGORIA = row
-                products.append({
-                    'producto' : K_PRODUCTO,
-                    'nombre' : T_NOMBRE,
-                    'descripcion' : T_DESCRIPCION,
-                    'precio' : N_PRECIO,
-                    'estado' : I_ESTADO,
-                    'categoria' : K_CATEGORIA,
-                })
+                if I_ESTADO == "A":
+                    products.append({
+                        'producto' : K_PRODUCTO,
+                        'nombre' : T_NOMBRE,
+                        'descripcion' : T_DESCRIPCION,
+                        'precio' : N_PRECIO,
+                        'estado' : I_ESTADO,
+                        'categoria' : K_CATEGORIA,
+                    })
         except Exception as e:
             return [False, str(e)]
         finally:
@@ -65,6 +66,26 @@ class ProductDao:
         finally:
             cursor.close()
         return [True, products]
+    
+    def disable (self, product_id: int):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"UPDATE PRODUCTO SET I_ESTADO = 'I' WHERE K_PRODUCTO = {product_id}")
+        except Exception as e:
+            return [False, str(e)]
+        finally:
+            cursor.close()
+        return [True, product_id]
+    
+    def activate (self, product_id: int):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"UPDATE PRODUCTO SET I_ESTADO = 'A' WHERE K_PRODUCTO = {product_id}")
+        except Exception as e:
+            return [False, str(e)]
+        finally:
+            cursor.close()
+        return [True, product_id]
     
     
 
