@@ -146,19 +146,47 @@ export class UsersComponent {
 
     if (this.usuario.nombre.trim()) {
       if (this.usuario.email) {
-        this.usuarios[this.findIndexById(this.usuario.email)] = this.usuario;
-        this.messageService.add({
-          severity: "success",
-          summary: "Successful",
-          detail: "usuario Actualizado",
-          life: 3000,
-        });
+        this.userService.setUser(this.usuario).subscribe(
+          (data)=> {
+            this.usuarios[this.findIndexById(this.usuario.email)] = data['data'];
+            this.messageService.add({
+              severity: "success",
+              summary: "Successful",
+              detail: "usuario Actualizado",
+              life: 3000,
+            });
+          },
+          (err)=> {
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "usuario NO Actualizado"+err,
+              life: 3000,
+            });
+          }
+        )
       } else {
         this.usuario.email = this.createId();
-        this.usuarios.push(this.usuario);
         this.userService.createUser(this.usuario).subscribe({
-          next:(res)=>{ console.log(res) },
-          error:(err)=>{}
+          next:(res)=>{ 
+            console.log(res);
+            //this.usuarios.push(this.usuario);
+            this.usuarios.push(res['data']) ;
+            this.messageService.add({
+              severity: "success",
+              summary: "Successful",
+              detail: "usuario Creado",
+              life: 3000,
+            });
+          },
+          error:(err)=>{
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "usuario NO Creado"+err,
+              life: 3000,
+            });
+          }
         });
         this.messageService.add({
           severity: "success",
