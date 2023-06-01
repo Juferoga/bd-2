@@ -139,7 +139,8 @@ class UserDao:
         finally:
             cursor.close()
         return [True, users]
-
+    
+    
     def create_user(self,cursor, usuario: UserOfDB):
         sql = f"insert into usuario ( K_USUARIO, T_NOMBRE, T_APELLIDO, F_NACIMIENTO, I_GENERO, N_TELEFONO, T_DIRECCION, T_EMAIL, I_ESTADO, T_USERNAME) values ({usuario.id}, '{usuario.nombre}', '{usuario.apellido}', to_date('{str(usuario.fecha_de_nacimiento)}','YYYY-mm-dd'), '{usuario.genero}', {usuario.telefono}, '{usuario.direccion}', '{usuario.email}', '{usuario.estado}','{usuario.username}')"
         try:

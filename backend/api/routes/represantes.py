@@ -137,3 +137,25 @@ async def get_representante_all(res: Response = None, current_user: UserOfDB = D
         conn_manager.remove_connection(current_user.username)
     return response
 
+@representantes_routes.get('/representante/comision/', response_model=ApiResponse)
+async def get_representante_comision(res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        representante_dao = RepresentanteDao(conn.content)
+        representantes = representante_dao.get_commision(current_user.username)
+        if not representantes[0]:
+            raise Exception(str(representantes[1]))
+        response.status  = status.HTTP_200_OK
+        response.data    = representantes[1]
+        response.message = "Success"
+    except Exception as e:
+        res.status_code  = status.HTTP_409_CONFLICT
+        response.status  = status.HTTP_409_CONFLICT
+        response.data    = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response

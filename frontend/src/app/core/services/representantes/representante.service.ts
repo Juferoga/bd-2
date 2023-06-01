@@ -29,6 +29,12 @@ export class RepresentanteService {
       {headers: this.headers}
     )
   }
+  getRepresentantesCom():Observable<Representantes[]>{
+    return this.http.get<Representantes[]>(
+      environment.api + 'representante/comision/',
+      {headers: this.headers}
+    )
+  }
   setRepresentante(representante):Observable<Representantes>{
     var body = JSON.stringify(representante)
     return this.http.post<Representantes>(

@@ -34,6 +34,30 @@ class RepresentanteDao:
             print("ERROR [create_represent | DAO] \n", error)
             return [False, str(error)]
         
-
+    def get_commision(self, username:str, *args, **kwargs):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"""
+                            SELECT 
+                                U.T_NOMBRE AS NOMBRE_USUARIO, 
+                                C.N_COMISION AS COMISION
+                            FROM 
+                                USUARIO U
+                                INNER JOIN REPRESENTANTE R ON U.K_USUARIO = R.K_REPRESENTANTE
+                                INNER JOIN CLASIFICACION C ON R.K_CLASIFICACION = C.K_CLASIFICACION
+                            WHERE U.T_USERNAME = '{username}'
+                            """)
+            orders = []
+            for row in cursor: 
+                NOMBRE_USUARIO, COMISION= row
+                orders.append({
+                    'usuario'     :  NOMBRE_USUARIO,
+                    'comision'    :  COMISION
+                })
+        except Exception as e:
+            return [False, str(e)]
+        finally:
+            cursor.close()
+        return [True, orders]
         
 
