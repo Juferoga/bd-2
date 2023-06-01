@@ -9,8 +9,11 @@ class Warehouse(BaseModel):
     region: str
     pais: str
 
+class WarehouseProductDelete(BaseModel):
+    id_warehouse: int
+    id_product: int
+
 class WarehouseProduct(BaseModel):
-    id: int
     id_warehouse: int
     id_product: int
     cantidad: int

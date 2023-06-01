@@ -60,7 +60,8 @@ import { ConfirmationDemo } from './pages/purchase/confirmation';
 import { TicketService } from './core/services/compra/ticket.service';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SplitterModule } from 'primeng/splitter';
-
+import { DividerModule } from 'primeng/divider';
+import { SkeletonModule } from 'primeng/skeleton';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +89,7 @@ import { SplitterModule } from 'primeng/splitter';
     ConfirmationDemo
   ],
   imports: [
+    SkeletonModule,
     TagModule,
     BrowserModule,
     AppRoutingModule,
@@ -119,7 +121,9 @@ import { SplitterModule } from 'primeng/splitter';
     StepsModule,
     CheckboxModule,
     CardModule,
-    SplitterModule
+    SplitterModule,
+    PasswordModule,
+    DividerModule
   ],
   providers: [
     MessageService,

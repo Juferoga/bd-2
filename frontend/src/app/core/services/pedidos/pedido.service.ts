@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Pedidos } from '../../models/pedidos/pedidos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
@@ -17,38 +16,38 @@ export class PedidoService {
     this.headers = this.headers.append("Content-Type", "application/json");
   }
 
-  getPedido(id):Observable<Pedidos>{
-    return this.http.get<Pedidos>(
-      environment.api + 'pedidos/' + id,
+  getPedido(id):Observable<any>{
+    return this.http.get<any>(
+      environment.api + 'order/' + id,
       {headers: this.headers}
     )
   }
-  getPedidos():Observable<Pedidos[]>{
-    return this.http.get<Pedidos[]>(
-      environment.api + 'pedidos/get/',
+  getPedidos():Observable<any[]>{
+    return this.http.get<any[]>(
+      environment.api + 'order/get_orders_by_user',
       {headers: this.headers}
     )
   }
-  setPedido(pedido):Observable<Pedidos>{
+  setPedido(pedido):Observable<any>{
     var body = JSON.stringify(pedido)
-    return this.http.post<Pedidos>(
-      environment.api + 'pedidos/set/',
+    return this.http.post<any>(
+      environment.api + 'order/set/',
       body,
       {headers: this.headers}
     )
   }
-  delPedido(pedido):Observable<Pedidos>{
+  delPedido(pedido):Observable<any>{
     var body = JSON.stringify(pedido)
-    return this.http.post<Pedidos>(
-      environment.api + 'pedidos/del/',
+    return this.http.post<any>(
+      environment.api + 'order/del/',
       body,
       {headers: this.headers}
     )
   }
-  createPedido(pedido):Observable<Pedidos>{
+  createPedido(pedido):Observable<any>{
     var body = JSON.stringify(pedido)
-    return this.http.post<Pedidos>(
-      environment.api + 'pedidos/add/',
+    return this.http.post<any>(
+      environment.api + 'order/add/',
       body,
       {headers: this.headers}
     )

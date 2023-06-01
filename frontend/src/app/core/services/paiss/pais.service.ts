@@ -19,20 +19,20 @@ export class PaisService {
 
   getPais(id):Observable<Paiss>{
     return this.http.get<Paiss>(
-      environment.api + 'pais/' + id,
+      environment.api + 'country/' + id,
       {headers: this.headers}
     )
   }
   getPaiss():Observable<Paiss[]>{
     return this.http.get<Paiss[]>(
-      environment.api + 'pais/get/',
+      environment.api + 'country/get/',
       {headers: this.headers}
     )
   }
   setPais(pais):Observable<Paiss>{
     var body = JSON.stringify(pais)
     return this.http.post<Paiss>(
-      environment.api + 'pais/set/',
+      environment.api + 'country/set/',
       body,
       {headers: this.headers}
     )
@@ -40,7 +40,7 @@ export class PaisService {
   delPais(pais):Observable<Paiss>{
     var body = JSON.stringify(pais)
     return this.http.post<Paiss>(
-      environment.api + 'pais/del/',
+      environment.api + 'country/del/',
       body,
       {headers: this.headers}
     )
@@ -48,7 +48,7 @@ export class PaisService {
   createPais(pais):Observable<Paiss>{
     var body = JSON.stringify(pais)
     return this.http.post<Paiss>(
-      environment.api + 'pais/add/',
+      environment.api + 'country/add/',
       body,
       {headers: this.headers}
     )

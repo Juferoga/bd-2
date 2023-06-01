@@ -13,7 +13,7 @@ user_routes = APIRouter()
 
 # Devuelve el usuario actual
 @user_routes.get('/user/me', response_model=ApiResponse)
-async def get_user_me(current_user: UserOfDB = Depends(get_current_user)):
+async def get_user_me(res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response = ApiResponse(status="", data=[], message="")    
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -27,6 +27,7 @@ async def get_user_me(current_user: UserOfDB = Depends(get_current_user)):
         response.data = user[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         response.status = status.HTTP_409_CONFLICT
         response.data = []
         response.message = str(e)
@@ -35,7 +36,7 @@ async def get_user_me(current_user: UserOfDB = Depends(get_current_user)):
     return response
 # Devuelve todos los usuarios
 @user_routes.get('/user/get', response_model=ApiResponse)
-async def get_user_all(current_user: UserOfDB = Depends(get_current_user)):
+async def get_user_all(res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response = ApiResponse(status="", data=[], message="")
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -49,6 +50,7 @@ async def get_user_all(current_user: UserOfDB = Depends(get_current_user)):
         response.data = users[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         response.status = status.HTTP_409_CONFLICT
         response.data = []
         response.message = str(e)
@@ -58,7 +60,7 @@ async def get_user_all(current_user: UserOfDB = Depends(get_current_user)):
 
 # Modifica un usuario
 @user_routes.post('/user/set')
-async def edit(user: User, current_user: UserOfDB = Depends(get_current_user)):
+async def edit(user: User, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response = ApiResponse(status="",data={},message="")
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -74,6 +76,7 @@ async def edit(user: User, current_user: UserOfDB = Depends(get_current_user)):
         response.data = user_dao.get_by_id(user.id)
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         conn.content.rollback()
         response.status = status.HTTP_409_CONFLICT
         response.data = []
@@ -84,7 +87,7 @@ async def edit(user: User, current_user: UserOfDB = Depends(get_current_user)):
 
 # Elimina un usuario
 @user_routes.post('/user/del', response_model=ApiResponse)
-async def delete(user: User, current_user: UserOfDB = Depends(get_current_user)):
+async def delete(user: User, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response = ApiResponse(status="",data={},message="")
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -100,6 +103,7 @@ async def delete(user: User, current_user: UserOfDB = Depends(get_current_user))
         response.data = user[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         conn.content.rollback()
         response.status = status.HTTP_400_BAD_REQUEST
         response.data = []
@@ -110,7 +114,7 @@ async def delete(user: User, current_user: UserOfDB = Depends(get_current_user))
 
 # Devuelve un usuario especifico
 @user_routes.get('/user/{username}', response_model=ApiResponse)
-async def get_user_me(username:str, current_user: UserOfDB = Depends(get_current_user)):
+async def get_user_me(username:str, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response =  ApiResponse(status="", data=[], message="")
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -124,6 +128,7 @@ async def get_user_me(username:str, current_user: UserOfDB = Depends(get_current
         response.data = user[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         response.status = status.HTTP_409_CONFLICT
         response.data = []
         response.message = str(e)
@@ -133,7 +138,7 @@ async def get_user_me(username:str, current_user: UserOfDB = Depends(get_current
 
 # Devuelve un usuario especifico
 @user_routes.get('/user/id/{id}', response_model=ApiResponse)
-async def get_user_for_id(id:int, current_user: UserOfDB = Depends(get_current_user)):
+async def get_user_for_id(id:int, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
     try:
         response =  ApiResponse(status="", data=[], message="")
         conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
@@ -147,6 +152,7 @@ async def get_user_for_id(id:int, current_user: UserOfDB = Depends(get_current_u
         response.data = user[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         response.status = status.HTTP_409_CONFLICT
         response.data = []
         response.message = str(e)

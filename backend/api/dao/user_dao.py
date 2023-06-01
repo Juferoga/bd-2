@@ -121,7 +121,7 @@ class UserDao:
             cursor.execute('SELECT * FROM USUARIO')
             users = []
             for row in cursor:
-                K_USUARIO, T_NOMBRE, T_APELLIDO, F_NACIMIENTO, I_GENERO, N_TELEFONO, T_DIRECCION, T_EMAIL, I_ESTADO, T_USERNAME = row
+                K_USUARIO, T_NOMBRE, T_APELLIDO, F_NACIMIENTO, I_GENERO, N_TELEFONO, T_DIRECCION, T_EMAIL, T_USERNAME, I_ESTADO = row
                 users.append({
                     'id': K_USUARIO,
                     'username': T_USERNAME,

@@ -7,8 +7,10 @@ from database.connection_manager import conn_manager
 from services.crypto import desencriptar
 from dao.user_dao import UserDao
 from dao.client_dao import ClientDao
+from colorama import init, Fore, Back, Style
 
 client_routes = APIRouter()
+
 
 # Crea un cliente
 @client_routes.post('/client/create', response_model=ApiResponse)
@@ -53,10 +55,21 @@ async def create_client(user: UserClient, res: Response = None, current_user: Us
         response.data = user_dao.get_by_username(user.username)[1]
         response.message = "Success"
     except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
         conn.content.rollback()
         response.status = status.HTTP_400_BAD_REQUEST
         response.data = []
         response.message = str(e)
+
+        #PARTE DE ELMINAR USUARIO DE BD
+        try:
+            if response["message"].find("ORA-01031") == -1:
+                cur.execute("drop user {}".format(user.t_nombre))
+        except Exception as e:
+            print(Back.RED + f":::   [ERROR|client.py]: {str(e)}      :::" + Style.RESET_ALL)
+            response.message = str(e)
+        # ----------------------------------------------------------------
+        
     finally:
         cur.close()
         conn_manager.remove_connection(current_user.username)

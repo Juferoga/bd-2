@@ -29,6 +29,12 @@ export class ProductService {
       {headers: this.headers}
     )
   }
+  getProductsRegion():Observable<Product[]>{
+    return this.http.get<Product[]>(
+      environment.api + 'region/inventory/',
+      {headers: this.headers}
+    )
+  }
   setProduct(product):Observable<Product>{
     var body = JSON.stringify(product)
     return this.http.post<Product>(

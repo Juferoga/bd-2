@@ -35,3 +35,5 @@ class RepresentanteDao:
             return [False, str(error)]
         
 
+        
+

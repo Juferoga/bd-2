@@ -1,5 +1,5 @@
 export class Clasificacions{
-  clasificacion : string;
-  descripcion : string;
-  comision : number;
+  id : string;
+  nombre : string;
+  comision ?: number;
 }

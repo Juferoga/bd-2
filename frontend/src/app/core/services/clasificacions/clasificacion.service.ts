@@ -19,20 +19,20 @@ export class ClasificacionService {
 
   getClasificacion(id):Observable<Clasificacions>{
     return this.http.get<Clasificacions>(
-      environment.api + 'clasificacion/' + id,
+      environment.api + 'classification/' + id,
       {headers: this.headers}
     )
   }
   getClasificacions():Observable<Clasificacions[]>{
     return this.http.get<Clasificacions[]>(
-      environment.api + 'clasificacion/get/',
+      environment.api + 'classification/get/',
       {headers: this.headers}
     )
   }
   setClasificacion(clasificacion):Observable<Clasificacions>{
     var body = JSON.stringify(clasificacion)
     return this.http.post<Clasificacions>(
-      environment.api + 'clasificacion/set/',
+      environment.api + 'classification/set/',
       body,
       {headers: this.headers}
     )
@@ -40,7 +40,7 @@ export class ClasificacionService {
   delelasificacion(clasificacion):Observable<Clasificacions>{
     var body = JSON.stringify(clasificacion)
     return this.http.post<Clasificacions>(
-      environment.api + 'clasificacion/del/',
+      environment.api + 'classification/del/',
       body,
       {headers: this.headers}
     )
@@ -48,7 +48,7 @@ export class ClasificacionService {
   crealasificacion(clasificacion):Observable<Clasificacions>{
     var body = JSON.stringify(clasificacion)
     return this.http.post<Clasificacions>(
-      environment.api + 'clasificacion/add/',
+      environment.api + 'classification/add/',
       body,
       {headers: this.headers}
     )

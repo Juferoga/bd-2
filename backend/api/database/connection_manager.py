@@ -36,7 +36,7 @@ class ConnectionManager:
             if user in self.connections:
                 self.connections[user].close()
                 del self.connections[user]
-            print(Back.BLUE + f":::   [CLOSE|connection]: {user}      :::" + Style.RESET_ALL)
+            print(Back.RED + f":::   [CLOSE|connection]: {user}      :::" + Style.RESET_ALL)
         except Exception as e:
             return InternalResponse(success=False, content=str(e))
         return InternalResponse(success=True, content=user)

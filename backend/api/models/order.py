@@ -11,14 +11,16 @@ class Order(BaseModel):
     pais: str
 
 class OrderItem(BaseModel):
-    id: int
-    id_pedido: int
     id_producto: int
+    id_pedido: int
     cantidad: int
     precio_unitario: int
 
 class ServiceRating(BaseModel):
-    id: int
     calificacion: int
     observacion: str
     id_pedido: int
+
+class DeleteItem(BaseModel):
+    id_pedido: int
+    id_producto: int

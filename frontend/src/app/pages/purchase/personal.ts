@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Paiss } from 'src/app/core/models/paiss/paiss.model';
+import { Regions } from 'src/app/core/models/regions/regions.model';
 import { TicketService } from 'src/app/core/services/compra/ticket.service';
+import { PaisService } from 'src/app/core/services/paiss/pais.service';
+import { RegionService } from 'src/app/core/services/regions/region.service';
 
 @Component({
     template: `
@@ -11,23 +16,33 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                 <ng-template pTemplate="content">
                     <div class="p-fluid">
                         <div class="field">
-                            <label for="region">Región</label>
-                            <input
-                                #region="ngModel"
-                                id="region"
-                                type="text"
-                                required
-                                pInputText
-                                [(ngModel)]="personalInformation.region"
-                                [ngClass]="{ 'ng-dirty': (region.invalid && submitted) || (region.dirty && region.invalid) }"
-                            />
-                            <small *ngIf="(region.invalid && submitted) || (region.dirty && region.invalid)" class="p-error">Región es required.</small>
-                        </div>
-                        <div class="field">
                             <label for="pais">País</label>
-                            <input #pais="ngModel" id="pais" type="text" required pInputText [(ngModel)]="personalInformation.pais" [ngClass]="{ 'ng-dirty': (pais.invalid && submitted) || (pais.dirty && pais.invalid) }" />
-                            <small class="p-error" *ngIf="(pais.invalid && submitted) || (pais.dirty && pais.invalid)">País es requerido.</small>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">
+                                    <i class="pi pi-globe"></i>
+                                </span>
+                                <select id="pais" [(ngModel)]="personalInformation.pais" (change)="onloadRegion($event)">
+                                    <option selected disabled value="null">Seleccione País</option>
+                                    <option *ngFor="let pais of paisesList" [value]="pais.id">{{ pais.nombre }}</option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="field" *ngIf="personalInformation.pais !== null">
+                            <label for="region">Región</label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">
+                                    <i class="pi pi-globe"></i>
+                                </span>
+                                <select id="region" [(ngModel)]="personalInformation.region" *ngIf="regionesList.length !=0">
+                                    <option selected disabled value="null">Seleccione Región</option>
+                                    <option *ngFor="let region of regionesList" [value]="region.region">{{ region.nombre }}</option>
+                                </select>
+                                <div *ngIf="!(regionesList.length !=0)">
+                                    <input style="min-width: 150px;" placeholder="Escribe tu región..." #region="ngModel" id="ciudad" type="text" required pInputText [(ngModel)]="personalInformation.region" [ngClass]="{ 'ng-dirty': (region.invalid && submitted) || (region.dirty && region.invalid) }" />
+                                    <small class="p-error" *ngIf="(ciudad.invalid && submitted) || (ciudad.dirty && ciudad.invalid)">Ciudad es requerido.</small>
+                                </div>
+                            </div>
+                        </div>      
                         <div class="field">
                             <label for="ciudad">Ciudad</label>
                                 <input #ciudad="ngModel" id="ciudad" type="text" required pInputText [(ngModel)]="personalInformation.ciudad" [ngClass]="{ 'ng-dirty': (ciudad.invalid && submitted) || (ciudad.dirty && ciudad.invalid) }" />
@@ -54,10 +69,37 @@ export class PersonalDemo implements OnInit {
 
     submitted: boolean = false;
 
-    constructor(public ticketService: TicketService, private router: Router) {}
+    paisesList: Paiss[] = [];
+	regionesList: Regions[] = [];
+
+    constructor(
+        public ticketService: TicketService, 
+        private router: Router,
+        private messageService: MessageService,
+        private regionService: RegionService,
+        private paisService: PaisService) {}
 
     ngOnInit() {
         this.personalInformation = this.ticketService.getTicketInformation().personalInformation;
+        this.paisService.getPaiss().subscribe(
+            (data)=>{
+              this.paisesList = data['data'];
+              this.messageService.add({
+                key: "grl-toast",
+                severity: "success",
+                summary: "Consulta exitosa",
+                detail: "La consulta se realizo correctamente sobre la base de datos - Países Cargados",
+              });
+            },
+            (error)=>{
+              this.messageService.add({
+                key: "grl-toast",
+                severity: "error",
+                summary: "Consulta realizada SIN ÉXITO - Países No cargados",
+                detail: "::: ERROR ::: \n" + error["error"]["detail"],
+              });
+            }
+          )
     }
 
     nextPage() {
@@ -70,4 +112,26 @@ export class PersonalDemo implements OnInit {
 
         this.submitted = true;
     }
+
+    onloadRegion(country){
+        this.regionService.getRegion(country.target.value).subscribe(
+          (data)=>{
+            this.regionesList = data['data'];
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "success",
+              summary: "Consulta exitosa",
+              detail: "La consulta se realizo correctamente sobre la base de datos - Regiones Cargadas",
+            });
+          },
+          (error)=>{
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "error",
+              summary: "Consulta realizada SIN ÉXITO - Regiones No cargados",
+              detail: "::: ERROR ::: \n" + error["error"]["detail"],
+            });
+          }
+        )
+      }
 }

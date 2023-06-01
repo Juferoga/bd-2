@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StaticsService } from 'src/app/core/services/statics/statics.service';
 
 @Component({
   selector: 'app-stats',
@@ -6,11 +7,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./stats.component.scss']
 })
 export class StatsComponent {
-  data: any;
-
+    data: any;
     options: any;
 
+    constructor(
+        private staticsService: StaticsService
+    ) {}
+
     ngOnInit() {
+
+        this.staticsService.getBestSellers('1990-01-01','2023-05-05').subscribe(
+            (data)=>{
+                console.log("VENDEDORES",data);
+            }
+        )
+
+        this.staticsService.getBestRegion('1990-01-01','2023-05-05').subscribe(
+            (data)=>{
+                console.log("REGIONES",data);
+            }
+        )
+
+        this.staticsService.getBestProducts('1990-01-01','2023-05-05').subscribe(
+            (data)=>{
+                console.log("PRODUCTOS",data);
+            }
+        )
+
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');

@@ -1,4 +1,4 @@
 export class Paiss{
-  pais : string;
+  id : string;
   nombre : string;
 }

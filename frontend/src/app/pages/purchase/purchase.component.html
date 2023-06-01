@@ -23,7 +23,7 @@
           <ng-template pTemplate="body" let-pedido>
               <tr>
                   <td>{{ pedido.pedido }}</td>
-                  <td>{{ pedido.creacion | date:'shortDate'}}</td>
+                  <td>{{ pedido.fecha_creacion | date:'shortDate'}}</td>
                   <td>{{ pedido.region }}</td>
                   <td>{{ pedido.cliente }}</td>
                   <td>{{ pedido.total  | currency:'COP':'$' }}</td>

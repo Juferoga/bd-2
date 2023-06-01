@@ -19,20 +19,20 @@ export class RegionService {
 
   getRegion(id):Observable<Regions>{
     return this.http.get<Regions>(
-      environment.api + 'regiones/' + id,
+      environment.api + 'region/' + id,
       {headers: this.headers}
     )
   }
   getRegions():Observable<Regions[]>{
     return this.http.get<Regions[]>(
-      environment.api + 'regiones/get/',
+      environment.api + 'region/get/',
       {headers: this.headers}
     )
   }
   setRegion(region):Observable<Regions>{
     var body = JSON.stringify(region)
     return this.http.post<Regions>(
-      environment.api + 'regiones/set/',
+      environment.api + 'region/set/',
       body,
       {headers: this.headers}
     )
@@ -40,7 +40,7 @@ export class RegionService {
   delRegion(region):Observable<Regions>{
     var body = JSON.stringify(region)
     return this.http.post<Regions>(
-      environment.api + 'regiones/del/',
+      environment.api + 'region/del/',
       body,
       {headers: this.headers}
     )
@@ -48,7 +48,7 @@ export class RegionService {
   createRegion(region):Observable<Regions>{
     var body = JSON.stringify(region)
     return this.http.post<Regions>(
-      environment.api + 'regiones/add/',
+      environment.api + 'region/add/',
       body,
       {headers: this.headers}
     )
