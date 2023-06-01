@@ -53,10 +53,29 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                 </ng-template>
             </p-card>
         </div>
+        
+        <p-dialog header="Califica tu experiencia" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+            <p class="m-0">
+                Tú experiencia es muy importante para nosotros, selecciona qu e tan contento estas con el maneo del tramite!!!
+            </p>
+
+            <p-rating [(ngModel)]="value" [stars]="5" [cancel]="false">
+                <ng-template pTemplate="onicon">
+                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png" width="25px" height="25px" />
+                </ng-template>
+                <ng-template pTemplate="officon">
+                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png" width="25px" height="25px" />
+                </ng-template>
+            </p-rating>
+
+            <p-button style="display: flex; align-items;justify-content: flex-end;" (click)="sendRating()" icon="pi pi-external-link" label="Enviar"></p-button>
+        </p-dialog>
     `
 })
 export class ConfirmationDemo implements OnInit {
     ticketInformation: any;
+    value : any;
+    visible = false;
 
     constructor(public ticketService: TicketService, private router: Router) {}
 
@@ -65,10 +84,20 @@ export class ConfirmationDemo implements OnInit {
     }
 
     complete() {
-        this.ticketService.complete();
+        this.visible = this.ticketService.complete();
+        
     }
-
+    
     prevPage() {
         this.router.navigate(['admin/mis-compras/payment']);
     }
+    
+    showDialog() {
+        this.visible = true;
+    }
+    
+    sendRating() {
+        // conectar con el servicio de calificación
+    }
+
 }

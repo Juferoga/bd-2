@@ -32,7 +32,8 @@ export class TicketService {
     this.ticketInformation = ticketInformation;
   }
 
-  complete() {
+  complete():boolean {
     this.paymentComplete.next(this.ticketInformation.personalInformation);
+    return true;
   }
 }

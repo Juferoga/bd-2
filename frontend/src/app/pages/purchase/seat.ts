@@ -35,8 +35,8 @@ import { ProductService } from 'src/app/core/services/products/product.service';
                             <td>{{product.precio}}</td>
                             <td>{{product.cantidad}}</td>
                             <td>
-                                añadir
-                                quitar
+                                
+                                
                             </td>
                         </tr>
                     </ng-template>
