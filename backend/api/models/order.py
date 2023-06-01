@@ -9,7 +9,6 @@ class Order(BaseModel):
     ciudad: str
     region: str
     pais: str
-    id_cliente: int
 
 class OrderItem(BaseModel):
     id: int
