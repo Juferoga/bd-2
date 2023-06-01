@@ -23,6 +23,12 @@ export class BodegaService {
       {headers: this.headers}
     )
   }
+  getBodegaInventory(url):Observable<Bodega>{
+    return this.http.get<Bodega>(
+      environment.api + 'inventory/' + url,
+      {headers: this.headers}
+    )
+  }
   getBodegas():Observable<Bodega[]>{
     return this.http.get<Bodega[]>(
       environment.api + 'warehouse/get/',

@@ -12,7 +12,9 @@ from routes.classification import classification_routes
 from routes.orders import order_routes
 from routes.ware_house import warehouse_routes
 from routes.statics import statics_routes
-
+from routes.inventory import inventory_routes
+from routes.payment import payment_routes
+from routes.class_sellers import class_sellers_route
 
 app = FastAPI()
 origins = ["*"]
@@ -23,6 +25,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.workers = 8
+app.max_request_size = 100000000
+
 app.include_router(auth_routes, prefix='/api')
 app.include_router(user_routes, prefix='/api')
 app.include_router(representantes_routes, prefix='/api')
@@ -34,4 +40,7 @@ app.include_router(classification_routes, prefix='/api')
 app.include_router(order_routes, prefix='/api')
 app.include_router(warehouse_routes, prefix='/api')
 app.include_router(statics_routes, prefix='/api')
+app.include_router(inventory_routes, prefix="/api")
+app.include_router(payment_routes, prefix="/api")
+app.include_router(class_sellers_route, prefix="/api")
 load_dotenv()

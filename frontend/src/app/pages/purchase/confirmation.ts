@@ -26,16 +26,7 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                         <b>{{ ticketInformation.personalInformation.direccion_entrega }}</b>
                     </div>
                     <div class="field col-12">
-                        <label for="Age">Seat Class</label>
-                        <b>{{ ticketInformation.seatInformation.class ? ticketInformation.seatInformation.class.name : '-' }}</b>
-                    </div>
-                    <div class="field col-12">
-                        <label for="Age">Wagon Number</label>
-                        <b>{{ ticketInformation.seatInformation.wagon ? ticketInformation.seatInformation.wagon.wagon : '-' }}</b>
-                    </div>
-                    <div class="field col-12">
-                        <label for="Age">Seat</label>
-                        <b>{{ ticketInformation.seatInformation.seat ? ticketInformation.seatInformation.seat.seat : '-' }}</b>
+                        ACÁ VA LA LISTA DE PRODUCTOS SELECCIONADOS
                     </div>
                     <div class="field col-12">
                         <label for="Age">Cardholder Name</label>

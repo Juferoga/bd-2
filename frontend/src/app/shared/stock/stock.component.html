@@ -3,7 +3,7 @@
         <p-tabPanel header="Inventario">
             <p-toolbar styleClass="mb-4 gap-2">
                 <ng-template pTemplate="left">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewInv()"></button>
                     <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
                 </ng-template>
           
@@ -22,22 +22,35 @@
                             <span class="p-input-icon-left">
                                 <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
                             </span>
-                            <div>
+                            <div style="display: flex;">
+																<!-- <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
+																	<option selected disabled value="null">Seleccione clasificación</option>
+																	<option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
+																</select> -->
                                 <!-- 1 -->
-                                <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
-                                    <option selected disabled value="null">Seleccione País</option>
-                                    <option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
-                                </select>
+																<div>
+																	<label for="pais">País</label>
+																	<select id="pais" [(ngModel)]="countryString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione País</option>
+																			<option *ngFor="let item of bodegasList" [value]="item.pais">{{item.pais}}</option>
+																	</select>
+																</div>
                                 <!-- 2 -->
-                                <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
-                                    <option selected disabled value="null">Seleccione Región</option>
-                                    <option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
-                                </select>
+																<div>
+																	<label for="region">Región</label>
+																	<select id="region" [(ngModel)]="regionString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione Región</option>
+																			<option *ngFor="let item of bodegasList" [value]="item.region">{{item.region}}</option>
+																	</select>
+																</div>
                                 <!-- 3 -->
-                                <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
-                                    <option selected disabled value="null">Seleccione Bodega</option>
-                                  <option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
-                                </select>
+																<div>
+																	<label for="bodega">Bodega</label>
+																	<select id="bodega" [(ngModel)]="warehouseString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione Bodega</option>
+																		<option *ngFor="let item of bodegasList" [value]="item.bodega">{{item.bodega}}</option>
+																	</select>
+																</div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +78,7 @@
                         <td>{{prod.cantidad}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(prod)"></button>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(prod)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProductInv(prod)"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -160,14 +173,14 @@
 					</select>
 				</div>
 			</div>
-			<label for="description">Descripción</label><br/>
+			<label for="description" *ngIf="isUpdated">Descripción</label><br/>
       <div class="field p-inputgroup description">
 					<p>{{product.descripcion}} </p>
       </div>
       <div class="field">
           <label for="inventoryStatus">Bodega</label>
 					<div class="p-inputgroup">
-						<select [(ngModel)]="product.id_warehouse">
+						<select [(ngModel)]="product.bodega">
 							<option selected disabled value="null">Seleccione Bodega</option>
 							<option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
 						</select>
@@ -185,12 +198,12 @@
   </ng-template>
 
   <ng-template pTemplate="footer">
-      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogInv()"></button>
       <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="isUpdated ? saveProductInv(): createProductInv()"></button>
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="productosDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="productosDialog" [style]="{width: '450px'}" header="Detalle producto" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
       <div class="field">
           <label for="name">Nombre</label>
@@ -216,8 +229,8 @@
           <div class="formgrid grid">
               <div class="field-radiobutton col-6">
                     <!-- TODO: Consulta categorías -->
-                  <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="producto.categoria"></p-radioButton>
-                  <label for="category1">Accessories</label>
+                  <p-radioButton id="category1" name="category" value="LIM" [(ngModel)]="producto.categoria"></p-radioButton>
+                  <label for="LIM">Limpieza</label>
               </div>
           </div>
       </div>

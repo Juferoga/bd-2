@@ -35,7 +35,7 @@ import { RegionService } from 'src/app/core/services/regions/region.service';
                                 </span>
                                 <select id="region" [(ngModel)]="personalInformation.region" *ngIf="regionesList.length !=0">
                                     <option selected disabled value="null">Seleccione Región</option>
-                                    <option *ngFor="let region of regionesList" [value]="region.region">{{ region.nombre }}</option>
+                                    <option *ngFor="let region of regionesList" [value]="region['id']">{{ region.nombre }}</option>
                                 </select>
                                 <div *ngIf="!(regionesList.length !=0)">
                                     <input style="min-width: 150px;" placeholder="Escribe tu región..." #region="ngModel" id="ciudad" type="text" required pInputText [(ngModel)]="personalInformation.region" [ngClass]="{ 'ng-dirty': (region.invalid && submitted) || (region.dirty && region.invalid) }" />

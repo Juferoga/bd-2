@@ -121,6 +121,29 @@ async def get_product_all(res: Response = None, current_user: UserOfDB = Depends
     return response
 
 
+# retorna productos de un pais y region en especifico
+@product_routes.get('/product/filter/', response_model=ApiResponse)
+async def products_for_country(country: str, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        product_dao = ProductDao(conn.content)
+        products = product_dao.get_filter_products(FilterRegionCounty(region=region, country=country))
+        if not products[0]:
+            raise Exception(str(products[1]))
+        response.status = status.HTTP_200_OK
+        response.data = products[1]
+        response.message = "Success"
+    except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response
 
 # retorna productos de un pais y region en especifico
 @product_routes.get('/product/filter', response_model=ApiResponse)

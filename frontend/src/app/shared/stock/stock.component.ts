@@ -31,6 +31,11 @@ export class StockComponent {
   productos: Product[];
   producto: Product;
   productoSeleccionado: Product[];
+  //select INV
+  countryString:string='';
+  regionString:string='';
+  warehouseString:string='';
+
 
   constructor(
     private messageService: MessageService,
@@ -101,9 +106,8 @@ export class StockComponent {
     );
 
     this.statuses = [
-      { label: "INSTOCK", value: "instock" },
-      { label: "LOWSTOCK", value: "lowstock" },
-      { label: "OUTOFSTOCK", value: "outofstock" },
+      { label: "Inactivo", value: "I" },
+      { label: "Activo", value: "A" },
     ];
 
     this.categoriaService.getCategorias().subscribe({
@@ -120,7 +124,7 @@ export class StockComponent {
   }
 
   openNew() {
-    this.product = {
+    this.producto = {
       id:0,
       producto : '',
       nombre : '',
@@ -130,7 +134,7 @@ export class StockComponent {
       categoria : ''
     };
     this.submitted = false;
-    this.productDialog = true;
+    this.productosDialog = true;
   }
 
   deleteSelectedProducts() {
@@ -153,23 +157,31 @@ export class StockComponent {
     });
   }
 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.isUpdated = true;
-    this.productDialog = true;
-  }
-
-  /* editProduct(productItem: Product,product: Product,dialog: boolean) {
-    product = { ...productItem };
-    dialog = true;
-  } */
-
-  deleteProduct(product: Product) {
+  deleteProductInv(product: Product) {
     this.confirmationService.confirm({
       message: "Are you sure you want to delete " + product.nombre + "?",
       header: "Confirm",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
+        this.productService.deleteProduct(product.id).subscribe({
+          next:(response)=>{
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "success",
+              summary: `Eliminación exitosa`,
+              detail: `La eliminación del producto ${this.producto['nombre'].toUpperCase()},
+              se realizo correctamente sobre la base de datos`,
+            });
+          },
+          error:(err)=>{
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "error",
+              summary: `Eliminación del producto ${this.product['nombre'].toUpperCase()} realizada SIN ÉXITO`,
+              detail: "::: ERROR ::: \n" + err["error"]["detail"],
+            });
+          }
+        })
         this.products = this.products.filter(
           (val) => val.producto !== product.producto
         );
@@ -181,22 +193,15 @@ export class StockComponent {
           estado : true,
           categoria : ''
         };
-        this.messageService.add({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Deleted",
-          life: 3000,
-        });
       },
     });
   }
 
-
   editProducto(product: Product) {
     this.producto = { ...product };
+    this.isUpdated = true;
     this.productosDialog = true;
   }
-
 
   deleteProducto(product: Product) {
     this.confirmationService.confirm({
@@ -204,10 +209,29 @@ export class StockComponent {
       header: "Confirm",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
-        this.productos = this.productos.filter(
+        this.productService.deleteProduct(Number(product.producto)).subscribe({
+          next:(response)=>{
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "success",
+              summary: `Eliminación exitosa`,
+              detail: `La eliminación del producto ${this.producto['nombre'].toUpperCase()},
+              se realizo correctamente sobre la base de datos`,
+            });
+          },
+          error:(err)=>{
+            this.messageService.add({
+              key: "grl-toast",
+              severity: "error",
+              summary: `Eliminación del producto ${this.product['nombre'].toUpperCase()} realizada SIN ÉXITO`,
+              detail: "::: ERROR ::: \n" + err["error"]["detail"],
+            });
+          }
+        })
+        this.products = this.products.filter(
           (val) => val.producto !== product.producto
         );
-        this.producto = {
+        this.product = {
           producto : '',
           nombre : '',
           descripcion : '',
@@ -215,57 +239,118 @@ export class StockComponent {
           estado : true,
           categoria : ''
         };
-        this.messageService.add({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Deleted",
-          life: 3000,
-        });
       },
     });
   }
+
   hideDialog() {
-    this.productDialog = false;
+    this.productosDialog = false;
     this.submitted = false;
+  }
+
+  createProduct() {
+    this.submitted = true;
+    this.producto.precio = Number(this.producto.precio)
+    this.productService.createProduct(this.producto).subscribe({
+      next:()=>{
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "success",
+          summary: `${this.isUpdated ? 'Actualización':'Creación'}  exitosa`,
+          detail: `La ${this.isUpdated ? 'actualización':'creación'} del producto ${this.producto['nombre'].toUpperCase()},
+          se realizo correctamente sobre la base de datos`,
+        });
+      },
+      error:(err)=>{
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "error",
+          summary: `Consulta del producto ${this.producto['nombre'].toUpperCase()} realizada SIN ÉXITO`,
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
+        });
+      }
+    })
+    this.productos = [...this.productos];
+    this.isUpdated = false;
+    this.productosDialog = false;
+    this.producto = {
+      producto : '',
+      nombre : '',
+      descripcion : '',
+      precio : 0,
+      estado : true,
+      categoria : ''
+    };
   }
 
   saveProduct() {
     this.submitted = true;
-    if (this.product.nombre.trim()) {
-      if (this.product.producto) {
-        this.products[this.findIndexById(this.product.producto)] = this.product;
+    this.producto.precio = Number(this.producto.precio)
+    this.productService.createProduct(this.producto).subscribe({
+      next:()=>{
         this.messageService.add({
+          key: "grl-toast",
           severity: "success",
-          summary: "Successful",
-          detail: "Producto Actualizado",
-          life: 3000,
+          summary: `${this.isUpdated ? 'Actualización':'Creación'}  exitosa`,
+          detail: `La ${this.isUpdated ? 'actualización':'creación'} del producto ${this.producto['nombre'].toUpperCase()},
+          se realizo correctamente sobre la base de datos`,
         });
-      } else {
-        this.product.producto = this.createId();
-        this.products.push(this.product);
+      },
+      error:(err)=>{
         this.messageService.add({
-          severity: "success",
-          summary: "Successful",
-          detail: "Producto Creado",
-          life: 3000,
+          key: "grl-toast",
+          severity: "error",
+          summary: `Consulta del producto ${this.producto['nombre'].toUpperCase()} realizada SIN ÉXITO`,
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
         });
       }
-
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {
-        producto : '',
-        nombre : '',
-        descripcion : '',
-        precio : 0,
-        estado : true,
-        categoria : ''
-      };
-    }
+    })
+    this.productos = [...this.productos];
+    this.isUpdated = false;
+    this.productosDialog = false;
+    this.producto = {
+      producto : '',
+      nombre : '',
+      descripcion : '',
+      precio : 0,
+      estado : true,
+      categoria : ''
+    };
   }
 
+  openNewInv() {
+    this.product = {
+      id:0,
+      producto : '',
+      nombre : '',
+      descripcion : '',
+      precio : 0,
+      estado : true,
+      categoria : ''
+    };
+    this.submitted = false;
+    this.productDialog = true;
+  }
+
+  editProduct(product: Product) {
+    this.product = { ...product };
+    this.isUpdated = true;
+    this.productDialog = true;
+  }
+
+  hideDialogInv() {
+    this.productDialog = false;
+    this.submitted = false;
+  }
+
+  /* Crear nueva bodega */
   createProductInv(){
-    this.bodegaService.createBodega(this.product).subscribe({
+    let data = {
+      id_warehouse: Number(this.product.bodega),
+      id_product: Number(this.product.id),
+      cantidad: Number(this.product.cantidad)
+    }
+    this.bodegaService.createBodega(data).subscribe({
       next:()=>{
         this.messageService.add({
           key: "grl-toast",
@@ -295,6 +380,8 @@ export class StockComponent {
       categoria : ''
     };
   }
+
+  /* Actualizar una bodega */
   saveProductInv(){
     this.submitted = true;
     let data = {
@@ -307,8 +394,9 @@ export class StockComponent {
         this.messageService.add({
           key: "grl-toast",
           severity: "success",
-          summary: "Actualización exitosa",
-          detail: `La actualización del producto ${this.products.find(el=> el.id == data.id_product)['nombre'].toUpperCase()},
+          summary: `${this.isUpdated ? 'Actualización':'Creación'}  exitosa`,
+          detail: `La ${this.isUpdated ? 'actualización':'creación'} del producto 
+          ${this.products.find(el=> el.id == data.id_product)['nombre'].toUpperCase()},
           se realizo correctamente sobre la base de datos`,
         });
       },
@@ -322,6 +410,7 @@ export class StockComponent {
       }
     })
     this.products = [...this.products];
+    this.isUpdated = false;
     this.productDialog = false;
     this.product = {
       producto : '',
@@ -375,5 +464,46 @@ export class StockComponent {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
+  }
+
+  checkBodega(){
+    let url = ''
+    // Construir la parte de la URL correspondiente a las variables existentes
+    let urlParams = '';
+    if (this.countryString) {
+      urlParams += 'c';
+      url += `?country=${this.countryString}`;
+    }
+    if (this.regionString) {
+      urlParams += 'r';
+      url += `${urlParams === '' ? '?' : '&'}region=${this.regionString}`;
+    }
+    if (this.warehouseString) {
+      urlParams += 'h';
+      url += `${urlParams === '' ? '?' : '&'}warehouse=${this.warehouseString}`;
+    }
+
+    // Añadir la parte de la URL correspondiente a las variables existentes
+    url = `${urlParams}/${url}`;
+        
+    this.bodegaService.getBodegaInventory(url).subscribe({
+      next: (response) => {
+        this.products = response["data"];
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "success",
+          summary: "Consulta exitosa",
+          detail: `La consulta de la BODEGA ${url} se realizo correctamente sobre la base de datos`,
+        });
+      },
+      error: (err) => {
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "error",
+          summary: `Consulta de la BODEGA ${url} realizada SIN ÉXITO`,
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
+        });
+      }
+    });
   }
 }
