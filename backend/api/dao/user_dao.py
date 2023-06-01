@@ -35,26 +35,44 @@ class UserDao:
                 email=response_db["T_EMAIL"],
                 estado=response_db["I_ESTADO"]
             )
-
         except Exception as e:
             return [False, str(e)]
         finally:
             cursor.close()
         return [True, usuario]
 
-    def get_by_id(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f'''
-                SELECT *
-                FROM USUARIO
-                WHERE K_USUARIO = '{id}';
-        ''')
-        # Obtener los nombres de las columnas
-        columnas = [d[0] for d in cursor.description]
-        # Obtener los datos del usuario en un diccionario
-        usuario = dict(zip(columnas, cursor.fetchone()))
-        cursor.close()
-        return usuario
+    def get_by_id(self, id: int):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f'''
+                    SELECT *
+                    FROM USUARIO
+                    WHERE K_USUARIO = {id}
+            ''')
+            # Obtener los nombres de las columnas
+            columnas = [d[0] for d in cursor.description]
+            # Obtener el primer resultado
+            row = cursor.fetchone()
+            if row is None:
+                raise Exception("Usuario no existe.")
+            # Obtener los datos del usuario en un diccionario
+            response_db = dict(zip(columnas, row))
+            usuario = User(
+                id=response_db["K_USUARIO"],
+                nombre=response_db["T_NOMBRE"],
+                apellido=response_db["T_APELLIDO"],
+                fecha_de_nacimiento=response_db["F_NACIMIENTO"],
+                genero=response_db["I_GENERO"],
+                telefono=response_db["N_TELEFONO"],
+                direccion=response_db["T_DIRECCION"],
+                email=response_db["T_EMAIL"],
+                estado=response_db["I_ESTADO"]
+            )
+        except Exception as e:
+            return [False, str(e)]
+        finally:
+            cursor.close()
+        return [True, usuario]
 
     def create(self, user: UserOfDB):
         sql = [ 

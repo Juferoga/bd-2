@@ -18,12 +18,12 @@ async def create_client(user: UserClient, res: Response = None, current_user: Us
         if not conn.success:
             raise Exception(str(conn.content))
         cur = conn.content.cursor()
-        user_dao = UserDao(conn)
+        user_dao = UserDao(conn.content)
         client_dao = ClientDao()
         response = ApiResponse(status="",data={},message="")
         conn.content.begin()
         cur.execute("create user {} identified by {}".format(user.username, user.password))
-        cur.execute("grant connect to {}".format(user.username))
+        cur.execute("grant connect, cliente to {}".format(user.username))  ## REVISAR SI PUEDE ASIGNAR ROLES
         #usuario modelo
         usuario = UserOfDB(
             id=user.id, 
@@ -42,15 +42,16 @@ async def create_client(user: UserClient, res: Response = None, current_user: Us
         if not resUser[0]:
             raise Exception(resUser[1])
         data_current_user = user_dao.get_by_username(current_user.username)
-
-        resCli = client_dao.create(cur, user, data_current_user.id)
+        if not data_current_user[0]:
+            raise Exception(str(data_current_user[1]))
+        resCli = client_dao.create(cur, user, data_current_user[1].id)
         if not resCli[0]:
             cur.execute(f"delete from usuario where k_usuario = {user.id}")
             raise Exception(resCli[1])
         conn.content.commit()
-        response.message = resUser[1] + " -- " + resCli[1]
-        response.status = 200
-        response.data = user_dao.get_by_username(user.username)
+        response.status = status.HTTP_200_OK
+        response.data = user_dao.get_by_username(user.username)[1]
+        response.message = "Success"
     except Exception as e:
         conn.content.rollback()
         response.status = status.HTTP_400_BAD_REQUEST

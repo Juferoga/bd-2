@@ -26,7 +26,7 @@ async def create_represent(user: Representante, res: Response = None, current_us
         response = ApiResponse(status="",data={},message="")
         # crear usuario en la base de datos
         cur.execute("create user {} identified by {}".format(user.username, user.password))
-        cur.execute("grant connect to {}".format(user.username))
+        cur.execute("grant connect, representante to {}".format(user.username))
         # usuario modelo
         usuario = UserOfDB(
             id=user.id, 

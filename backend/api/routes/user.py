@@ -24,7 +24,7 @@ async def get_user_me(current_user: UserOfDB = Depends(get_current_user)):
         if not user[0]:
             raise Exception(str(user[1]))
         response.status = status.HTTP_200_OK
-        response.data = user
+        response.data = user[1]
         response.message = "Success"
     except Exception as e:
         response.status = status.HTTP_409_CONFLICT
@@ -118,6 +118,29 @@ async def get_user_me(username:str, current_user: UserOfDB = Depends(get_current
             raise Exception(str(response.content))
         user_dao = UserDao(conn.content)
         user = user_dao.get_by_username(username)
+        if not user[0]:
+            raise Exception(str(user[1]))
+        response.status = status.HTTP_200_OK
+        response.data = user[1]
+        response.message = "Success"
+    except Exception as e:
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
+        conn_manager.remove_connection(current_user.username)
+    return response
+
+# Devuelve un usuario especifico
+@user_routes.get('/user/id/{id}', response_model=ApiResponse)
+async def get_user_for_id(id:int, current_user: UserOfDB = Depends(get_current_user)):
+    try:
+        response =  ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(response.content))
+        user_dao = UserDao(conn.content)
+        user = user_dao.get_by_id(id)
         if not user[0]:
             raise Exception(str(user[1]))
         response.status = status.HTTP_200_OK

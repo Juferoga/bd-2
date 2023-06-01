@@ -18,3 +18,8 @@ class CreateProduct(BaseModel):
 class FilterRegionCounty(BaseModel):
     region: str
     country: str
+
+class Category(BaseModel):
+    id: str
+    descripcion: str
+    superior: str

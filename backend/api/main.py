@@ -7,6 +7,7 @@ from routes.represantes import representantes_routes
 from routes.product import product_routes
 from routes.client import client_routes
 from routes.country import country_routes
+from routes.region import region_routes
 
 
 
@@ -25,4 +26,5 @@ app.include_router(representantes_routes, prefix='/api')
 app.include_router(client_routes, prefix='/api')
 app.include_router(product_routes, prefix='/api')
 app.include_router(country_routes, prefix='/api')
+app.include_router(region_routes, prefix='/api')
 load_dotenv()
