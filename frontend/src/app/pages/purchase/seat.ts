@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Product } from 'src/app/core/models/products/product.model';
 import { TicketService } from 'src/app/core/services/compra/ticket.service';
+import { OrderService } from 'src/app/core/services/order/order.service';
 import { ProductService } from 'src/app/core/services/products/product.service';
 
 @Component({
@@ -16,7 +17,7 @@ import { ProductService } from 'src/app/core/services/products/product.service';
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 4rem">
-                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                No.
                             </th>
                             <th>Nombre</th>
                             <th>Descripción</th>
@@ -25,18 +26,16 @@ import { ProductService } from 'src/app/core/services/products/product.service';
                             <th>Categoría</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product>
+                    <ng-template pTemplate="body" let-product let-a>
                         <tr>
-                            <td>
-                                <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                            </td>
+                            <td><pre>{{a.id}}</pre></td>
                             <td>{{product.nombre}}</td>
                             <td>{{product.descripcion}}</td>
                             <td>{{product.precio}}</td>
                             <td>{{product.cantidad}}</td>
-                            <td>
-                                
-                                
+                            <td style="display: flex; justify-content: space-evenly;">
+                                <p-button (click)="agregarCarrito(a.id)" icon="pi pi-plus" styleClass="p-button-rounded"></p-button>
+                                <p-button (click)="eliminarCarrito(a.id)" icon="pi pi-minus" styleClass="p-button-rounded"></p-button>
                             </td>
                         </tr>
                     </ng-template>
@@ -57,10 +56,12 @@ export class SeatDemo implements OnInit {
         public ticketService: TicketService, 
         private router: Router,
         private messageService: MessageService,
-        private productService: ProductService) {}
+        private productService: ProductService,
+        private orderService:OrderService) {}
 
     products: any;
     productList : Product[];
+    productListCarrito : Product[];
 
     ngOnInit() {
         this.products = this.ticketService.ticketInformation.products;
@@ -92,5 +93,25 @@ export class SeatDemo implements OnInit {
 
     prevPage() {
         this.router.navigate(['admin/mis-compras/personal']);
+    }
+
+    agregarCarrito(id){
+        this.orderService.addItemOrder(id).subscribe(
+            (data)=> {
+                this.productListCarrito = data['data'];
+            },
+            (err)=>{
+                this.messageService.add({
+                    key: "grl-toast",
+                    severity: "error",
+                    summary: "ERROR",
+                    detail: "La consulta se realizo con errores"+err,
+                });
+            }
+        )
+    }
+
+    eliminarCarrito(id){
+
     }
 }

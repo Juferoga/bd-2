@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Messages } from 'primeng/messages';
 import { TicketService } from 'src/app/core/services/compra/ticket.service';
+import { OrderService } from 'src/app/core/services/order/order.service';
 
 @Component({
     template: `
@@ -59,7 +62,7 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                 Tú experiencia es muy importante para nosotros, selecciona qu e tan contento estas con el maneo del tramite!!!
             </p>
 
-            <p-rating [(ngModel)]="value" [stars]="5" [cancel]="false">
+            <p-rating [(ngModel)]="cal.calificacion" [stars]="5" [cancel]="false">
                 <ng-template pTemplate="onicon">
                     <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png" width="25px" height="25px" />
                 </ng-template>
@@ -67,6 +70,7 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                     <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png" width="25px" height="25px" />
                 </ng-template>
             </p-rating>
+            <textarea [(ngModel)]="cal.observacion" rows="5" cols="30" pInputTextarea [disabled]="true"></textarea>
 
             <p-button style="display: flex; align-items;justify-content: flex-end;" (click)="sendRating()" icon="pi pi-external-link" label="Enviar"></p-button>
         </p-dialog>
@@ -74,10 +78,14 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
 })
 export class ConfirmationDemo implements OnInit {
     ticketInformation: any;
-    value : any;
+    cal : any;
     visible = false;
 
-    constructor(public ticketService: TicketService, private router: Router) {}
+    constructor(
+        public ticketService: TicketService, 
+        private router: Router,
+        private orderService:OrderService,
+        private messageService:MessageService) {}
 
     ngOnInit() {
         this.ticketInformation = this.ticketService.ticketInformation;
@@ -97,7 +105,25 @@ export class ConfirmationDemo implements OnInit {
     }
     
     sendRating() {
-        // conectar con el servicio de calificación
+        this.orderService.rateOrder(this.cal).subscribe(
+            (data)=>{
+                this.messageService.add({
+                    key: "grl-toast",
+                    severity: "success",
+                    summary: "Consulta exitosa",
+                    detail: "La consulta se realizo correctamente sobre la base de datos - Países Cargados",
+                });
+                this.visible = false; 
+            },
+            (error)=>{
+                this.messageService.add({
+                    key: "grl-toast",
+                    severity: "error",
+                    summary: "ERROR",
+                    detail: "La consulta se realizo con errores"+error,
+                });
+            }
+        )
     }
 
 }
