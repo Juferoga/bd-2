@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Product } from 'src/app/core/models/products/product.model';
+import { BodegaService } from 'src/app/core/services/bodegas/bodega.service';
 import { TicketService } from 'src/app/core/services/compra/ticket.service';
 import { OrderService } from 'src/app/core/services/order/order.service';
 import { ProductService } from 'src/app/core/services/products/product.service';
@@ -34,7 +35,7 @@ import { ProductService } from 'src/app/core/services/products/product.service';
                             <td>{{product.precio}}</td>
                             <td>{{product.cantidad}}</td>
                             <td style="display: flex; justify-content: space-evenly;">
-                                <p-button (click)="agregarCarrito(a.id)" icon="pi pi-plus" styleClass="p-button-rounded"></p-button>
+                                <p-button (click)="agregarCarrito(a.id,product)" icon="pi pi-plus" styleClass="p-button-rounded"></p-button>
                                 <p-button (click)="eliminarCarrito(a.id)" icon="pi pi-minus" styleClass="p-button-rounded"></p-button>
                             </td>
                         </tr>
@@ -57,7 +58,8 @@ export class SeatDemo implements OnInit {
         private router: Router,
         private messageService: MessageService,
         private productService: ProductService,
-        private orderService:OrderService) {}
+        private orderService:OrderService,
+				private bodegaService:BodegaService) {}
 
     products: any;
     productList : Product[];
@@ -65,25 +67,44 @@ export class SeatDemo implements OnInit {
 
     ngOnInit() {
         this.products = this.ticketService.ticketInformation.products;
-        this.productService.getProductS2(this.ticketService.ticketInformation.personalInformation.pais, this.ticketService.ticketInformation.personalInformation.region).subscribe(
-            (data)=>{
-                this.productList = data['data'];
-                this.messageService.add({
-                    key: "grl-toast",
-                    severity: "success",
-                    summary: "Consulta exitosa",
-                    detail: "La consulta se realizo correctamente sobre la base de datos - Países Cargados",
-                });
-            },
-            (error)=>{
-                this.messageService.add({
-                    key: "grl-toast",
-                    severity: "error",
-                    summary: "ERROR",
-                    detail: "La consulta se realizo con errores"+error,
-                });
-            }
-        )
+				let url = ''
+				// Construir la parte de la URL correspondiente a las variables existentes
+				let urlParams = '';
+				let warehouse = 3
+				if (this.ticketService.ticketInformation.personalInformation.pais) {
+					urlParams += 'c';
+					url += `?country=${this.ticketService.ticketInformation.personalInformation.pais}`;
+				}
+				if (this.ticketService.ticketInformation.personalInformation.region) {
+					urlParams += 'r';
+					url += `${urlParams === '' ? '?' : '&'}region=${this.ticketService.ticketInformation.personalInformation.region}`;
+				}
+				if (warehouse) {
+					urlParams += 'h';
+					url += `${urlParams === '' ? '?' : '&'}warehouse=${warehouse}`;
+				}
+
+				// Añadir la parte de la URL correspondiente a las variables existentes
+				url = `${urlParams}/${url}`;  
+				this.bodegaService.getBodegaInventory(url).subscribe({
+					next: (response) => {
+						this.productList = response["data"];
+						this.messageService.add({
+							key: "grl-toast",
+							severity: "success",
+							summary: "Consulta exitosa",
+							detail: `La consulta de la BODEGA ${url} se realizo correctamente sobre la base de datos`,
+						});
+					},
+					error: (err) => {
+						this.messageService.add({
+							key: "grl-toast",
+							severity: "error",
+							summary: `Consulta de la BODEGA ${url} realizada SIN ÉXITO`,
+							detail: "::: ERROR ::: \n" + err["error"]["detail"],
+						});
+					}
+				});
     }
     
     nextPage() {
@@ -95,8 +116,14 @@ export class SeatDemo implements OnInit {
         this.router.navigate(['admin/mis-compras/personal']);
     }
 
-    agregarCarrito(id){
-        this.orderService.addItemOrder(id).subscribe(
+    agregarCarrito(id,product){
+			let data = {
+				id_producto: id,
+				id_pedido: 3265,
+				cantidad: product.cantidad,
+				precio_unitario: product.precio
+			}
+        this.orderService.addItemOrder(data).subscribe(
             (data)=> {
                 this.productListCarrito = data['data'];
             },

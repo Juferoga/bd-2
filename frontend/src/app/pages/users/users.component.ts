@@ -56,6 +56,9 @@ export class UsersComponent {
   ) {}
 
   ngOnInit() {
+
+    this.loadData();
+
     this.userService.getUsers().subscribe(
       (users) => {
         this.usuarios = users["data"];

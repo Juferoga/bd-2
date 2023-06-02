@@ -8,6 +8,8 @@ import { RepresentanteService } from 'src/app/core/services/representantes/repre
 })
 export class SellsComponent {
 
+  comision :any = {};
+
   constructor(
     private representantesService:RepresentanteService
     ) { }
@@ -15,7 +17,7 @@ export class SellsComponent {
   ngOnInit() {
     this.representantesService.getRepresentantesCom().subscribe(
       (data)=>{
-        console.log(data);
+        this.comision = data['data'];
       },
       (error)=>{
         console.log(error);

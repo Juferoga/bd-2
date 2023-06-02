@@ -21,7 +21,7 @@ async def create_client(user: UserClient, res: Response = None, current_user: Us
             raise Exception(str(conn.content))
         cur = conn.content.cursor()
         user_dao = UserDao(conn.content)
-        client_dao = ClientDao()
+        client_dao = ClientDao(conn.content)
         response = ApiResponse(status="",data={},message="")
         conn.content.begin()
         cur.execute("create user {} identified by {}".format(user.username, user.password))
@@ -72,6 +72,38 @@ async def create_client(user: UserClient, res: Response = None, current_user: Us
         
     finally:
         cur.close()
+        conn_manager.remove_connection(current_user.username)
+    return response
+
+# desactivar producto
+@client_routes.post('/client/change_represent', response_model=ApiResponse)
+async def change_represent(represent_id: int, res: Response = None, current_user: UserOfDB = Depends(get_current_user)):
+    try:
+        response = ApiResponse(status="", data=[], message="")
+        conn = conn_manager.create_connection(current_user.username, desencriptar(current_user.password))
+        if not conn.success:
+            raise Exception(str(conn.content))
+        client_dao = ClientDao(conn.content)
+        user_dao = UserDao(conn.content)
+        conn.content.begin()
+        data_current_user = user_dao.get_by_username(current_user.username)
+        if not data_current_user[0]:
+            raise Exception(str(data_current_user[1]))
+        client = client_dao.change_representante(data_current_user.id, represent_id)
+        if not client[0]:
+            raise Exception(str(client[1]))
+        conn.content.commit()
+        response.status = status.HTTP_200_OK
+        response.data = client[1]
+        response.message = "Success"
+    except Exception as e:
+        res.status_code = status.HTTP_409_CONFLICT
+        if conn.success:
+            conn.content.rollback()
+        response.status = status.HTTP_409_CONFLICT
+        response.data = []
+        response.message = str(e)
+    finally:
         conn_manager.remove_connection(current_user.username)
     return response
     

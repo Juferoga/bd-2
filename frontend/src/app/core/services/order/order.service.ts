@@ -17,6 +17,28 @@ export class OrderService {
     this.headers = this.headers.append("Content-Type", "application/json");
   }
 
+  getOrder():Observable<any>{
+    return this.http.get<any>(
+      environment.api + 'order/get/',
+      {headers: this.headers}
+    )
+  }
+
+  getOrderItemsByOrderId(orderId):Observable<any>{
+    return this.http.get<any>(
+      environment.api + 'order/get/'+orderId,
+      {headers: this.headers}
+    )
+  }
+
+  deleteOrderItem(orderId,itemId):Observable<any>{
+    var body = JSON.stringify({'id_pedido':orderId,'id_producto':itemId})
+    return this.http.delete<any>(
+      environment.api + 'order/delete_item/',
+      {headers: this.headers}
+    )
+  }
+
   addOrder(order:Order):Observable<any>{
     let body = JSON.stringify(order);
     return this.http.post<any>(
@@ -27,6 +49,15 @@ export class OrderService {
   }
 
   addItemOrder(item:OrderItem):Observable<any>{
+    let body = JSON.stringify(item); 
+    return this.http.post<any>(
+      environment.api + "order/add_item",
+      body,
+      {headers: this.headers}
+    )
+  }
+
+  setItemOrder(item:OrderItem):Observable<any>{
     let body = JSON.stringify(item); 
     return this.http.post<any>(
       environment.api + "order/add_item",

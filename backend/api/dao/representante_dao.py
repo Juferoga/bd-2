@@ -2,8 +2,9 @@ from models.representante import Representante
 import cx_Oracle
 
 class RepresentanteDao:
-    def __init__(self):
-        self.nombre = "UserDao"
+    def __init__(self, connection):
+        self.nombre = "RepresentanteDao"
+        self.connection = connection
 
     def get_all_representantes(self, cursor):
         try:
@@ -34,7 +35,7 @@ class RepresentanteDao:
             print("ERROR [create_represent | DAO] \n", error)
             return [False, str(error)]
         
-    def get_commision(self, username:str, *args, **kwargs):
+    def get_commision(self, username:str):
         try:
             cursor = self.connection.cursor()
             cursor.execute(f"""
@@ -52,7 +53,7 @@ class RepresentanteDao:
                 NOMBRE_USUARIO, COMISION= row
                 orders.append({
                     'usuario'     :  NOMBRE_USUARIO,
-                    'comision'    :  COMISION
+                    'comision'    :  COMISION,
                 })
         except Exception as e:
             return [False, str(e)]

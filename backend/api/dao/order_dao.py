@@ -175,3 +175,8 @@ class OrderDao:
             return [False, str(e)]
         finally:
             cursor.close()
+
+"""     def edit_item(self, item: OrderItem):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"update ") """

@@ -29,7 +29,7 @@ import { OrderService } from 'src/app/core/services/order/order.service';
                         <b>{{ ticketInformation.personalInformation.direccion_entrega }}</b>
                     </div>
                     <div class="field col-12">
-                        ACÁ VA LA LISTA DE PRODUCTOS SELECCIONADOS
+                        
                     </div>
                     <div class="field col-12">
                         <label for="Age">Cardholder Name</label>
@@ -70,7 +70,7 @@ import { OrderService } from 'src/app/core/services/order/order.service';
                     <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png" width="25px" height="25px" />
                 </ng-template>
             </p-rating>
-            <textarea [(ngModel)]="cal.observacion" rows="5" cols="30" pInputTextarea [disabled]="true"></textarea>
+            <textarea [(ngModel)]="cal.observacion" rows="5" cols="30" pInputTextarea ></textarea>
 
             <p-button style="display: flex; align-items;justify-content: flex-end;" (click)="sendRating()" icon="pi pi-external-link" label="Enviar"></p-button>
         </p-dialog>
@@ -78,7 +78,7 @@ import { OrderService } from 'src/app/core/services/order/order.service';
 })
 export class ConfirmationDemo implements OnInit {
     ticketInformation: any;
-    cal : any;
+    cal : any = {'calificacion':0,'observacion':''};
     visible = false;
 
     constructor(
@@ -120,7 +120,7 @@ export class ConfirmationDemo implements OnInit {
                     key: "grl-toast",
                     severity: "error",
                     summary: "ERROR",
-                    detail: "La consulta se realizo con errores"+error,
+                    detail: "La consulta se realizo con errores"+error['detail'],
                 });
             }
         )
