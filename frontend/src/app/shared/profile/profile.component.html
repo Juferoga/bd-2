@@ -9,48 +9,64 @@
   <div class="scrollable">
     <div class="profile-info">
       <div class="profile-info-title">
-        <h5> Datos personales</h5> <p-button icon="pi pi-pencil" label="Editar" (click)="isEdited=!isEdited"></p-button>
+        <h5> Datos personales</h5> <p-button icon="pi pi-pencil" label="Editar" (click)="editUsuario();isEdited = !isEdited"></p-button>
       </div>
       <div class="profile-info-form">
         <div>
-          <p><strong>Nombre:</strong> <span *ngIf="!isEdited"> {{user.nombre}} </span></p>
+          <p><strong>Nombre:</strong>
+            <p-skeleton *ngIf="!user.nombre" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.nombre"> {{user.nombre}} </span></p>
           <input [(ngModel)]="user.nombre" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Apellido:</strong> <span *ngIf="!isEdited"> {{user.apellido}} </span></p>
+          <p><strong>Apellido:</strong>
+          <p-skeleton *ngIf="!user.apellido" width="10rem" styleClass="mb-2"></p-skeleton>
+          <span *ngIf="!isEdited && user.apellido"> {{user.apellido}} </span></p>
           <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Fecha de nacimiento:</strong> <span *ngIf="!isEdited"> {{user.fecha_de_nacimiento | date}} </span></p>
+          <p><strong>Fecha de nacimiento:</strong>
+            <p-skeleton *ngIf="!user.fecha_de_nacimiento" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.fecha_de_nacimiento"> {{user.fecha_de_nacimiento | date}} </span></p>
           <input [(ngModel)]="user.fecha_de_nacimiento" type="date" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Genero:</strong> <span *ngIf="!isEdited"> {{user.genero}} </span></p>
+          <p><strong>Genero:</strong>
+            <p-skeleton *ngIf="!user.genero" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.genero"> {{user.genero}} </span></p>
           <input [(ngModel)]="user.apellido" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Teléfono:</strong> <span *ngIf="!isEdited"> {{user.telefono}} </span></p>
+          <p><strong>Teléfono:</strong>
+            <p-skeleton *ngIf="!user.telefono" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.telefono"> {{user.telefono}} </span></p>
           <input [(ngModel)]="user.telefono" type="number" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Dirección:</strong> <span *ngIf="!isEdited"> {{user.direccion}} </span></p>
+          <p><strong>Dirección:</strong>
+            <p-skeleton *ngIf="!user.direccion" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.direccion"> {{user.direccion}} </span></p>
           <input [(ngModel)]="user.direccion" type="text" pInputText *ngIf="isEdited"/>
         </div>
         <div>
-          <p><strong>Email:</strong> <span *ngIf="!isEdited"> {{user.email}} </span></p>
+          <p><strong>Email:</strong>
+            <p-skeleton *ngIf="!user.email" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.email"> {{user.email}} </span></p>
           <input [(ngModel)]="user.email" type="email" pInputText *ngIf="isEdited"/>
+        </div>
+        <div class="rep-change">
+          <p><strong>Representante:</strong>
+            <p-skeleton *ngIf="!user.email" width="10rem" styleClass="mb-2"></p-skeleton>
+            <span *ngIf="!isEdited && user.representante"> {{user.representante ? user.representante: 'No registra'}} </span></p>
+          <select *ngIf="isEdited" [(ngModel)]="user.representante">
+            <option *ngFor="let item of representantes" [value]="item.representante">{{item.representante}}</option>
+          </select>
         </div>
         <div style="display:flex; justify-content: space-around; width: 100%; padding: 30px;">
           <p-button icon="pi pi-save" label="Guardar" *ngIf="isEdited" (click)="saveUser()"></p-button>
           <p-button icon="pi pi-times" label="Eliminar cuenta" (click)="deleteUser()"></p-button>
         </div>
       </div>
-    </div>
-    <div class="rep-change">
-      <h4>Cambiar de representante</h4>
-      <select [(ngModel)]="user.representante">
-        <option *ngFor="let item of representantes" [value]="item.representante">{{item.representante}}</option>
-      </select>
     </div>
     <div *ngIf="false" class="profile-graphs">
       <div class="graph">
@@ -59,3 +75,6 @@
     </div>
   </div>
 </div>
+<p-dialog header="Eliminar cuenta" [(visible)]="isDeleteUser" [style]="{width: '50vw'}">
+  <h4>Esta función ho está habilitada</h4>
+</p-dialog>

@@ -1,82 +1,223 @@
 <div class="card">
-  <p-toolbar styleClass="mb-4 gap-2">
-      <ng-template pTemplate="left">
-          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-          <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
-      </ng-template>
-
-      <ng-template pTemplate="right">
-          <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
-          <!-- <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
-      </ng-template>
-  </p-toolbar>
-
-  <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" [tableStyle]="{'min-width': '75rem'}"
-      [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-      currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} entradas" [showCurrentPageReport]="true">
-      <ng-template pTemplate="caption">
-          <div class="flex align-items-center justify-content-between">
-              <h5 class="m-0">Gestión Products</h5>
-              <span class="p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <!-- TODO: Averiguar porque no sirve :) -->
-                  <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
-              </span>
-          </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-              <th style="width: 4rem">
-                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th pSortableColumn="nombre" style="min-width:15rem">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-              <th>Descripción</th>
-              <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
-              <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
-              <th pSortableColumn="categoria" style="min-width:10rem">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
-              <th pSortableColumn="quantity">Cantidad <p-sortIcon field="quantity"></p-sortIcon></th>
-              <th></th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-product>
-          <tr>
-              <td>
-                  <p-tableCheckbox [value]="product"></p-tableCheckbox>
-              </td>
-              <td>{{product.nombre}}</td>
-              <td>{{product.descripcion}}</td>
-              <td>{{product.precio | currency}}</td>
-              <td><span [class]="'product-badge status-' + (product.estado ? product.estado.toLowerCase() : '')">{{product.estado}}</span></td>
-              <td>{{product.categoria}}</td>
-              <td>
-                  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
-                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
-              </td>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-between">
-              En total hay {{products ? products.length : 0 }} productos.
-          </div>
-      </ng-template>
-  </p-table>
+    <p-tabView>
+        <p-tabPanel header="Inventario">
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewInv()"></button>
+                    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                </ng-template>
+          
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+                    <!-- <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" [tableStyle]="{'min-width': '75rem'}"
+                [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} entradas" [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Gestión Productos</h5>
+                        <div style="display: flex;justify-content: space-between;">
+                            <span class="p-input-icon-left">
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
+                            </span>
+                            <div style="display: flex;">
+																<!-- <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
+																	<option selected disabled value="null">Seleccione clasificación</option>
+																	<option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
+																</select> -->
+                                <!-- 1 -->
+																<div>
+																	<label for="pais">País</label>
+																	<select id="pais" [(ngModel)]="countryString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione País</option>
+																			<option *ngFor="let item of bodegasList" [value]="item.pais">{{item.pais}}</option>
+																	</select>
+																</div>
+                                <!-- 2 -->
+																<div>
+																	<label for="region">Región</label>
+																	<select id="region" [(ngModel)]="regionString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione Región</option>
+																			<option *ngFor="let item of bodegasList" [value]="item.region">{{item.region}}</option>
+																	</select>
+																</div>
+                                <!-- 3 -->
+																<div>
+																	<label for="bodega">Bodega</label>
+																	<select id="bodega" [(ngModel)]="warehouseString" (change)="checkBodega()">
+																			<option selected disabled value="null">Seleccione Bodega</option>
+																		<option *ngFor="let item of bodegasList" [value]="item.bodega">{{item.bodega}}</option>
+																	</select>
+																</div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="nombre" style="min-width:15rem">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                        <th>Descripción</th>
+                        <th pSortableColumn="quantity">Bodega <p-sortIcon field="quantity"></p-sortIcon></th>
+                        <th pSortableColumn="quantity">Cantidad <p-sortIcon field="quantity"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-prod>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="prod"></p-tableCheckbox>
+                        </td>
+                        <td>{{prod.nombre}}</td>
+                        <td>{{prod.descripcion}}</td>
+                        <td>{{prod.bodegas}}</td>
+                        <td>{{prod.cantidad}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(prod)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProductInv(prod)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total hay {{products ? products.length : 0 }} productos.
+                    </div>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="Productos">
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                </ng-template>
+          
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+                    <!-- <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="productos" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" [tableStyle]="{'min-width': '75rem'}"
+                [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} entradas" [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Gestión Productos</h5>
+                        <div style="display: flex;justify-content: space-between;">
+                            <span class="p-input-icon-left">
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
+                            </span>
+                            <select [(ngModel)]="bodega" (change)="checkWarehouse($event)">
+                              <option selected disabled value="null">Seleccione clasificación</option>
+                              <option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="nombre" style="min-width:15rem">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                        <th>Descripción</th>
+                        <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+                        <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+                        <th pSortableColumn="categoria" style="min-width:10rem">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
+                        <th pSortableColumn="quantity">Cantidad <p-sortIcon field="quantity"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                        </td>
+                        <td>{{product.nombre}}</td>
+                        <td>{{product.descripcion}}</td>
+                        <td>{{product.precio | currency}}</td>
+                        <td><span [class]="'product-badge status-' + (product.estado ? product.estado.toLowerCase() : '')">{{product.estado}}</span></td>
+                        <td>{{product.categoria}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProducto(product)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProducto(product)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total hay {{products ? products.length : 0 }} productos.
+                    </div>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
 </div>
 
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
+      <div class="field" *ngIf="isUpdated">
+          <label for="name">Nombre</label>
+					<h4>{{product.nombre}}</h4>
+      </div>
+      <div class="field" *ngIf="!isUpdated">
+				<label for="inventoryStatus">Nombre</label>
+				<div class="p-inputgroup">
+					<select [(ngModel)]="product.id">
+						<option selected disabled value="null">Seleccione Bodega</option>
+						<option *ngFor="let item of productos" [value]="item.producto">{{item.nombre}}</option>
+					</select>
+				</div>
+			</div>
+			<label for="description" *ngIf="isUpdated">Descripción</label><br/>
+      <div class="field p-inputgroup description">
+					<p>{{product.descripcion}} </p>
+      </div>
+      <div class="field">
+          <label for="inventoryStatus">Bodega</label>
+					<div class="p-inputgroup">
+						<select [(ngModel)]="product.bodega">
+							<option selected disabled value="null">Seleccione Bodega</option>
+							<option *ngFor="let item of bodegasList" [value]="item.bodega">[ {{item.pais}}|{{item.region}}|{{item.ciudad}} ] - {{item.direccion}}</option>
+						</select>
+					</div>
+      </div>
+      <div class="formgrid grid">
+          <div class="field col">
+              <label for="quantity">Cantidad</label>
+              <div class="p-inputgroup">
+									<input type="text" pInputText [(ngModel)]="product.cantidad" placeholder="xxxx" required autofocus  />
+									<span class="p-inputgroup-addon">und.</span>
+							</div>
+          </div>
+      </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogInv()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="isUpdated ? saveProductInv(): createProductInv()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="productosDialog" [style]="{width: '450px'}" header="Detalle producto" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
       <div class="field">
           <label for="name">Nombre</label>
-          <input type="text" pInputText id="name" [(ngModel)]="product.nombre" required autofocus />
+          <input type="text" pInputText id="name" [(ngModel)]="producto.nombre" required autofocus />
           <small class="p-error" *ngIf="submitted && !product.nombre">Nombre es requerido.</small>
       </div>
 			<label for="description">Descripción</label><br/>
       <div class="field p-inputgroup description">
-          <textarea id="description" pInputTextarea [(ngModel)]="product.descripcion" required  rows="5" cols="30"></textarea>
+          <textarea id="description" pInputTextarea [(ngModel)]="producto.descripcion" required  rows="5" cols="30"></textarea>
       </div>
 
       <div class="field">
           <label for="inventoryStatus">Estado</label>
-          <p-dropdown [(ngModel)]="product.estado" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
+          <p-dropdown [(ngModel)]="producto.estado" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
               <ng-template let-option pTemplate="item">
                   <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
               </ng-template>
@@ -88,8 +229,8 @@
           <div class="formgrid grid">
               <div class="field-radiobutton col-6">
                     <!-- TODO: Consulta categorías -->
-                  <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.categoria"></p-radioButton>
-                  <label for="category1">Accessories</label>
+                  <p-radioButton id="category1" name="category" value="LIM" [(ngModel)]="producto.categoria"></p-radioButton>
+                  <label for="LIM">Limpieza</label>
               </div>
           </div>
       </div>
@@ -100,13 +241,13 @@
               <label for="price">Precio</label>
               <div class="p-inputgroup">
 									<span class="p-inputgroup-addon">$</span>
-									<input type="text" pInputText [(ngModel)]="product.precio" placeholder="Price" required autofocus  />
+									<input type="text" pInputText [(ngModel)]="producto.precio" placeholder="Price" required autofocus  />
 							</div>
           </div>
           <div class="field col">
               <label for="quantity">Cantidad</label>
               <div class="p-inputgroup">
-									<input type="text" pInputText [(ngModel)]="product.cantidad" placeholder="xxxx" required autofocus  />
+									<input type="text" pInputText [(ngModel)]="producto.cantidad" placeholder="xxxx" required autofocus  />
 									<span class="p-inputgroup-addon">und.</span>
 							</div>
           </div>

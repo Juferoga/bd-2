@@ -23,9 +23,21 @@ export class ProductService {
       {headers: this.headers}
     )
   }
+  getProductS2(country, region):Observable<Product>{
+    return this.http.get<Product>(
+      environment.api + 'inventory/cr/?country='+country+'&region='+region,
+      {headers: this.headers}
+    )
+  }
   getProducts():Observable<Product[]>{
     return this.http.get<Product[]>(
       environment.api + 'product/get/',
+      {headers: this.headers}
+    )
+  }
+  getProductsRegion():Observable<Product[]>{
+    return this.http.get<Product[]>(
+      environment.api + 'region/inventory/',
       {headers: this.headers}
     )
   }
@@ -37,13 +49,9 @@ export class ProductService {
       {headers: this.headers}
     )
   }
-  deleteProduct(product):Observable<Product>{
-    var body = JSON.stringify(product)
-    return this.http.post<Product>(
-      environment.api + 'product/del/',
-      body,
-      {headers: this.headers}
-    )
+  deleteProduct(id: number): Observable<Product> {
+    const url = `${environment.api}product/disable/${id}`;
+    return this.http.delete<Product>(url, { headers: this.headers });
   }
   createProduct(product):Observable<Product>{
     var body = JSON.stringify(product)

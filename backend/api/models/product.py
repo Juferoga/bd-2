@@ -1,5 +1,4 @@
-from pydantic import BaseModel, EmailStr
-from datetime import date
+from pydantic import BaseModel
 
 class Product(BaseModel):
     id: int
@@ -8,3 +7,19 @@ class Product(BaseModel):
     precio: int
     estado: str
     categoria: str
+
+class CreateProduct(BaseModel):
+    nombre: str
+    descripcion: str
+    precio: int
+    estado: str
+    categoria: str
+
+class FilterRegionCounty(BaseModel):
+    region: str
+    country: str
+
+class Category(BaseModel):
+    id: str
+    descripcion: str
+    superior: str

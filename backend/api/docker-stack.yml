@@ -2,10 +2,9 @@ version: '3.1'
 
 services:
   backend:
-    image: juferoga/bd2-back:1.0
-    command: python manage.py runserver 0.0.0.0:8000
+    image: bd2-back
     volumes:
-      - .:/code
+      - .:/app
     networks:
       - proxy
     deploy:

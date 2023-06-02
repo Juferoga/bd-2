@@ -1,5 +1,99 @@
-<div class="card">
-  <p-toast></p-toast>
-  <p-steps [model]="items" [readonly]="false"></p-steps>
-</div>
-<router-outlet></router-outlet>
+<p-tabView>
+  <p-tabPanel header="Nueva compra">
+    <div class="card">
+      <p-toast></p-toast>
+      <p-steps [model]="items" [readonly]="false"></p-steps>
+    </div>
+    <router-outlet></router-outlet>
+  </p-tabPanel>
+  <p-tabPanel header="Histórico"> 
+      <ng-template pTemplate>
+        <!-- Tabla -->
+        <p-table [value]="pedidos" [tableStyle]="{ 'min-width': '50rem' }"  [rows]="5" [paginator]="true" [rowHover]="true" >
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Pedido</th>
+                  <th>Creación</th>
+                  <th>Región</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-pedido>
+              <tr>
+                  <td>{{ pedido.pedido }}</td>
+                  <td>{{ pedido.fecha_creacion | date:'shortDate'}}</td>
+                  <td>{{ pedido.region }}</td>
+                  <td>{{ pedido.cliente }}</td>
+                  <td>{{ pedido.total  | currency:'COP':'$' }}</td>
+                  <td>
+                      <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-warning" (click)="onPedidoSelect(pedido)"></button>
+                  </td>
+              </tr>
+          </ng-template>
+        </p-table>
+        <!-- ./Tabla -->
+      </ng-template>
+  </p-tabPanel>
+</p-tabView>
+
+<p-dialog [(visible)]="isShowDetails" [style]="{ width: '550px' }" header="Detalles Compra" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="col flex align-items-center justify-content-center" id="factura-compra">
+      <!-- Factura -->
+        <div class="fact-header">
+          <h5>Número de factura {{factura.N_FACTURA}}</h5>
+          <div class="fact-header-info">
+            <div class="left-info">
+              <p><strong>Cliente: </strong>{{factura.T_NCLIENTE}}</p>
+              <p><strong>Fecha Creación: </strong>{{factura.F_CREACION}}</p>
+              <p><strong>Fecha Pago: </strong>{{factura.F_PAGO}}</p>
+              <p><strong>Estado: </strong>{{factura.I_ESTADOF}}</p>
+            </div>
+            <div class="right-info">
+              <p><strong>Dirección envío: </strong>{{factura.T_DIRECCIONE}}</p>
+              <p><strong>Región: </strong>{{factura.T_REGION}}</p>
+              <p><strong>País: </strong>{{factura.T_PAIS}}</p>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="fact-body">
+          <p-table [value]="factura.A_ITEMSF" >
+            <ng-template pTemplate="header">
+                <tr>
+                  <td>Producto</td>
+                  <td>Cantidad</td>
+                  <td>Valor Unitario</td>
+                  <td>Total</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pedido>
+                <tr>
+                    <td>{{ pedido.N_PRODUCTO }}</td>
+                    <td>{{ pedido.Q_PRODUCTO}}</td>
+                    <td>${{ pedido.V_UNITARIO }}</td>
+                    <td>${{ pedido.V_TOTAL }}</td>
+                </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div class="fact-footer">
+          <hr>
+          <p><strong>Subtotal: </strong>${{factura.V_SUBTOTAL}}</p>
+          <p><strong>Valor IVA: </strong>${{factura.V_IVA}}</p>
+          <p><strong>Valor Total: </strong>${{factura.V_TOTAL}}</p>
+          <hr>
+          <p>
+            <small>Fecha facturación: {{factura.F_GENERADA}}</small><br>
+            <small>UD BD2 - Sistema Facturación Bases de Datos 2</small>
+          </p>
+        </div>
+      <!-- ./Factura -->
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cerrar" icon="pi pi-times" class="p-button-text" (click)="isShowDetails =false" ></button>
+  </ng-template>
+</p-dialog>

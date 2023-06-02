@@ -1,7 +1,7 @@
 export class Pedidos{
   pedido : number;
-  creacion : Date;
-  direccione : string;
+  fecha_creacion : Date;
+  direccion : string;
   total : number;
   estado : string;
   ciudad : string;

@@ -19,20 +19,26 @@ export class BodegaService {
 
   getBodega(id):Observable<Bodega>{
     return this.http.get<Bodega>(
-      environment.api + 'bodega/' + id,
+      environment.api + 'warehouse/' + id + '/inventory',
+      {headers: this.headers}
+    )
+  }
+  getBodegaInventory(url):Observable<Bodega>{
+    return this.http.get<Bodega>(
+      environment.api + 'inventory/' + url,
       {headers: this.headers}
     )
   }
   getBodegas():Observable<Bodega[]>{
     return this.http.get<Bodega[]>(
-      environment.api + 'bodega/get/',
+      environment.api + 'warehouse/get/',
       {headers: this.headers}
     )
   }
   setBodega(bodega):Observable<Bodega>{
     var body = JSON.stringify(bodega)
     return this.http.post<Bodega>(
-      environment.api + 'bodega/set/',
+      environment.api + 'warehouse/set/',
       body,
       {headers: this.headers}
     )
@@ -40,7 +46,7 @@ export class BodegaService {
   deleteBodega(bodega):Observable<Bodega>{
     var body = JSON.stringify(bodega)
     return this.http.post<Bodega>(
-      environment.api + 'bodega/del/',
+      environment.api + 'warehouse/del/',
       body,
       {headers: this.headers}
     )
@@ -48,7 +54,15 @@ export class BodegaService {
   createBodega(bodega):Observable<Bodega>{
     var body = JSON.stringify(bodega)
     return this.http.post<Bodega>(
-      environment.api + 'bodega/add/',
+      environment.api + 'warehouse/add_product/',
+      body,
+      {headers: this.headers}
+    )
+  }
+  editProductBodega(bodega):Observable<Bodega>{
+    var body = JSON.stringify(bodega)
+    return this.http.post<Bodega>(
+      environment.api + 'warehouse/edit_product/',
       body,
       {headers: this.headers}
     )

@@ -1,18 +1,59 @@
 
 <p-tabView>
   <p-tabPanel header="Mejor vendedor">
-    <div class="card">
-      <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+    <div class="card">      
+      <p-table [value]="bestSellersData" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre</th>
+                <th>Ventas total</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-seller>
+            <tr>
+                <td>{{ seller.nombre }}</td>
+                <td>{{ seller.ventas_total }}</td>
+            </tr>
+        </ng-template>
+      </p-table>
     </div>
   </p-tabPanel>
   <p-tabPanel header="Regionales con más ventas">
-    <div class="card flex justify-content-center">
-      <p-chart type="polarArea" [data]="data" [options]="options"></p-chart>
+    <div class="card">      
+      <p-table [value]="bestRegionData" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Region</th>
+                <th>Venta total</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-regionals>
+            <tr>
+                <td>{{ regionals.region }}</td>
+                <td>{{ regionals.ventas_total }}</td>
+            </tr>
+        </ng-template>
+      </p-table>
     </div>
   </p-tabPanel>
   <p-tabPanel header="Producto mas vendido">
-    <div class="card flex justify-content-center">
-      <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+    <div class="card">      
+      <p-table [value]="bestProductsData" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Cantidad vendida</th>
+                <th>Nombre producto</th>
+                <th>Producto</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.cantidad_vendida }}</td>
+                <td>{{ product.nombre_producto }}</td>
+                <td>{{ product.producto }}</td>
+            </tr>
+        </ng-template>
+      </p-table>
     </div>
   </p-tabPanel>
 </p-tabView>

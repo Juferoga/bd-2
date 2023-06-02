@@ -11,55 +11,76 @@ import { UserService } from "src/app/core/services/users/user.service";
   styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent {
-
   // TODO: Integrate -> https://primeng.org/tree/horizontal
 
   userLoading = {
-    'nombre':'Cargando',
-    'apellido':'Cargando',
-    'fecha_de_nacimiento': new Date(Date.now()),
-    'genero':'Cargando',
-    'telefono': 300000000,
-    'direccion':'Cargando',
-    'email':'Cargando',
-    'estado':'Cargando'
-  }
+    nombre: "",
+    apellido: "",
+    fecha_de_nacimiento: null,
+    genero: "",
+    telefono: 0,
+    direccion: "",
+    email: "",
+    estado: "",
 
-  username = sessionStorage.getItem("username")? sessionStorage.getItem("username"):'Loading...';
-  representantes : Representantes[];
-  user : User = this.userLoading;
+  };
+
+  username = sessionStorage.getItem("username")
+    ? sessionStorage.getItem("username")
+    : "Loading...";
+  representantes: Representantes[];
+  user: User = this.userLoading;
   data: any;
   chartOptions: any;
-  isEdited:boolean = false;
+  isEdited: boolean = false;
+  isDeleteUser: boolean = false;
 
   constructor(
     private userService: UserService,
     private repService: RepresentanteService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
-
     this.userService.getUser().subscribe(
-      (user:User)=>{
-        this.user = user['data'];
-        this.messageService.add({key:'grl-toast', severity:'success', summary:'Consulta exitosa', detail:'La consulta se realizo correctamente sobre la base de datos'});
+      (user: any) => {
+        this.user = user["data"];
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "success",
+          summary: "Consulta exitosa",
+          detail: "La consulta se realizo correctamente sobre la base de datos",
+        });
       },
-      (err)=>{
-        this.messageService.add({key:'grl-toast', severity:'error', summary:'Consulta realizada SIN ÉXITO', detail:'::: ERROR ::: \n'+err['error']['detail']});
-
+      (err) => {
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "error",
+          summary: "Consulta realizada SIN ÉXITO",
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
+        });
       }
-    )
+    );
 
     this.repService.getRepresentantes().subscribe(
-      (representante:Representantes[])=>{
-        this.representantes = representante['data'];
-        this.messageService.add({key:'grl-toast', severity:'success', summary:'Consulta exitosa', detail:'La consulta se realizo correctamente sobre la base de datos'});
+      (representante: Representantes[]) => {
+        this.representantes = representante["data"];
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "success",
+          summary: "Consulta exitosa",
+          detail: "La consulta se realizo correctamente sobre la base de datos",
+        });
       },
-      (err)=>{
-        this.messageService.add({key:'grl-toast', severity:'error', summary:'Consulta realizada SIN ÉXITO', detail:'::: ERROR ::: \n'+err['error']['detail']});
+      (err) => {
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "error",
+          summary: "Consulta realizada SIN ÉXITO",
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
+        });
       }
-    )
+    );
 
     this.data = {
       labels: [
@@ -96,11 +117,34 @@ export class ProfileComponent {
     };
   }
 
-    deleteUser() {
-      console.log("Usuario BORRADO")
-    }
+  editUsuario() {
+    let fecha = this.user.fecha_de_nacimiento.toString().split("T")[0];
+    this.user.fecha_de_nacimiento = fecha as any;
+  }
+  deleteUser() {
+    this.isDeleteUser=true
+    console.log("Usuario BORRADO");
+  }
 
-    saveUser() {
-      console.log("Usuario ACTUALIZADO")
-    }
+  saveUser() {
+    this.userService.setUser(this.user).subscribe(
+      (user: any) => {
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "success",
+          summary: "Consulta exitosa",
+          detail: "Se realizo la actualización correctamente",
+        });
+      },
+      (err) => {
+        this.messageService.add({
+          key: "grl-toast",
+          severity: "error",
+          summary: "Consulta realizada SIN ÉXITO",
+          detail: "::: ERROR ::: \n" + err["error"]["detail"],
+        });
+      }
+    );
+  }
+
 }

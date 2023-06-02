@@ -51,10 +51,18 @@ export class UserService {
       {headers: this.headers}
     )
   }
-  createUser(usuario):Observable<User>{
+  createUserRep(usuario):Observable<User>{
     var body = JSON.stringify(usuario)
     return this.http.post<User>(
-      environment.api + 'user/add/',
+      environment.api + 'represent/create/',
+      body,
+      {headers: this.headers}
+    )
+  }
+  createUserCli(usuario):Observable<User>{
+    var body = JSON.stringify(usuario)
+    return this.http.post<User>(
+      environment.api + 'client/create/',
       body,
       {headers: this.headers}
     )

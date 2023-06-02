@@ -10,11 +10,7 @@ export class TicketService {
       ciudad: "",
       direccion_entrega: ""
     },
-    seatInformation: {
-      class: null,
-      wagon: null,
-      seat: null,
-    },
+    products: [],
     paymentInformation: {
       cardholderName: "",
       cardholderNumber: "",
@@ -36,7 +32,8 @@ export class TicketService {
     this.ticketInformation = ticketInformation;
   }
 
-  complete() {
+  complete():boolean {
     this.paymentComplete.next(this.ticketInformation.personalInformation);
+    return true;
   }
 }

@@ -136,6 +136,7 @@ drop public synonym s_producto;
 drop public synonym s_caliservicio;
 drop public synonym s_pedido;
 drop public synonym s_pagopedido;
+drop public synonym s_pediitem;
 
 -- Crear sinónimos
 create public synonym estudiante for adminsga.estudiante;
@@ -160,3 +161,4 @@ create public synonym s_producto for adminmulven.s_producto;
 create public synonym s_caliservicio for adminmulven.s_caliservicio;
 create public synonym s_pedido for adminmulven.s_pedido;
 create public synonym s_pagopedido for adminmulven.s_pagopedido;
+create public synonym s_pediitem for adminmulven.s_pediitem;

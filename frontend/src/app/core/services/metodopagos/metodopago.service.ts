@@ -18,20 +18,20 @@ export class MetodopagoService {
 
   getMetodoPago(id):Observable<Metodopagos>{
     return this.http.get<Metodopagos>(
-      environment.api + 'metodopago/' + id,
+      environment.api + 'payment/' + id,
       {headers: this.headers}
     )
   }
   getMetodoPagos():Observable<Metodopagos[]>{
     return this.http.get<Metodopagos[]>(
-      environment.api + 'metodopago/get/',
+      environment.api + 'payment/get/',
       {headers: this.headers}
     )
   }
   setMetodoPago(metodoPago):Observable<Metodopagos>{
     var body = JSON.stringify(metodoPago)
     return this.http.post<Metodopagos>(
-      environment.api + 'metodopago/set/',
+      environment.api + 'payment/set/',
       body,
       {headers: this.headers}
     )
@@ -39,7 +39,7 @@ export class MetodopagoService {
   delMetodoPago(metodoPago):Observable<Metodopagos>{
     var body = JSON.stringify(metodoPago)
     return this.http.post<Metodopagos>(
-      environment.api + 'metodopago/del/',
+      environment.api + 'payment/del/',
       body,
       {headers: this.headers}
     )
@@ -47,7 +47,7 @@ export class MetodopagoService {
   createMetodoPago(metodoPago):Observable<Metodopagos>{
     var body = JSON.stringify(metodoPago)
     return this.http.post<Metodopagos>(
-      environment.api + 'metodopago/add/',
+      environment.api + 'payment/add/',
       body,
       {headers: this.headers}
     )

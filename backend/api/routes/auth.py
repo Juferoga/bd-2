@@ -18,7 +18,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=user, headers={"WWW-Authenticate" : "Bearer"})
     access_token_expires = timedelta(minutes=int(getenv("ACCESS_TOKEN_EXPIRE_MINUTES")))
     access_token = create_access_token(data=
-                                       {"username": form_data.username,
+                                        {"username": form_data.username,
                                         "password": encriptar(form_data.password)},
                                         expires_delta=access_token_expires)
     return {"access_token": access_token,

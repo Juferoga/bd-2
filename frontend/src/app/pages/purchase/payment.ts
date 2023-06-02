@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Metodopagos } from 'src/app/core/models/metodopagos/metodopagos.model';
 import { TicketService } from 'src/app/core/services/compra/ticket.service';
+import { MetodopagoService } from 'src/app/core/services/metodopagos/metodopago.service';
 
 @Component({
     template: `
@@ -9,7 +12,13 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
                 <ng-template pTemplate="title"> Información de pago </ng-template>
                 <ng-template pTemplate="subtitle"> Ingresa los detalles de tu pago </ng-template>
                 <ng-template pTemplate="content">
-                    <div class="p-fluid formgrid grid">
+                    <select (change)="paymentMethod($event)">
+                        <option *ngFor="let item of listPayment" [value]="item['nombre']">{{item['descripcion']}}</option>
+                    </select>
+                    <div *ngIf="paymentMethodSelected == 'PE'" class="pse-button">
+                        <img width="100px" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.lIAd86vNiOtS15yRQF4juQAAAA%26pid%3DApi&f=1&ipt=84765d7c18fd5450799f7b638b9f491676dbcb8c2fa70e6d89fa5760697663c1&ipo=images" alt="Boton PSE" >
+                    </div>
+                    <div *ngIf="paymentMethodSelected == 'TC'" class="p-fluid formgrid grid">
                         <div class="field col-12">
                             <label for="class">Nombre del propietario de la tarjeta</label>
                             <input type="text" required pInputText [(ngModel)]="paymentInformation.cardholderName" />
@@ -44,11 +53,41 @@ import { TicketService } from 'src/app/core/services/compra/ticket.service';
 })
 export class PaymentDemo implements OnInit {
     paymentInformation: any;
+    listPayment: Metodopagos[];
+    paymentMethodSelected = '';
 
-    constructor(public ticketService: TicketService, private router: Router) {}
-
+    constructor(
+        public ticketService: TicketService, 
+        private router: Router,
+        private metodoService: MetodopagoService,
+        private messageService: MessageService,
+    ) {}
+    
     ngOnInit() {
         this.paymentInformation = this.ticketService.ticketInformation.paymentInformation;
+        this.metodoService.getMetodoPagos().subscribe(
+            (data)=>{
+                this.listPayment = data['data'];
+                this.messageService.add({
+                    key: "grl-toast",
+                    severity: "success",
+                    summary: "Consulta exitosa",
+                    detail: "La consulta se realizo correctamente sobre la base de datos - Países Cargados",
+                });
+            },
+            (error)=>{
+                this.messageService.add({
+                    key: "grl-toast",
+                    severity: "error",
+                    summary: "ERROR",
+                    detail: "La consulta se realizo con errores"+error,
+                });
+            }
+        )
+    }
+
+    paymentMethod(event){
+        this.paymentMethodSelected = event.target.value
     }
 
     nextPage() {

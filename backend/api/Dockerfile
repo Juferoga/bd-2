@@ -1,4 +1,8 @@
-FROM python:3.10.5-slim-buster
+FROM python:3.10
+EXPOSE 80
+
+# manual installation
+RUN pip install fastapi uvicorn
 
 WORKDIR    /opt/oracle
 RUN        apt-get update && apt-get install -y libaio1 wget unzip \
@@ -10,12 +14,14 @@ RUN        apt-get update && apt-get install -y libaio1 wget unzip \
             && echo /opt/oracle/instantclient* > /etc/ld.so.conf.d/oracle-instantclient.conf \
             && ldconfig
 
-WORKDIR    /code
-COPY       . /code/
-RUN        pip3 install pipenv
+# copy whole installation (minus dockerignore)
+COPY . /app
 
-COPY requirements.txt /code/
-
+# install additional dependencies (might have duplicates?)
+# (was pipenv previously but had problems with alpine)
+COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-CMD python manage.py runserver 0.0.0.0:80
+# set workdir to have subscripts in scope
+WORKDIR /app
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

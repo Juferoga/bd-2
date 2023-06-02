@@ -25,8 +25,6 @@ class UserOfDB(User):
     username: str
     password: str
 
-class UserClient(UserOfDB):
-    ciudad: str
 
 def authenticate_user(username : str, password : str):
     response = try_connect_to_db(username, desencriptar(password))
